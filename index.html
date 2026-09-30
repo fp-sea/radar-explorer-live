@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar Volume Explorer</title>
+  <link rel="stylesheet" href="style.css?v=20260930012033">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <header id="topbar">
+    <div class="title">
+      <span id="case-title">Radar Volume Explorer</span>
+      <span id="frame-time" class="time">loading…</span>
+      <div id="lightning-badge" hidden></div>
+      <div id="radar-down" hidden></div>
+      <div id="active-chips"></div>
+    </div>
+    <div id="top-right"><div id="status"></div></div>
+  </header>
+
+  <aside id="panel">
+    <div id="panel-head">
+      <div id="panel-tabs" class="ptabs">
+        <button data-ptab="where" class="on" title="Region, radar, time, focus and view"><i>📍</i>Where</button>
+        <button data-ptab="radar" title="How the radar volume looks"><i>📡</i>Radar</button>
+        <button data-ptab="layers" title="Ground, marks, satellite, lightning, airports, rain"><i>🗺</i>Layers</button>
+        <button data-ptab="air" title="The air: balloon soundings (observed) and model layers"><i>🌡</i>Air</button>
+        <button data-ptab="cut" title="Cutaway, slab scan, beam and sweep"><i>✂</i>Cut</button>
+        <button data-ptab="analyze" title="Cross-section, QVP, winds"><i>📊</i>Analyze</button>
+      </div>
+      <button id="ui-hide" class="mini" title="Hide the controls (H)">⟨</button>
+    </div>
+
+    <!-- 📍 Where -->
+    <div class="ptab" data-ptab="where">
+      <section>
+        <label class="h">Region</label>
+        <select id="region-select" title="Part of the world to explore"></select>
+        <label class="h">Situation</label>
+        <select id="preset-select" title="Set everything up for a question, with tips">
+          <option value="">Choose a situation…</option>
+        </select>
+        <label class="h">Radar source</label>
+        <div id="source-buttons" class="seg" title="One radar, or several merged (each spot from the radar that sees it best)"></div>
+        <div id="source-note" class="note" style="margin-top:3px"></div>
+        <div id="radar-status" title="Each radar's own status report (NWS), and when its newest data arrived here"></div>
+        <label class="h">Time</label>
+        <div class="row" style="margin-top:0">
+          <button id="time-live" class="mini" title="Latest data, updating every few minutes">● Live</button>
+          <span id="loop-buttons" class="seg" title="How far back live mode keeps volumes (memory grows with length)">
+            <button class="mini" data-min="30">30 m</button><button class="mini" data-min="60">60 m</button><button class="mini" data-min="90">90 m</button>
+          </span>
+          <span id="live-mode" class="seg" title="Fast 2D: the lowest tilt from the NWS Level III products (~0.25 MB, ~1.5 min after the scan, every low-level scan): dBZ and Vel, in seconds. 3D: full radar volumes (~5 MB each, ~7 min after the scan), loading behind it.">
+            <button class="mini" data-mode="2d">⚡ 2D</button><button class="mini" data-mode="3d">3D</button>
+          </span>
+        </div>
+        <label class="chk" title="Live opens in Fast 2D and loads the 3D volumes behind it, switching to 3D once they're in (press 2D to stay in 2D). Off: 2D only, no volume downloads (phones, slow connections); press 3D to load them."><input id="bg3d" type="checkbox" checked> Load 3D in background</label>
+        <select id="case-select" title="A saved past event" style="margin-top:6px"></select>
+      </section>
+      <section>
+        <label class="h">Focus point</label>
+        <select id="focus-select" title="The spot the pole, Focus views, sections and beam facts are about"></select>
+        <div class="row">
+          <button id="focus-pick" class="mini" title="Click the map to put the focus there">📍 Pick on map</button>
+          <button id="focus-save" class="mini" title="Save the current focus as a named spot">☆ Save</button>
+          <button id="focus-delete" class="mini" hidden>Delete saved</button>
+        </div>
+        <div id="focus-save-row" class="row" hidden>
+          <input id="focus-name" type="text" placeholder="Name, e.g. My marina" maxlength="40">
+          <button id="focus-save-ok" class="mini">Save</button>
+        </div>
+      </section>
+      <section>
+        <label class="h">View</label>
+        <select id="view-select" title="Camera views (keys 1–9 pick them in list order)"></select>
+        <div id="view-quick" class="row">
+          <button class="mini" data-view="home" title="Back to this area's opening view">⌂ Home</button>
+          <button class="mini" data-view="whole-top">Whole ▢</button>
+          <button class="mini" data-view="whole-3d">Whole 3D</button>
+          <button class="mini" data-view="focus-3d">Focus 3D</button>
+        </div>
+        <div class="row">
+          <button id="stand-toggle" class="mini" title="Put yourself at a spot, at a height, and look around">👁 Stand here</button>
+          <button id="fly-toggle" class="mini" title="Fly along a line, or tour between views you add">✈ Fly-through</button>
+          <button id="export-toggle" class="mini" title="Save the picture as a GIF or MP4">⬇ Export</button>
+        </div>
+        <div id="stand-box" class="subbox" hidden>
+          <div class="row lightning-row" style="margin-top:0">
+            <label class="chk" style="margin:0">From</label>
+            <select id="stand-from" class="mini-select"></select>
+          </div>
+          <label class="h">Height above the ground <b id="stand-alt-val"></b></label>
+          <input id="stand-alt" type="range" min="0" max="1" step="any" value="0.274" title="Finer near the ground, up to 40 km">
+          <div id="stand-alt-presets" class="row seg" style="margin-top:2px"></div>
+          <label class="h">Looking toward <b id="stand-heading-val"></b></label>
+          <input id="stand-heading" type="range" min="0" max="359" step="1" value="0">
+          <label class="h">Up / down <b id="stand-pitch-val"></b></label>
+          <input id="stand-pitch" type="range" min="-60" max="75" step="1" value="5">
+          <label class="h">Zoom <b id="stand-zoom-val"></b></label>
+          <input id="stand-zoom" type="range" min="0" max="1" step="0.01" value="0" title="Lens zoom from where you stand (also the mouse wheel, or pinch)">
+          <label class="chk"><input id="stand-pole" type="checkbox"> Focus pole</label>
+          <div class="note">Drag the picture to look around. Heights are true here: vertical exaggeration is 1× until you leave.
+            Under heavy rain the echo fills the sky, as it would: raise <b>Show values</b> or lower <b>Opacity</b> (Radar tab) to see the storm's shape.</div>
+          <div class="row"><button id="stand-exit" class="mini">Leave</button></div>
+        </div>
+        <div id="fly-box" class="subbox" hidden>
+          <label class="h" style="margin-top:0">Fly along a line</label>
+          <div class="note" style="margin-top:0">You travel from <b>Start</b> to <b>Finish</b> (shown on the map) at the height below, looking ahead. Drag the picture to look around while flying.</div>
+          <div class="row lightning-row">
+            <label class="chk" style="margin:0">Line</label>
+            <select id="fly-which" class="mini-select">
+              <option value="beam">radar → through the focus</option>
+              <option value="drawn">my drawn line</option>
+            </select>
+          </div>
+          <div class="row">
+            <button id="fly-draw" class="mini" title="Click two points on the map: start, then finish">✎ Draw a new line</button>
+            <label class="chk" style="margin:0"><input id="fly-reverse" type="checkbox"> Reverse</label>
+          </div>
+          <label class="h">Height above the ground <b id="fly-alt-val"></b></label>
+          <input id="fly-alt" type="range" min="0.1" max="12" step="0.05" value="1.5">
+          <div class="row lightning-row">
+            <label class="chk" style="margin:0">The whole flight takes</label>
+            <select id="fly-speed" class="mini-select">
+              <option value="20">20 s</option><option value="40" selected>40 s</option><option value="90">90 s</option>
+            </select>
+          </div>
+          <div class="row"><button id="fly-line" class="mini">▶ Fly the line</button>
+            <label class="chk" style="margin:0" title="On: the radar loop plays while you fly or tour. Off: it holds the frame on screen."><input id="fly-loop" type="checkbox" checked> Loop plays while flying</label></div>
+          <div id="fly-status" class="note"></div>
+          <label class="h">Tour of views <b id="tour-count"></b></label>
+          <div class="note" style="margin-top:0">Move the camera where you like, then add it as a stop; Play flies between the stops in order. Kept in this browser for this area.</div>
+          <div class="row">
+            <button id="tour-add" class="mini" title="Add the current camera as the next stop">＋ Add this view</button>
+            <button id="tour-undo" class="mini" title="Remove the last stop">Undo last</button>
+            <button id="tour-play" class="mini">▶ Play tour</button>
+            <button id="tour-clear" class="mini">Clear</button>
+          </div>
+        </div>
+        <div id="export-box" class="subbox" hidden>
+          <div class="seg" id="export-what">
+            <button class="mini on" data-what="loop" title="Every frame of the loop, at the playback speed">Loop playing</button>
+            <button class="mini" data-what="orbit" title="Circle round the view's centre">Circle</button>
+            <button class="mini" data-what="tour" title="The tour of views (Fly-through)">Tour</button>
+            <button class="mini" data-what="fly" title="Fly the line (Fly-through), at its height and duration">Fly the line</button>
+          </div>
+          <label class="chk" id="export-animate-row" hidden title="The radar loop plays while the camera moves, at the playback speed; off: the frame on screen throughout"><input id="export-animate" type="checkbox" checked> Radar loop plays during the move</label>
+          <div class="row lightning-row">
+            <select id="export-format" class="mini-select"><option value="gif">GIF</option><option value="mp4" selected>MP4</option></select>
+            <select id="export-width" class="mini-select"><option value="800">800 px</option><option value="1280" selected>1280 px</option><option value="1920">1920 px</option></select>
+            <button id="export-go" class="mini">⬇ Make file</button>
+          </div>
+          <div id="export-note" class="note">The picture only, with time, legend, labels and credits. Made in your browser.</div>
+        </div>
+        <div class="row">
+          <button id="copy-link" class="mini" title="A link that opens this page as it is now (area, focus, camera, field and layers) with the latest data">🔗 Copy link to this view</button>
+        </div>
+        <div id="link-note" class="note" hidden></div>
+      </section>
+    </div>
+
+    <!-- 📡 Radar -->
+    <div class="ptab" data-ptab="radar" hidden>
+      <section>
+        <label class="h">Field</label>
+        <div id="field-buttons" class="seg"></div>
+        <div id="srv-row" hidden>
+          <div class="row lightning-row">
+            <label class="chk" style="margin:0">Storm motion</label>
+            <select id="srv-mode" class="mini-select">
+              <option value="auto">auto: mean wind 1–6 km (VAD)</option><option value="set">set by hand</option>
+            </select>
+          </div>
+          <div class="row" id="srv-set" hidden>
+            <label class="chk" style="margin:0">from <input id="srv-dir" type="number" min="0" max="359" step="5" value="240" style="width:4.5em">°</label>
+            <label class="chk" style="margin:0">at <input id="srv-kt" type="number" min="0" max="80" step="1" value="25" style="width:4em"> kt</label>
+          </div>
+          <div id="srv-info" class="note"></div>
+        </div>
+        <label class="h">Render</label>
+        <div id="mode-buttons" class="seg">
+          <button data-mode="0" class="on" title="Glowing cloud: every shown value adds colour">Volume</button>
+          <button data-mode="1" title="Solid lit surface at the threshold: best for storm shape">Surface</button>
+          <button data-mode="2" title="Strongest value along each line of sight (3D composite)">Max</button>
+        </div>
+      </section>
+      <section>
+        <label class="h">Show <span id="thr-desc"></span> <b id="thr-val"></b></label>
+        <input id="thr" type="range">
+        <label class="h">Opacity <b id="op-val"></b></label>
+        <input id="op" type="range" min="0.05" max="1" step="0.05" value="0.5">
+        <label class="h">Vertical exaggeration <b id="vex-val"></b></label>
+        <input id="vex" type="range" min="1" max="12" step="0.5" value="2">
+      </section>
+      <section>
+        <label class="h oneline">Look ahead (nowcast) <b id="nowcast-val"></b></label>
+        <div class="row" style="margin-top:0">
+          <button id="nowcast-play" class="mini" title="Play the nowcast: 0 to +60 min and round again">▶</button>
+          <input id="nowcast" type="range" min="0" max="60" step="5" value="0" style="flex:1" title="Move the radar volume forward along the echoes' recent motion">
+        </div>
+        <div class="row" style="margin-top:0">
+          <button id="nowcast-load-all" class="mini" title="Work out every step (+5 to +60 min) for the frame on screen now, so playing and dragging are smooth">⇩ Prepare all steps</button>
+          <span id="nowcast-load-status" class="note oneline" style="margin:0"></span>
+        </div>
+        <div id="nowcast-info" class="note">Slide right to carry the echoes forward along the way they have been moving. <b>Extrapolated, not observed</b>: nothing grows, fades or forms. Good for 10–30 min in organised rain.</div>
+      </section>
+      <section>
+        <label class="chk"><input id="hide-volume" type="checkbox"> Hide 3D volume</label>
+        <label class="chk"><input id="hq" type="checkbox"> High quality (slower)</label>
+      </section>
+    </div>
+
+    <!-- 🗺 Layers -->
+    <div class="ptab" data-ptab="layers" hidden>
+      <section>
+        <label class="h">Ground</label>
+        <div class="row lightning-row">
+          <label class="chk"><input id="show-terrain" type="checkbox" checked> Terrain</label>
+          <select id="terrain-relief" class="mini-select" title="Terrain height exaggeration. The radar uses its own (Vertical exaggeration). 'Match radar' keeps beams and ridges in step.">
+            <option value="1">relief 1× (natural)</option><option value="1.5">relief 1.5×</option>
+            <option value="2">relief 2×</option><option value="3">relief 3×</option>
+            <option value="match" selected>relief = radar (default)</option>
+          </select>
+        </div>
+        <div class="row lightning-row">
+          <label class="chk" style="margin:0">Ground</label>
+          <select id="ground-select" class="mini-select" title="What the ground looks like under the radar">
+            <option value="relief">shaded relief</option><option value="photo">satellite photo</option><option value="dark">plain dark</option>
+          </select>
+        </div>
+        <label class="chk"><input id="show-lines" type="checkbox" checked> Roads &amp; waterways</label>
+        <label class="chk" title="NOAA chart data over the water, drawn here: depth shading and contours, traffic lanes and channels, buoys and lights, soundings when zoomed in (not for navigation)"><input id="show-chart" type="checkbox"> ⚓ Marine chart (NOAA)</label>
+        <div id="chart-box" class="subbox" hidden>
+          <label class="chk" title="Sounding depths as numbers when you're zoomed in close"><input id="chart-water" type="checkbox"> Soundings when zoomed in</label>
+          <label class="chk" title="The depth colour key with the other keys (and in exports)"><input id="chart-key" type="checkbox"> Depth key</label>
+          <label class="h">Chart opacity <b id="chart-op-val"></b></label>
+          <input id="chart-op" type="range" min="0.15" max="1" step="0.05" value="0.75">
+          <div id="chart-info" class="note"></div>
+        </div>
+        <div id="relief-note" class="note" hidden></div>
+      </section>
+      <section>
+        <label class="h">Marks</label>
+        <div class="row lightning-row">
+          <label class="chk"><input id="show-labels" type="checkbox" checked> Labels</label>
+          <label class="chk"><input id="show-pole" type="checkbox" checked> Focus pole</label>
+          <select id="units" class="mini-select" title="Height units for the focus pole and other altitude marks (pressure is the standard-atmosphere equivalent)">
+            <option value="ft">ft</option><option value="m">m</option><option value="km">km</option>
+          </select>
+        </div>
+        <div class="row lightning-row">
+          <label class="chk" style="margin:0" title="Distance rings round each radar"><input id="show-rings" type="checkbox" checked> Range rings</label>
+          <label class="chk" style="margin:0" title="The radar beam (Beam &amp; sweep): its centre and width at the chosen tilt and azimuth"><input id="show-beam" type="checkbox" checked> Beam</label>
+        </div>
+      </section>
+      <section>
+        <label class="h">Weather layers</label>
+        <label class="chk" title="Every flash from the start of the loop up to this frame; newest brightest. Off by default: live, it reads ~30 MB of GOES files for a loop (kept for the visit, and on this device for 2 h). The badge with the nearest flash to your spot needs it on."><input id="show-lightning" type="checkbox"> ⚡ Lightning (GOES GLM)</label>
+        <label class="chk" title="Latest airport report within 90 min of the frame: visibility (statute miles), ceiling (ft), weather. Hover a marker for the full METAR.">
+          <input id="show-metar" type="checkbox"> ✈ Airport visibility &amp; ceiling</label>
+        <div id="metar-key" class="metar-key" hidden><span class="metar vfr"><i></i>VFR</span><span class="metar mvfr"><i></i>MVFR</span><span class="metar ifr"><i></i>IFR</span><span class="metar lifr"><i></i>LIFR</span></div>
+        <label class="chk" title="Observed stability over the water: sea minus air temperature at NOAA tide stations that measure both (harbour gauges). + sea warmer: unstable, gusty; − air warmer: stable, the surface cut off from the wind aloft"><input id="show-seaair" type="checkbox"> 🌊 Sea − air temperature (stability)</label>
+        <div id="seaair-key" class="seaair-key" hidden></div>
+        <label class="chk" title="The NWS radar software's own storm tracking (Level III): cells, past and forecast tracks, mesocyclones, tornado signatures, hail"><input id="show-storms" type="checkbox"> ⛈ NWS storm cells &amp; signatures</label>
+        <div id="storm-info" class="note" hidden></div>
+        <label class="chk"><input id="show-arrows" type="checkbox"> VAD wind arrows over the radar</label>
+        <label class="chk"><input id="show-block" type="checkbox"> Beam blockage (for the chosen tilt)</label>
+      </section>
+      <section>
+        <label class="chk" style="margin-top:0"><input id="sat-on" type="checkbox"> 🛰 Satellite · <span id="sat-name">GOES</span> <span class="kbd">S</span></label>
+        <div id="sat-settings" hidden>
+          <div id="sat-band" class="seg" style="margin-top:6px">
+            <button data-band="auto" class="on" title="Visible by day, infrared at night">Auto</button>
+            <button data-band="vis" title="Visible, 0.5 km (daytime, cases only)">Visible</button>
+            <button data-band="ir" title="Clean infrared, 2 km: cloud-top temperature">Infrared</button>
+            <button data-band="fog" title="Likely fog / low stratus: 10.3−3.9 µm at night, bright + warm + water-droplet tops by day, no radar echo">Fog</button>
+          </div>
+          <label class="h">Flat ⟷ cloud tops 3D <b id="sat-shape-val"></b></label>
+          <input id="sat-shape" type="range" min="0" max="1" step="0.01" value="0">
+          <div class="row"><button id="sat-morph" class="mini" title="Animate between a flat sheet and the 3D cloud-top surface">▶ Morph flat ⟷ 3D</button></div>
+          <label class="h">Flat sheet height <b id="sat-height-val"></b></label>
+          <input id="sat-height" type="range" min="0" max="12" step="0.5" value="10">
+          <label class="h">Opacity <b id="sat-op-val"></b></label>
+          <input id="sat-op" type="range" min="0.1" max="1" step="0.05" value="0.85">
+          <label class="chk"><input id="sat-clear" type="checkbox" checked> Clear sky see-through</label>
+          <canvas id="sat-legend" width="240" height="10" hidden></canvas>
+          <div id="sat-legend-ticks" hidden></div>
+        </div>
+        <div id="sat-info" class="note"></div>
+      </section>
+      <section>
+        <div class="row lightning-row" style="margin-top:0">
+          <label class="chk" style="margin:0"><input id="rain-on" type="checkbox"> 🌧 Rain totals</label>
+          <label class="chk" style="margin:0" title="The 3D radar volume: hidden while totals show, and back when they're turned off"><input id="rain-volume" type="checkbox" checked> 3D volume</label>
+        </div>
+        <div id="rain-box" hidden>
+          <select id="rain-window" class="mini-select" style="margin-top:6px" title="Loop: this radar, every scan. Longer windows: NOAA MRMS multi-radar totals (gauge-corrected when available), unless the loop already covers them.">
+            <option value="loop" selected>loop · radar</option>
+            <option value="1">1 h · MRMS</option><option value="3">3 h · MRMS</option><option value="6">6 h · MRMS</option>
+            <option value="12">12 h · MRMS</option><option value="24">24 h · MRMS</option>
+            <option value="48">48 h · MRMS</option><option value="72">72 h · MRMS</option>
+          </select>
+          <div id="rain-legend"></div>
+          <div id="rain-info" class="note"></div>
+        </div>
+        <div class="row lightning-row">
+          <label class="chk" style="margin:0" title="What rain gauges measured (NWS HADS, airports, CoCoRaHS volunteers), to set against the radar's estimate"><input id="gauges-on" type="checkbox"> 🪣 Rain gauges</label>
+          <select id="gauges-days" class="mini-select" title="Local calendar days, ending on the frame's day">
+            <option value="1">today so far</option><option value="2" selected>2 days</option><option value="3">3 days</option><option value="7">7 days</option>
+          </select>
+        </div>
+        <div id="gauges-info" class="note" hidden></div>
+        <div id="rain-units-row" class="row lightning-row" hidden>
+          <label class="chk" style="margin:0">Rain in</label>
+          <select id="rain-units" class="mini-select" title="Rain amounts in inches or millimetres"><option value="in">in</option><option value="mm">mm</option></select>
+        </div>
+      </section>
+    </div>
+
+    <!-- 🌡 Air -->
+    <div class="ptab" data-ptab="air" hidden>
+      <section>
+        <label class="h" style="margin-top:0">Observed</label>
+        <label class="chk" title="Observed temperature, dew point and wind with height from the nearest weather balloons (00Z and 12Z)"><input id="show-balloon" type="checkbox"> 🎈 Balloon sounding</label>
+        <div id="balloon-box" hidden>
+          <select id="balloon-station" class="mini-select" style="margin-top:4px"></select>
+          <label class="chk" title="Draw the balloon's 0 °C level, snow-growth layer and inversion across the whole area. One balloon, one place: a rough guide only."><input id="balloon-spread" type="checkbox"> Spread its levels across the area (assumption)</label>
+          <div id="balloon-info" class="note"></div>
+        </div>
+        <label class="h" title="How much of the wind aloft can reach the surface now, from observations: the radar's wind profile (VAD), the balloon's mixed layer and airport gusts">Vertical mixing (observed) <a href="guide.html#mixing" target="_blank" rel="noopener" class="h-guide" title="The method, the reasoning and how to read it (guide)">📖</a></label>
+        <div id="mixing-info" class="note" style="margin-top:2px"></div>
+        <details id="mixing-help" class="note">
+          <summary>How to read this</summary>
+          <ul>
+            <li><b>Gusts are wind from higher up</b>, carried down by eddies. The stirred (mixed) layer is how high they reach; its lid is usually an inversion. Its strongest wind is the gust ceiling.</li>
+            <li><b>Sea − air</b> (🌊 in Layers): <b style="color:#f08a7f">+</b> sea warmer, the air heated from below: stirred, gusty, showers. <b style="color:#7fb0f0">−</b> air warmer: stable, the surface cut off from the wind aloft, smoother, fog-prone.</li>
+            <li><b>VAD vs airports:</b> a lot of wind aloft but light at the surface means stable or sheltered; similar speeds or big gusts mean it's mixing down. Surface windier than the VAD: local funnelling the radar's average can't see.</li>
+            <li><b>Gust factor</b> (gust ÷ mean): ~1.3 ordinary gusty mixing; 1.5+ strong mixing or squalls.</li>
+            <li><b>Rule of thumb:</b> unstable + deep mixed layer + strong wind aloft: gusts toward the VAD speed, reef early. Stable + shallow: lighter wind, but it can arrive suddenly off headlands and in passes.</li>
+            <li>All observed: the balloon can be 12 h old and far away; the VAD is a ring round the radar; tide stations are harbour gauges. <a href="guide.html#mixing" target="_blank" rel="noopener">📖 The full explanation</a></li>
+          </ul>
+        </details>
+      </section>
+      <section>
+        <label class="h" style="margin-top:0">Model (a forecast system, not observation)</label>
+        <label class="chk"><input id="model-on" type="checkbox"> 🌐 <span id="model-name">Model layers</span></label>
+        <div id="model-box" hidden>
+          <div class="row lightning-row" style="margin-top:0">
+            <label class="chk" style="margin:0" title="The radar's area, or 2,000 km across: the scale of a hurricane or a front">Area</label>
+            <select id="model-area" class="mini-select">
+              <option value="radar">radar area</option>
+              <option value="wide">wide 2,000 km (hurricanes, fronts)</option>
+            </select>
+            <button id="model-topdown" class="mini" title="Flat map view: straight down on the whole 2,000 km area, north up" hidden>🗺 Map view</button>
+          </div>
+          <div id="wide-ir-row" class="row" style="margin-top:0" hidden>
+            <label class="chk" style="margin:0">🛰 Satellite</label>
+            <select id="wide-ir" class="mini-select" title="GOES over the whole wide area. IR: cloud tops day and night, coloured by how cold (high). Visible: 1 km, what the eye would see, daytime only. Auto: visible when the sun is well up over the area all loop, else IR.">
+              <option value="ir">IR (~3 MB a scan)</option><option value="vis">Visible, day (~14 MB / 10 min)</option><option value="auto">Auto: visible by day</option><option value="off">off</option>
+            </select>
+            <input id="wide-op" type="range" min="0.1" max="1" step="0.05" value="0.85" style="width:80px;flex:none" title="How solid the wide-area satellite is: lower lets the model colours and map show through">
+            <b id="wide-op-val" class="note" style="margin:0"></b>
+            <span id="wide-ir-info" class="note oneline" style="margin:0"></span>
+          </div>
+          <label class="h oneline">Look ahead <b id="model-ahead-val"></b></label>
+          <div class="row" style="margin-top:0">
+            <button id="model-play" class="mini" title="Step through the forecast hours (each loads as it goes; the next few load ahead)">▶</button>
+            <input id="model-ahead" type="range" min="0" max="48" step="1" value="0" style="flex:1" title="0 = the model's analysis for this time; right = its forecast for later hours">
+          </div>
+          <div id="model-ahead-bar" class="ahead-bar" title="Hours loaded"></div>
+          <div class="row" style="margin-top:0">
+            <button id="model-load-all" class="mini" title="Download every forecast hour first, so playing and dragging are smooth from the start">⇩ Load all hours</button>
+            <span id="model-load-status" class="note oneline" style="margin:0"></span>
+          </div>
+          <label class="h">Levels: lines (winds, contours) · colour fill</label>
+          <div id="model-levels-head" class="note" style="margin:2px 0"></div>
+          <div id="model-levels"></div>
+          <div class="note" style="margin-top:2px">Fills on several levels stack at their own heights: tilt the view to see them apart.</div>
+          <label class="chk" title="Each level aloft in use drawn as a faint wire mesh at its true height, so its shape shows"><input id="model-wire" type="checkbox" checked> Levels aloft as wire mesh</label>
+          <label class="chk"><input id="model-freezing" type="checkbox"> Freezing level (0 °C) surface</label>
+          <label class="h">Wind as</label>
+          <div id="model-winds" class="seg">
+            <button class="mini on" data-v="auto" title="Streamlines at the surface, barbs aloft">Auto</button><button class="mini" data-v="stream">Streamlines</button><button class="mini" data-v="barbs">Barbs</button><button class="mini" data-v="particles" title="The wind on each level with lines on, as drifting streaks in the level's colour at its height (sped up to read; longer and brighter where it's faster)">✦ Particles</button><button class="mini" data-v="mixed" title="Particles on the low levels (surface, 925 mb) where the flow over the water and terrain matters, barbs on the levels above: the boundary layer moving, the winds aloft still readable">✦ low + barbs</button>
+          </div>
+          <div id="particle-box" class="subbox" hidden>
+            <div id="particle-levels-note" class="note" style="margin:0 0 4px"></div>
+            <label class="chk" title="Particles at every height, with the wind interpolated between the model levels above and below; coloured by the level at or below them. Loads every level. Smooth where wind changes smoothly with height; softens sharp shear (inversions, fronts, jet cores)."><input id="particle-3d" type="checkbox"> Between levels (3D, interpolated)</label>
+            <label class="h">Density <b id="particle-density-val"></b></label>
+            <input id="particle-density" type="range" min="0.25" max="12" step="0.25" value="1">
+            <label class="h" title="Extra particles at the surface and 925 mb (in 3D: more of them near the ground)">Low-level boost <b id="particle-low-val"></b></label>
+            <input id="particle-low" type="range" min="1" max="4" step="0.5" value="1">
+            <label class="chk" title="A bright dot at the head of each streak"><input id="particle-heads" type="checkbox"> Bright heads</label>
+            <label class="h">Size <b id="particle-size-val"></b></label>
+            <input id="particle-size" type="range" min="1" max="5" step="0.5" value="2.5">
+            <label class="h">Opacity <b id="particle-opacity-val"></b></label>
+            <input id="particle-opacity" type="range" min="0.2" max="1" step="0.05" value="0.85">
+          </div>
+          <label class="h">Spacing <b id="model-spacing-val"></b></label>
+          <input id="model-spacing" type="range" min="6" max="40" step="1" value="14" title="Distance between barbs or streamlines">
+          <label class="h">Fill opacity <b id="model-opacity-val"></b></label>
+          <input id="model-opacity" type="range" min="0.1" max="0.9" step="0.05" value="0.5">
+          <label class="chk" title="On: blend between model grid points. Off: each model point's own value, so you see the model's resolution."><input id="model-smooth" type="checkbox" checked> Smooth between model points</label>
+        </div>
+        <div id="model-info" class="note"></div>
+        <div class="note">Models by region: <b>Northwest &amp; Houston</b> HRRR 3 km: hourly analyses, forecasts to +18 h · <b>Hawaiʻi</b> GFS 0.25° (~27 km), 6-hourly runs, forecasts to +24 h. <b>Wide 2,000 km area</b> (any region): GFS, which covers all of it.</div>
+      </section>
+    </div>
+
+    <!-- ✂ Cut -->
+    <div class="ptab" data-ptab="cut" hidden>
+      <section>
+        <label class="h">Cutaway <button id="clip-reset" class="mini">reset</button></label>
+        <div class="clip">
+          <span>W</span><input id="clip-x0" type="range" min="0" max="1" step="0.005" value="0">
+          <span>E</span><input id="clip-x1" type="range" min="0" max="1" step="0.005" value="1">
+          <span>S</span><input id="clip-y0" type="range" min="0" max="1" step="0.005" value="0">
+          <span>N</span><input id="clip-y1" type="range" min="0" max="1" step="0.005" value="1">
+          <span>Top</span><input id="clip-z1" type="range" min="0.02" max="1" step="0.005" value="1">
+        </div>
+        <div class="row">
+          <button id="slice-low" class="mini" title="Only the lowest 1.5 km">Low levels</button>
+        </div>
+      </section>
+      <section>
+        <label class="h">Slab scan (CT style) <span class="kbd">[ ]</span></label>
+        <select id="slab-mode" title="Step a slab of chosen thickness through the volume">
+          <option value="off">off (whole volume)</option>
+          <option value="x">N–S slices, stepping west → east</option>
+          <option value="y">E–W slices, stepping south → north</option>
+          <option value="z">Height slices, stepping upward</option>
+          <option value="across">Across a line, stepping along it</option>
+          <option value="along">Along a line, stepping sideways</option>
+          <option value="beam">Radial slice, rotating round the radar (RHI)</option>
+        </select>
+        <div id="slab-controls" hidden>
+          <div class="row lightning-row">
+            <label class="chk" style="margin:0">Thickness</label>
+            <select id="slab-nm" class="mini-select">
+              <option value="0.25">0.25 nm</option><option value="0.5">0.5 nm</option><option value="1" selected>1 nm</option>
+              <option value="2">2 nm</option><option value="5">5 nm</option><option value="10">10 nm</option>
+            </select>
+          </div>
+          <label class="h" id="slab-pos-label">Position</label>
+          <input id="slab-pos" type="range" min="0" max="1" step="0.001" value="0.5" title="Where the slab is along its axis">
+          <div id="slab-line-controls" hidden>
+            <div id="slab-spot-row">
+              <label class="h">Spot on the line <b id="slab-spot-val"></b></label>
+              <input id="slab-spot" type="range" min="0" max="1" step="0.001" value="0.5" title="The point on the line the slab turns and tilts about">
+            </div>
+            <label class="h">Turn <b id="slab-turn-val"></b></label>
+            <input id="slab-turn" type="range" min="-90" max="90" step="1" value="0" title="Rotate the slab about the spot, around the vertical">
+            <label class="h">Tilt <b id="slab-tilt-val"></b></label>
+            <input id="slab-tilt" type="range" min="0" max="85" step="1" value="0" title="Lean the slab away from vertical about the spot (90° would be a height slice)">
+            <div class="row"><button id="slab-square" class="mini" title="Back to straight across / along the line, upright">Square up</button></div>
+          </div>
+          <div class="row">
+            <button id="slab-prev" class="mini" title="Back one slab thickness ([)">◀ step</button>
+            <button id="slab-play" class="mini" title="Sweep through the volume">▶</button>
+            <button id="slab-next" class="mini" title="Forward one slab thickness (])">step ▶</button>
+            <button id="slab-face" class="mini" title="Point the camera straight at the slab">Face slab</button>
+          </div>
+          <label class="chk"><input id="slab-follow" type="checkbox" checked> 2D cross-section follows the slab</label>
+          <div id="slab-info" class="note"></div>
+        </div>
+      </section>
+      <section>
+        <label class="h">Beam &amp; sweep</label>
+        <div class="clip">
+          <span class="radar-row">Radar</span><select id="beam-radar" class="radar-row"></select>
+          <span>Tilt</span><select id="beam-tilt"></select>
+          <span>Az</span><input id="beam-az" type="range" min="0" max="359.5" step="0.5" value="0">
+        </div>
+        <div class="row">
+          <b id="beam-az-val" class="mini-val"></b>
+          <button id="beam-focus" class="mini" title="Point the beam at the focus point">Aim at focus</button>
+        </div>
+        <div class="row">
+          <button id="sweep-tilt" class="mini" title="Rotate the antenna round one tilt. While it turns, change Tilt (or ↑ / ↓) and it carries on at the new angle; drag Az to move it">▶ Sweep tilt</button>
+          <button id="sweep-vol" class="mini" title="Run the whole volume scan, tilt after tilt. Change Tilt (or ↑ / ↓) to jump to another angle">▶ Volume scan</button>
+          <select id="sweep-speed" class="mini-select" title="Antenna speed">
+            <option value="18">real-ish</option>
+            <option value="60" selected>fast</option>
+            <option value="150">faster</option>
+          </select>
+        </div>
+        <label class="chk"><input id="show-surface" type="checkbox"> Tilt surface (the cone one tilt sees)</label>
+      </section>
+    </div>
+
+    <!-- 📊 Analyze -->
+    <div class="ptab" data-ptab="analyze" hidden>
+      <section>
+        <label class="h">Cross-section</label>
+        <div class="row" style="margin-top:0">
+          <button id="sec-draw" class="mini" title="Click two points on the map to draw a cross-section">✎ Draw section</button>
+          <button id="sec-along" class="mini" title="Section from the radar out through the focus point">Along beam</button>
+          <button id="sec-across" class="mini" title="Section across the beam at the focus: rotation shows as a colour pair">Across beam</button>
+          <button id="sec-clear" class="mini" title="Remove the section line from the map" hidden>✕ Remove</button>
+        </div>
+        <div class="note">A vertical slice through the volume: draw one anywhere, or along / across the beam at the focus.</div>
+      </section>
+      <section>
+        <label class="h">Balloon sounding</label>
+        <div class="row" style="margin-top:0">
+          <button id="skewt-open" class="mini" title="The balloon's temperature, dew point and wind: a Skew-T diagram">Skew-T</button>
+        </div>
+        <div class="note">Observed, not modelled: the nearest balloon launch (00Z/12Z), with its age. Melting level, snow-growth layer and inversions shaded.</div>
+      </section>
+      <section>
+        <label class="h">Profiles over time</label>
+        <div class="row" style="margin-top:0">
+          <button id="qvp-open" class="mini" title="Quasi-vertical profile: layers over time">QVP</button>
+          <button id="winds-open" class="mini" title="VAD wind profile over time">Winds</button>
+        </div>
+        <div class="note"><b>QVP</b>: the steep tilt averaged all the way round, stacked in time (melting layer, snow growth).
+          <b>Winds</b>: VAD profile, one average wind per height round the radar.</div>
+      </section>
+    </div>
+  </aside>
+
+  <footer id="timebar">
+    <button id="play" title="Play / pause (space)">▶</button>
+    <input id="frame" type="range" min="0" max="0" value="0">
+    <select id="speed" title="Loop speed">
+      <option value="900">slow</option>
+      <option value="500" selected>normal</option>
+      <option value="250">fast</option>
+    </select>
+    <label id="sails-row" class="chk" style="margin:0;white-space:nowrap" hidden
+      title="Include the ~3-min low-level updates (mid-volume repeat of the lowest tilt)"><input id="show-sails" type="checkbox" checked> 3-min low level</label>
+    <span id="load-progress"></span>
+  </footer>
+
+  <div id="dock" hidden>
+    <div class="dock-head">
+      <div class="tabs">
+        <button data-dock="section" class="on">Cross-section</button>
+        <button data-dock="qvp">QVP</button>
+        <button data-dock="winds">Winds</button>
+        <button data-dock="skewt">Skew-T</button>
+      </div>
+      <select id="dock-radar" class="mini-select" title="Which radar's QVP and winds to show" hidden></select>
+      <span id="dock-readout"></span>
+      <button id="dock-sec-clear" class="mini" title="Remove the section line from the map" hidden>✕ Remove section</button>
+      <button id="dock-min" class="mini" title="Shrink to its tabs / show again">▾</button>
+      <button id="dock-close" class="mini" title="Close">×</button>
+    </div>
+    <canvas id="section-canvas"></canvas>
+    <canvas id="qvp-canvas" hidden></canvas>
+    <canvas id="winds-canvas" hidden></canvas>
+    <canvas id="skewt-canvas" hidden></canvas>
+    <div id="dock-note"></div>
+  </div>
+
+  <div id="model-legend" hidden></div>
+  <div id="legend">
+    <div id="legend-title"></div>
+    <canvas id="legend-bar" width="256" height="14"></canvas>
+    <div id="legend-ticks"></div>
+  </div>
+
+  <a id="guide-link" href="guide.html" target="_blank" rel="noopener" title="The full guide: every feature, how it's worked out, data sources, limits and practical tips (opens in a new tab)">📖 Guide</a>
+  <button id="learn-open" title="Tips for this field, situation and case">ⓘ Tips</button>
+  <aside id="learn" hidden>
+    <div class="tabs">
+      <button data-tab="tip">Situation</button>
+      <button data-tab="field" class="on">Reading this field</button>
+      <button data-tab="holes">Empty spaces</button>
+      <button data-tab="case">This case</button>
+      <a id="learn-guide" class="mini" href="guide.html" target="_blank" rel="noopener" title="More on this in the full guide (new tab)">📖 Guide</a>
+      <button id="learn-toggle" class="mini" title="Close tips">×</button>
+    </div>
+    <div id="learn-body"></div>
+  </aside>
+
+  <button id="ui-show" title="Show the controls (H)" hidden>☰ Controls</button>
+  <div id="hover-tip" hidden></div>
+  <div id="credits"></div>
+  <script type="module" src="app.js?v=20260930012033"></script>
+</body>
+</html>

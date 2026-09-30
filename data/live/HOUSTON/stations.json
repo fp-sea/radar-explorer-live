@@ -1,0 +1,250 @@
+[
+ {
+  "id": "11R",
+  "name": "BRENHAM_MUNICIPAL_APT",
+  "lat": 30.2189,
+  "lon": -96.3742,
+  "x": -124.47,
+  "y": 83.76
+ },
+ {
+  "id": "60R",
+  "name": "Navasota",
+  "lat": 30.3719,
+  "lon": -96.1133,
+  "x": -99.25,
+  "y": 100.52
+ },
+ {
+  "id": "66R",
+  "name": "Columbus",
+  "lat": 29.6411,
+  "lon": -96.5158,
+  "x": -138.88,
+  "y": 19.67
+ },
+ {
+  "id": "6R3",
+  "name": "Cleveland",
+  "lat": 30.3564,
+  "lon": -95.008,
+  "x": 6.79,
+  "y": 98.35
+ },
+ {
+  "id": "ARM",
+  "name": "WHARTON REGIONAL ARPT",
+  "lat": 29.2543,
+  "lon": -96.1544,
+  "x": -104.35,
+  "y": -23.72
+ },
+ {
+  "id": "AXH",
+  "name": "Houston SW",
+  "lat": 29.5061,
+  "lon": -95.4769,
+  "x": -38.53,
+  "y": 3.87
+ },
+ {
+  "id": "BMT",
+  "name": "Beaumont",
+  "lat": 30.0702,
+  "lon": -94.2151,
+  "x": 83.11,
+  "y": 66.84
+ },
+ {
+  "id": "BPT",
+  "name": "Beaumont - Port Arthur",
+  "lat": 29.9521,
+  "lon": -94.0261,
+  "x": 101.42,
+  "y": 53.86
+ },
+ {
+  "id": "BQX",
+  "name": "Brazos 451",
+  "lat": 28.4936,
+  "lon": -95.7244,
+  "x": -63.1,
+  "y": -108.61
+ },
+ {
+  "id": "BYY",
+  "name": "Bay City Regional",
+  "lat": 28.9732,
+  "lon": -95.8634,
+  "x": -76.33,
+  "y": -55.2
+ },
+ {
+  "id": "CFD",
+  "name": "Brazos",
+  "lat": 30.7157,
+  "lon": -96.3314,
+  "x": -119.76,
+  "y": 138.96
+ },
+ {
+  "id": "CLL",
+  "name": "COLLEGE STATION",
+  "lat": 30.5881,
+  "lon": -96.3639,
+  "x": -123.02,
+  "y": 124.8
+ },
+ {
+  "id": "CXO",
+  "name": "CONROE/MONTGOMERY COUNTY AIRPORT",
+  "lat": 30.3524,
+  "lon": -95.4145,
+  "x": -32.22,
+  "y": 97.95
+ },
+ {
+  "id": "DWH",
+  "name": "HOUSTON/D.W. HOOKS",
+  "lat": 30.068,
+  "lon": -95.5562,
+  "x": -45.95,
+  "y": 66.38
+ },
+ {
+  "id": "EFD",
+  "name": "HOUSTON/ELLINGTON",
+  "lat": 29.6073,
+  "lon": -95.1588,
+  "x": -7.74,
+  "y": 15.06
+ },
+ {
+  "id": "ELA",
+  "name": "Eagle Lake",
+  "lat": 29.6006,
+  "lon": -96.3219,
+  "x": -120.19,
+  "y": 14.95
+ },
+ {
+  "id": "GLS",
+  "name": "GALVESTON/SCHOLES",
+  "lat": 29.2653,
+  "lon": -94.8604,
+  "x": 21.18,
+  "y": -22.95
+ },
+ {
+  "id": "GVW",
+  "name": "Galveston 209B",
+  "lat": 29.1302,
+  "lon": -94.5466,
+  "x": 51.69,
+  "y": -37.88
+ },
+ {
+  "id": "GVX",
+  "name": "Galveston 424",
+  "lat": 28.5767,
+  "lon": -94.9767,
+  "x": 9.96,
+  "y": -99.54
+ },
+ {
+  "id": "HOU",
+  "name": "HOUSTON/WILL HOBBY",
+  "lat": 29.6375,
+  "lon": -95.2824,
+  "x": -19.68,
+  "y": 18.43
+ },
+ {
+  "id": "IAH",
+  "name": "Houston Intercontinental",
+  "lat": 29.9844,
+  "lon": -95.3607,
+  "x": -27.16,
+  "y": 57.02
+ },
+ {
+  "id": "LBX",
+  "name": "ANGLETON/LAKE JACKS",
+  "lat": 29.1086,
+  "lon": -95.4621,
+  "x": -37.24,
+  "y": -40.34
+ },
+ {
+  "id": "LVJ",
+  "name": "Pearland Regional",
+  "lat": 29.5189,
+  "lon": -95.2417,
+  "x": -15.77,
+  "y": 5.24
+ },
+ {
+  "id": "MCJ",
+  "name": "Houston Dunn",
+  "lat": 29.714,
+  "lon": -95.395,
+  "x": -30.54,
+  "y": 26.96
+ },
+ {
+  "id": "PSX",
+  "name": "PALACIOS MUNICIPAL",
+  "lat": 28.73,
+  "lon": -96.25,
+  "x": -114.21,
+  "y": -81.93
+ },
+ {
+  "id": "RPE",
+  "name": "SABINE PASS",
+  "lat": 29.7,
+  "lon": -93.95,
+  "x": 109.02,
+  "y": 25.89
+ },
+ {
+  "id": "SGR",
+  "name": "HOUSTON/HULL FIELD",
+  "lat": 29.6222,
+  "lon": -95.6565,
+  "x": -55.85,
+  "y": 16.85
+ },
+ {
+  "id": "T41",
+  "name": "La Porte",
+  "lat": 29.6692,
+  "lon": -95.0641,
+  "x": 1.41,
+  "y": 21.94
+ },
+ {
+  "id": "T78",
+  "name": "Liberty",
+  "lat": 30.0778,
+  "lon": -94.6986,
+  "x": 36.58,
+  "y": 67.43
+ },
+ {
+  "id": "TME",
+  "name": "Houston Exec",
+  "lat": 29.805,
+  "lon": -95.8979,
+  "x": -79.04,
+  "y": 37.32
+ },
+ {
+  "id": "UTS",
+  "name": "HUNTSVILLE MUNICIPAL AIRPORT",
+  "lat": 30.7469,
+  "lon": -95.5872,
+  "x": -48.59,
+  "y": 141.88
+ }
+]

@@ -1,0 +1,256 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 KOTX + KPDT \u00b7 Eastern Washington",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "EASTWA",
+  "name": "KOTX + KPDT \u00b7 Eastern Washington",
+  "lat": 47.68041611,
+  "lon": -117.62677765,
+  "alt_m": 746.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KOTX",
+   "name": "Spokane",
+   "lat": 47.68041611,
+   "lon": -117.62677765,
+   "alt_m": 746.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "KPDT",
+   "name": "Pendleton",
+   "lat": 45.69065094,
+   "lon": -118.85292816,
+   "alt_m": 481.0,
+   "lowest_tilt": 0.2,
+   "x": -95.254,
+   "y": -220.506
+  }
+ ],
+ "grid": {
+  "x0": -280.0,
+  "x1": 120.0,
+  "y0": -320.0,
+  "y1": 130.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 1.0,
+  "dz": 0.3,
+  "nx": 401,
+  "ny": 451,
+  "nz": 41
+ },
+ "max_range_km": 230.0,
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  },
+  {
+   "key": "src",
+   "label": "Source radar",
+   "units": "",
+   "lo": 1.0,
+   "hi": 255.0
+  }
+ ],
+ "places": [
+  {
+   "name": "The Dalles",
+   "x": -276.36,
+   "y": -225.73,
+   "focus": false
+  },
+  {
+   "name": "Yakima",
+   "x": -219.93,
+   "y": -115.85,
+   "focus": false
+  },
+  {
+   "name": "Ellensburg",
+   "x": -221.5,
+   "y": -71.83,
+   "focus": false
+  },
+  {
+   "name": "Wenatchee",
+   "x": -201.83,
+   "y": -25.13,
+   "focus": false
+  },
+  {
+   "name": "Spokane",
+   "x": 15.04,
+   "y": -2.36,
+   "focus": false
+  },
+  {
+   "name": "Moscow",
+   "x": 47.77,
+   "y": -105.27,
+   "focus": false
+  },
+  {
+   "name": "Lewiston",
+   "x": 46.75,
+   "y": -140.3,
+   "focus": false
+  },
+  {
+   "name": "Coeur d'Alene",
+   "x": 63.39,
+   "y": 0.08,
+   "focus": false
+  },
+  {
+   "name": "Sandpoint",
+   "x": 79.46,
+   "y": 66.78,
+   "focus": false
+  },
+  {
+   "name": "Colville",
+   "x": -20.48,
+   "y": 96.4,
+   "focus": false
+  },
+  {
+   "name": "Omak",
+   "x": -140.32,
+   "y": 82.97,
+   "focus": false
+  },
+  {
+   "name": "Grand Coulee",
+   "x": -102.21,
+   "y": 29.88,
+   "focus": false
+  },
+  {
+   "name": "Moses Lake",
+   "x": -124.91,
+   "y": -59.88,
+   "focus": false
+  },
+  {
+   "name": "Ritzville",
+   "x": -56.98,
+   "y": -61.26,
+   "focus": false
+  },
+  {
+   "name": "Colfax",
+   "x": 19.97,
+   "y": -88.97,
+   "focus": false
+  },
+  {
+   "name": "Tri-Cities",
+   "x": -122.78,
+   "y": -159.47,
+   "focus": false
+  },
+  {
+   "name": "Walla Walla",
+   "x": -55.26,
+   "y": -179.37,
+   "focus": false
+  },
+  {
+   "name": "Cheney",
+   "x": 3.82,
+   "y": -21.51,
+   "focus": false
+  },
+  {
+   "name": "Pendleton",
+   "x": -90.24,
+   "y": -222.66,
+   "focus": false
+  },
+  {
+   "name": "Hermiston",
+   "x": -128.78,
+   "y": -203.28,
+   "focus": false
+  },
+  {
+   "name": "La Grande",
+   "x": -36.07,
+   "y": -261.8,
+   "focus": false
+  },
+  {
+   "name": "Enterprise",
+   "x": 27.23,
+   "y": -250.62,
+   "focus": false
+  },
+  {
+   "name": "Sunnyside",
+   "x": -182.84,
+   "y": -148.15,
+   "focus": false
+  },
+  {
+   "name": "Prosser",
+   "x": -164.85,
+   "y": -161.58,
+   "focus": false
+  },
+  {
+   "name": "Goldendale",
+   "x": -247.58,
+   "y": -201.7,
+   "focus": false
+  },
+  {
+   "name": "Blue Mountains",
+   "x": -28.94,
+   "y": -209.02,
+   "focus": false
+  },
+  {
+   "name": "Pullman",
+   "x": 34.05,
+   "y": -105.47,
+   "focus": true
+  }
+ ]
+}

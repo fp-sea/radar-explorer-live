@@ -1,0 +1,144 @@
+{
+ "pnw": {
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18",
+  "areas": [
+   {
+    "id": "KATX",
+    "label": "Camano Island",
+    "radars": [
+     "KATX"
+    ],
+    "group": "West \u00b7 Puget Sound & coast"
+   },
+   {
+    "id": "KLGX",
+    "label": "Langley Hill",
+    "radars": [
+     "KLGX"
+    ],
+    "group": "West \u00b7 Puget Sound & coast"
+   },
+   {
+    "id": "SALISH",
+    "label": "KATX + KLGX",
+    "radars": [
+     "KATX",
+     "KLGX"
+    ],
+    "group": "West \u00b7 Puget Sound & coast"
+   },
+   {
+    "id": "PNW_WIDE",
+    "label": "KATX + KLGX + KRTX \u00b7 Washington & NW Oregon",
+    "radars": [
+     "KATX",
+     "KLGX",
+     "KRTX"
+    ],
+    "group": "West \u00b7 Puget Sound & coast"
+   },
+   {
+    "id": "KOTX",
+    "label": "Spokane",
+    "radars": [
+     "KOTX"
+    ],
+    "group": "East \u00b7 Columbia Basin & Palouse"
+   },
+   {
+    "id": "KPDT",
+    "label": "Pendleton",
+    "radars": [
+     "KPDT"
+    ],
+    "group": "East \u00b7 Columbia Basin & Palouse"
+   },
+   {
+    "id": "EASTWA",
+    "label": "KOTX + KPDT \u00b7 Eastern Washington",
+    "radars": [
+     "KOTX",
+     "KPDT"
+    ],
+    "group": "East \u00b7 Columbia Basin & Palouse"
+   }
+  ]
+ },
+ "hawaii": {
+  "name": "Hawai\u02bbi \u00b7 Big Island",
+  "tz": "Pacific/Honolulu",
+  "goes": "noaa-goes18",
+  "areas": [
+   {
+    "id": "PHKM",
+    "label": "Kohala",
+    "radars": [
+     "PHKM"
+    ]
+   },
+   {
+    "id": "PHWA",
+    "label": "South Shore",
+    "radars": [
+     "PHWA"
+    ]
+   },
+   {
+    "id": "BIGISLAND",
+    "label": "PHKM + PHWA",
+    "radars": [
+     "PHKM",
+     "PHWA"
+    ]
+   },
+   {
+    "id": "BIGISLAND_WIDE",
+    "label": "PHKM + PHWA \u00b7 wide 600 km (hurricane scale)",
+    "radars": [
+     "PHKM",
+     "PHWA"
+    ]
+   }
+  ]
+ },
+ "houston": {
+  "name": "Houston \u00b7 Galveston Bay",
+  "tz": "America/Chicago",
+  "goes": "noaa-goes19",
+  "areas": [
+   {
+    "id": "KHGX",
+    "label": "Houston/Galveston",
+    "radars": [
+     "KHGX"
+    ]
+   },
+   {
+    "id": "TIAH",
+    "label": "Houston Intercontinental (TDWR)",
+    "radars": [
+     "TIAH"
+    ]
+   },
+   {
+    "id": "HOUSTON",
+    "label": "KHGX + TIAH",
+    "radars": [
+     "KHGX",
+     "TIAH"
+    ]
+   },
+   {
+    "id": "HOUSTON_WIDE",
+    "label": "KHGX + KLCH + KCRP \u00b7 wide 600 km (hurricane scale)",
+    "radars": [
+     "KHGX",
+     "KLCH",
+     "KCRP"
+    ]
+   }
+  ]
+ }
+}

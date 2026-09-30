@@ -1,0 +1,220 @@
+{
+ "site": {
+  "id": "BIGISLAND",
+  "name": "PHKM + PHWA",
+  "lat": 20.12528,
+  "lon": -155.77777,
+  "alt_m": 1208.0
+ },
+ "region": {
+  "id": "hawaii",
+  "name": "Hawai\u02bbi \u00b7 Big Island",
+  "tz": "Pacific/Honolulu",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "PHKM",
+   "name": "Kohala",
+   "lat": 20.12528,
+   "lon": -155.77777,
+   "alt_m": 1208.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "PHWA",
+   "name": "South Shore",
+   "lat": 19.095,
+   "lon": -155.56889,
+   "alt_m": 445.0,
+   "lowest_tilt": 0.5,
+   "x": 21.95,
+   "y": -114.548
+  }
+ ],
+ "grid": {
+  "x0": -130.0,
+  "x1": 130.0,
+  "y0": -170.0,
+  "y1": 110.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 0.75,
+  "dz": 0.4,
+  "nx": 348,
+  "ny": 374,
+  "nz": 41
+ },
+ "tilts": [
+  0.2,
+  0.5,
+  0.9,
+  1.3,
+  1.8,
+  2.4,
+  3.1,
+  4.0,
+  5.1,
+  6.4,
+  8.0,
+  10.0,
+  12.0
+ ],
+ "terrain": {
+  "file": "terrain.i16.gz",
+  "units": "m",
+  "max_m": 4145
+ },
+ "blockage": {
+  "file": "blockage.u8.gz",
+  "units": "%",
+  "shape": [
+   2,
+   13,
+   374,
+   348
+  ],
+  "summary": [
+   {
+    "radar": "PHKM",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 34.3
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 30.3
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 22.8
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 16.1
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 11.1
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 8.2
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 6.4
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 3.2
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 1.8
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHKM",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 56.2
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 54.2
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 48.2
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 45.4
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 43.1
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 40.0
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 35.8
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 30.7
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 9.3
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "PHWA",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   }
+  ]
+ },
+ "owner": {
+  "file": "owner.u8.gz",
+  "pct_voxels": {
+   "PHKM": 57.8,
+   "PHWA": 24.6
+  }
+ },
+ "source": "AWS Terrain Tiles (Terrarium, zoom 10); blockage after Bech et al. 2003"
+}

@@ -1,0 +1,167 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Kohala",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "PHKM",
+  "name": "Kohala",
+  "lat": 20.12528,
+  "lon": -155.77777,
+  "alt_m": 1208.0
+ },
+ "region": {
+  "id": "hawaii",
+  "name": "Hawai\u02bbi \u00b7 Big Island",
+  "tz": "Pacific/Honolulu",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "PHKM",
+   "name": "Kohala",
+   "lat": 20.12528,
+   "lon": -155.77777,
+   "alt_m": 1208.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -100.0,
+  "x1": 100.0,
+  "y0": -130.0,
+  "y1": 90.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 0.5,
+  "dz": 0.4,
+  "nx": 401,
+  "ny": 441,
+  "nz": 41
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Hilo",
+   "x": 72.31,
+   "y": -44.92,
+   "focus": false
+  },
+  {
+   "name": "Kailua-Kona",
+   "x": -22.85,
+   "y": -53.95,
+   "focus": false
+  },
+  {
+   "name": "Kawaihae",
+   "x": -5.67,
+   "y": -9.93,
+   "focus": false
+  },
+  {
+   "name": "Upolu Point",
+   "x": -8.37,
+   "y": 15.87,
+   "focus": false
+  },
+  {
+   "name": "Waimea",
+   "x": 11.05,
+   "y": -11.37,
+   "focus": false
+  },
+  {
+   "name": "Kahului",
+   "x": -71.91,
+   "y": 85.18,
+   "focus": false
+  },
+  {
+   "name": "Lahaina",
+   "x": -94.05,
+   "y": 83.96,
+   "focus": false
+  },
+  {
+   "name": "H\u0101na",
+   "x": -22.07,
+   "y": 70.37,
+   "focus": false
+  },
+  {
+   "name": "M\u0101\u02bbalaea",
+   "x": -76.12,
+   "y": 74.3,
+   "focus": false
+  },
+  {
+   "name": "Mauna Kea",
+   "x": 32.4,
+   "y": -33.8,
+   "focus": false
+  },
+  {
+   "name": "Mauna Loa",
+   "x": 17.8,
+   "y": -72.3,
+   "focus": false
+  },
+  {
+   "name": "K\u012blauea",
+   "x": 51.89,
+   "y": -79.79,
+   "focus": false
+  },
+  {
+   "name": "K\u012bhei",
+   "x": -69.37,
+   "y": 71.16,
+   "focus": false
+  },
+  {
+   "name": "P\u0101hoa",
+   "x": 86.66,
+   "y": -69.65,
+   "focus": false
+  },
+  {
+   "name": "Alenuihaha Channel",
+   "x": -21.08,
+   "y": 30.56,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

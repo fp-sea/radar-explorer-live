@@ -1,0 +1,208 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 PHKM + PHWA \u00b7 wide 600 km (hurricane scale)",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "BIGISLAND_WIDE",
+  "name": "PHKM + PHWA \u00b7 wide 600 km (hurricane scale)",
+  "lat": 20.12528,
+  "lon": -155.77777,
+  "alt_m": 1208.0
+ },
+ "region": {
+  "id": "hawaii",
+  "name": "Hawai\u02bbi \u00b7 Big Island",
+  "tz": "Pacific/Honolulu",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "PHKM",
+   "name": "Kohala",
+   "lat": 20.12528,
+   "lon": -155.77777,
+   "alt_m": 1208.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "PHWA",
+   "name": "South Shore",
+   "lat": 19.095,
+   "lon": -155.56889,
+   "alt_m": 445.0,
+   "lowest_tilt": 0.5,
+   "x": 21.95,
+   "y": -114.548
+  }
+ ],
+ "grid": {
+  "x0": -250.0,
+  "x1": 350.0,
+  "y0": -420.0,
+  "y1": 180.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 1.25,
+  "dz": 0.5,
+  "nx": 481,
+  "ny": 481,
+  "nz": 33
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  },
+  {
+   "key": "src",
+   "label": "Source radar",
+   "units": "",
+   "lo": 1.0,
+   "hi": 255.0
+  }
+ ],
+ "places": [
+  {
+   "name": "Hilo",
+   "x": 72.31,
+   "y": -44.92,
+   "focus": false
+  },
+  {
+   "name": "Kailua-Kona",
+   "x": -22.85,
+   "y": -53.95,
+   "focus": false
+  },
+  {
+   "name": "Kawaihae",
+   "x": -5.67,
+   "y": -9.93,
+   "focus": false
+  },
+  {
+   "name": "Upolu Point",
+   "x": -8.37,
+   "y": 15.87,
+   "focus": false
+  },
+  {
+   "name": "Waimea",
+   "x": 11.05,
+   "y": -11.37,
+   "focus": false
+  },
+  {
+   "name": "Kahului",
+   "x": -71.91,
+   "y": 85.18,
+   "focus": false
+  },
+  {
+   "name": "Lahaina",
+   "x": -94.05,
+   "y": 83.96,
+   "focus": false
+  },
+  {
+   "name": "H\u0101na",
+   "x": -22.07,
+   "y": 70.37,
+   "focus": false
+  },
+  {
+   "name": "M\u0101\u02bbalaea",
+   "x": -76.12,
+   "y": 74.3,
+   "focus": false
+  },
+  {
+   "name": "South Point",
+   "x": 10.18,
+   "y": -135.02,
+   "focus": false
+  },
+  {
+   "name": "Mauna Kea",
+   "x": 32.4,
+   "y": -33.8,
+   "focus": false
+  },
+  {
+   "name": "Mauna Loa",
+   "x": 17.8,
+   "y": -72.3,
+   "focus": false
+  },
+  {
+   "name": "K\u012blauea",
+   "x": 51.89,
+   "y": -79.79,
+   "focus": false
+  },
+  {
+   "name": "Honolulu",
+   "x": -215.51,
+   "y": 132.77,
+   "focus": false
+  },
+  {
+   "name": "Kaunakakai",
+   "x": -128.99,
+   "y": 107.76,
+   "focus": false
+  },
+  {
+   "name": "L\u0101na\u02bbi City",
+   "x": -118.71,
+   "y": 78.55,
+   "focus": false
+  },
+  {
+   "name": "K\u012bhei",
+   "x": -69.37,
+   "y": 71.16,
+   "focus": false
+  },
+  {
+   "name": "P\u0101hoa",
+   "x": 86.66,
+   "y": -69.65,
+   "focus": false
+  },
+  {
+   "name": "Alenuihaha Channel",
+   "x": -21.08,
+   "y": 30.56,
+   "focus": true
+  }
+ ],
+ "max_range_km": 460.0
+}

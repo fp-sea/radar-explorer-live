@@ -1,0 +1,143 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Camano Island",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "KATX",
+  "name": "Camano Island",
+  "lat": 48.1946106,
+  "lon": -122.49569702,
+  "alt_m": 195.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KATX",
+   "name": "Camano Island",
+   "lat": 48.1946106,
+   "lon": -122.49569702,
+   "alt_m": 195.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -110.0,
+  "x1": 90.0,
+  "y0": -140.0,
+  "y1": 70.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.5,
+  "dz": 0.25,
+  "nx": 401,
+  "ny": 421,
+  "nz": 49
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Seattle",
+   "x": 12.27,
+   "y": -65.44,
+   "focus": false
+  },
+  {
+   "name": "Everett",
+   "x": 21.86,
+   "y": -23.93,
+   "focus": false
+  },
+  {
+   "name": "Tacoma",
+   "x": 3.9,
+   "y": -104.7,
+   "focus": false
+  },
+  {
+   "name": "Port Townsend",
+   "x": -19.62,
+   "y": -8.6,
+   "focus": false
+  },
+  {
+   "name": "Port Angeles",
+   "x": -69.35,
+   "y": -8.1,
+   "focus": false
+  },
+  {
+   "name": "Victoria",
+   "x": -64.14,
+   "y": 26.31,
+   "focus": false
+  },
+  {
+   "name": "Bellingham",
+   "x": 1.22,
+   "y": 61.76,
+   "focus": false
+  },
+  {
+   "name": "Olympia",
+   "x": -30.64,
+   "y": -128.64,
+   "focus": false
+  },
+  {
+   "name": "Aberdeen",
+   "x": -100.1,
+   "y": -134.76,
+   "focus": false
+  },
+  {
+   "name": "Mount Baker",
+   "x": 50.03,
+   "y": 64.98,
+   "focus": false
+  },
+  {
+   "name": "Green Lake",
+   "x": 12.48,
+   "y": -57.21,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

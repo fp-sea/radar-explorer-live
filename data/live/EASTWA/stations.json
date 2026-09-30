@@ -1,0 +1,298 @@
+[
+ {
+  "id": "1QW",
+  "name": "Yakima Training",
+  "lat": 46.8,
+  "lon": -120.1667,
+  "x": -193.31,
+  "y": -94.74
+ },
+ {
+  "id": "1S5",
+  "name": "Sunnyside",
+  "lat": 46.3271,
+  "lon": -119.9704,
+  "x": -179.94,
+  "y": -147.78
+ },
+ {
+  "id": "1YT",
+  "name": "Vagabond",
+  "lat": 46.66,
+  "lon": -120.45,
+  "x": -215.42,
+  "y": -109.56
+ },
+ {
+  "id": "3W7",
+  "name": "Electric City",
+  "lat": 47.922,
+  "lon": -119.083,
+  "x": -108.51,
+  "y": 27.88
+ },
+ {
+  "id": "63S",
+  "name": "Colville",
+  "lat": 48.5442,
+  "lon": -117.8835,
+  "x": -18.9,
+  "y": 96.08
+ },
+ {
+  "id": "65S",
+  "name": "Bonners Ferry",
+  "lat": 48.726,
+  "lon": -116.2952,
+  "x": 97.67,
+  "y": 117.11
+ },
+ {
+  "id": "68S",
+  "name": "Davenport",
+  "lat": 47.6536,
+  "lon": -118.1689,
+  "x": -40.61,
+  "y": -2.84
+ },
+ {
+  "id": "9S9",
+  "name": "Lexington",
+  "lat": 45.4541,
+  "lon": -119.6903,
+  "x": -160.98,
+  "y": -245.44
+ },
+ {
+  "id": "ALW",
+  "name": "WALLA WALLA RGN",
+  "lat": 46.0948,
+  "lon": -118.289,
+  "x": -51.07,
+  "y": -176.1
+ },
+ {
+  "id": "BKE",
+  "name": "BAKER MUNICIPAL",
+  "lat": 44.8374,
+  "lon": -117.8091,
+  "x": -14.38,
+  "y": -316.11
+ },
+ {
+  "id": "COE",
+  "name": "COEUR D ALENE(AWOS)",
+  "lat": 47.7743,
+  "lon": -116.8196,
+  "x": 60.32,
+  "y": 10.75
+ },
+ {
+  "id": "CQV",
+  "name": "COLVILLE MUNICIPAL",
+  "lat": 48.55,
+  "lon": -117.8833,
+  "x": -18.88,
+  "y": 96.72
+ },
+ {
+  "id": "DEW",
+  "name": "DEER PARK",
+  "lat": 47.9689,
+  "lon": -117.4211,
+  "x": 15.31,
+  "y": 32.1
+ },
+ {
+  "id": "DLS",
+  "name": "The Dalles Muni",
+  "lat": 45.6186,
+  "lon": -121.1673,
+  "x": -275.32,
+  "y": -223.04
+ },
+ {
+  "id": "EAT",
+  "name": "WENATCHEE/PANGBORN",
+  "lat": 47.399,
+  "lon": -120.207,
+  "x": -194.17,
+  "y": -28.06
+ },
+ {
+  "id": "ELN",
+  "name": "ELLENSBURG/BOWERS",
+  "lat": 47.033,
+  "lon": -120.5307,
+  "x": -220.04,
+  "y": -67.88
+ },
+ {
+  "id": "EPH",
+  "name": "EPHRATA MUNICIPAL",
+  "lat": 47.3081,
+  "lon": -119.5147,
+  "x": -142.33,
+  "y": -39.67
+ },
+ {
+  "id": "GEG",
+  "name": "SPOKANE INTL ARPT",
+  "lat": 47.6216,
+  "lon": -117.528,
+  "x": 7.4,
+  "y": -6.54
+ },
+ {
+  "id": "GIC",
+  "name": "Grangeville",
+  "lat": 45.9426,
+  "lon": -116.1234,
+  "x": 116.26,
+  "y": -192.12
+ },
+ {
+  "id": "HMS",
+  "name": "HANFORD",
+  "lat": 46.5667,
+  "lon": -119.6,
+  "x": -150.84,
+  "y": -121.93
+ },
+ {
+  "id": "HRI",
+  "name": "HERMISTON",
+  "lat": 45.8258,
+  "lon": -119.2611,
+  "x": -126.65,
+  "y": -204.9
+ },
+ {
+  "id": "JSY",
+  "name": "Joseph State",
+  "lat": 45.3595,
+  "lon": -117.2538,
+  "x": 29.15,
+  "y": -258.0
+ },
+ {
+  "id": "LGD",
+  "name": "LA GRANDE (AWOS)",
+  "lat": 45.2902,
+  "lon": -118.0071,
+  "x": -29.76,
+  "y": -265.71
+ },
+ {
+  "id": "LWS",
+  "name": "Lewiston",
+  "lat": 46.3745,
+  "lon": -117.0154,
+  "x": 46.91,
+  "y": -145.03
+ },
+ {
+  "id": "MEH",
+  "name": "Meacham",
+  "lat": 45.5114,
+  "lon": -118.4247,
+  "x": -62.19,
+  "y": -240.87
+ },
+ {
+  "id": "MWH",
+  "name": "MOSES LAKE/GRANT CO",
+  "lat": 47.2086,
+  "lon": -119.3191,
+  "x": -127.83,
+  "y": -51.07
+ },
+ {
+  "id": "OMK",
+  "name": "OMAK AIRPORT",
+  "lat": 48.4644,
+  "lon": -119.5181,
+  "x": -139.44,
+  "y": 88.88
+ },
+ {
+  "id": "PDT",
+  "name": "PENDLETON MUNICIPAL",
+  "lat": 45.6951,
+  "lon": -118.8414,
+  "x": -94.35,
+  "y": -220.03
+ },
+ {
+  "id": "PSC",
+  "name": "PASCO/TRI-CITIES",
+  "lat": 46.2647,
+  "lon": -119.119,
+  "x": -114.72,
+  "y": -156.32
+ },
+ {
+  "id": "PUW",
+  "name": "PULLMAN/MOSCOW RGNL",
+  "lat": 46.7439,
+  "lon": -117.1096,
+  "x": 39.41,
+  "y": -104.0
+ },
+ {
+  "id": "RLD",
+  "name": "Richland",
+  "lat": 46.3015,
+  "lon": -119.3012,
+  "x": -128.63,
+  "y": -151.95
+ },
+ {
+  "id": "S52",
+  "name": "Winthrop",
+  "lat": 48.4249,
+  "lon": -120.1459,
+  "x": -185.86,
+  "y": 85.82
+ },
+ {
+  "id": "SFF",
+  "name": "SPOKANE/FELTS FIELD",
+  "lat": 47.6828,
+  "lon": -117.3226,
+  "x": 22.77,
+  "y": 0.31
+ },
+ {
+  "id": "SKA",
+  "name": "FAIRCHILD AFB",
+  "lat": 47.6151,
+  "lon": -117.6558,
+  "x": -2.18,
+  "y": -7.26
+ },
+ {
+  "id": "SMP",
+  "name": "Stampede Pass",
+  "lat": 47.2767,
+  "lon": -121.3372,
+  "x": -279.81,
+  "y": -38.2
+ },
+ {
+  "id": "SZT",
+  "name": "SANDPOINT",
+  "lat": 48.2994,
+  "lon": -116.56,
+  "x": 78.91,
+  "y": 69.37
+ },
+ {
+  "id": "YKM",
+  "name": "YAKIMA AIR TERMINAL",
+  "lat": 46.5682,
+  "lon": -120.5441,
+  "x": -222.98,
+  "y": -119.5
+ }
+]

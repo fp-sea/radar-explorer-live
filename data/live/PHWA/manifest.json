@@ -1,0 +1,131 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 South Shore",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "PHWA",
+  "name": "South Shore",
+  "lat": 19.095,
+  "lon": -155.56889,
+  "alt_m": 445.0
+ },
+ "region": {
+  "id": "hawaii",
+  "name": "Hawai\u02bbi \u00b7 Big Island",
+  "tz": "Pacific/Honolulu",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "PHWA",
+   "name": "South Shore",
+   "lat": 19.095,
+   "lon": -155.56889,
+   "alt_m": 445.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -100.0,
+  "x1": 100.0,
+  "y0": -90.0,
+  "y1": 130.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 0.5,
+  "dz": 0.4,
+  "nx": 401,
+  "ny": 441,
+  "nz": 41
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Hilo",
+   "x": 50.44,
+   "y": 69.57,
+   "focus": false
+  },
+  {
+   "name": "Kawaihae",
+   "x": -27.49,
+   "y": 104.66,
+   "focus": false
+  },
+  {
+   "name": "Waimea",
+   "x": -10.77,
+   "y": 103.19,
+   "focus": false
+  },
+  {
+   "name": "South Point",
+   "x": -11.79,
+   "y": -20.46,
+   "focus": false
+  },
+  {
+   "name": "Mauna Kea",
+   "x": 10.55,
+   "y": 80.73,
+   "focus": false
+  },
+  {
+   "name": "Mauna Loa",
+   "x": -4.1,
+   "y": 42.25,
+   "focus": false
+  },
+  {
+   "name": "K\u012blauea",
+   "x": 29.98,
+   "y": 34.72,
+   "focus": false
+  },
+  {
+   "name": "P\u0101hoa",
+   "x": 64.77,
+   "y": 44.82,
+   "focus": false
+  },
+  {
+   "name": "Kailua-Kona",
+   "x": -44.73,
+   "y": 60.66,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

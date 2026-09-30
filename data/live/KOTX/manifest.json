@@ -1,0 +1,197 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Spokane",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "KOTX",
+  "name": "Spokane",
+  "lat": 47.68041611,
+  "lon": -117.62677765,
+  "alt_m": 746.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KOTX",
+   "name": "Spokane",
+   "lat": 47.68041611,
+   "lon": -117.62677765,
+   "alt_m": 746.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -240.0,
+  "x1": 110.0,
+  "y0": -200.0,
+  "y1": 130.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.75,
+  "dz": 0.3,
+  "nx": 468,
+  "ny": 441,
+  "nz": 41
+ },
+ "max_range_km": 230.0,
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Yakima",
+   "x": -219.93,
+   "y": -115.85,
+   "focus": false
+  },
+  {
+   "name": "Ellensburg",
+   "x": -221.5,
+   "y": -71.83,
+   "focus": false
+  },
+  {
+   "name": "Wenatchee",
+   "x": -201.83,
+   "y": -25.13,
+   "focus": false
+  },
+  {
+   "name": "Spokane",
+   "x": 15.04,
+   "y": -2.36,
+   "focus": false
+  },
+  {
+   "name": "Moscow",
+   "x": 47.77,
+   "y": -105.27,
+   "focus": false
+  },
+  {
+   "name": "Lewiston",
+   "x": 46.75,
+   "y": -140.3,
+   "focus": false
+  },
+  {
+   "name": "Coeur d'Alene",
+   "x": 63.39,
+   "y": 0.08,
+   "focus": false
+  },
+  {
+   "name": "Sandpoint",
+   "x": 79.46,
+   "y": 66.78,
+   "focus": false
+  },
+  {
+   "name": "Colville",
+   "x": -20.48,
+   "y": 96.4,
+   "focus": false
+  },
+  {
+   "name": "Omak",
+   "x": -140.32,
+   "y": 82.97,
+   "focus": false
+  },
+  {
+   "name": "Grand Coulee",
+   "x": -102.21,
+   "y": 29.88,
+   "focus": false
+  },
+  {
+   "name": "Moses Lake",
+   "x": -124.91,
+   "y": -59.88,
+   "focus": false
+  },
+  {
+   "name": "Ritzville",
+   "x": -56.98,
+   "y": -61.26,
+   "focus": false
+  },
+  {
+   "name": "Colfax",
+   "x": 19.97,
+   "y": -88.97,
+   "focus": false
+  },
+  {
+   "name": "Tri-Cities",
+   "x": -122.78,
+   "y": -159.47,
+   "focus": false
+  },
+  {
+   "name": "Walla Walla",
+   "x": -55.26,
+   "y": -179.37,
+   "focus": false
+  },
+  {
+   "name": "Cheney",
+   "x": 3.82,
+   "y": -21.51,
+   "focus": false
+  },
+  {
+   "name": "Sunnyside",
+   "x": -182.84,
+   "y": -148.15,
+   "focus": false
+  },
+  {
+   "name": "Prosser",
+   "x": -164.85,
+   "y": -161.58,
+   "focus": false
+  },
+  {
+   "name": "Pullman",
+   "x": 34.05,
+   "y": -105.47,
+   "focus": true
+  }
+ ]
+}

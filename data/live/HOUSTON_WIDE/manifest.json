@@ -1,0 +1,308 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 KHGX + KLCH + KCRP \u00b7 wide 600 km (hurricane scale)",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "HOUSTON_WIDE",
+  "name": "KHGX + KLCH + KCRP \u00b7 wide 600 km (hurricane scale)",
+  "lat": 29.4719,
+  "lon": -95.07874,
+  "alt_m": 34.0
+ },
+ "region": {
+  "id": "houston",
+  "name": "Houston \u00b7 Galveston Bay",
+  "tz": "America/Chicago",
+  "goes": "noaa-goes19"
+ },
+ "radars": [
+  {
+   "id": "KHGX",
+   "name": "Houston/Galveston",
+   "lat": 29.4719,
+   "lon": -95.07874,
+   "alt_m": 34.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "KLCH",
+   "name": "Lake Charles",
+   "lat": 30.12530518,
+   "lon": -93.21588898,
+   "alt_m": 41.0,
+   "lowest_tilt": 0.5,
+   "x": 179.157,
+   "y": 74.098
+  },
+  {
+   "id": "KCRP",
+   "name": "Corpus Christi",
+   "lat": 27.78401756,
+   "lon": -97.51125336,
+   "alt_m": 43.0,
+   "lowest_tilt": 0.3,
+   "x": -239.317,
+   "y": -185.228
+  }
+ ],
+ "grid": {
+  "x0": -300.0,
+  "x1": 300.0,
+  "y0": -400.0,
+  "y1": 200.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 1.25,
+  "dz": 0.5,
+  "nx": 481,
+  "ny": 481,
+  "nz": 33
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  },
+  {
+   "key": "src",
+   "label": "Source radar",
+   "units": "",
+   "lo": 1.0,
+   "hi": 255.0
+  }
+ ],
+ "places": [
+  {
+   "name": "Houston",
+   "x": -28.12,
+   "y": 32.07,
+   "focus": false
+  },
+  {
+   "name": "Galveston",
+   "x": 27.32,
+   "y": -18.97,
+   "focus": false
+  },
+  {
+   "name": "Texas City",
+   "x": 17.03,
+   "y": -9.76,
+   "focus": false
+  },
+  {
+   "name": "Baytown",
+   "x": 9.82,
+   "y": 29.26,
+   "focus": false
+  },
+  {
+   "name": "Freeport",
+   "x": -27.27,
+   "y": -57.56,
+   "focus": false
+  },
+  {
+   "name": "Kemah",
+   "x": 5.68,
+   "y": 7.91,
+   "focus": false
+  },
+  {
+   "name": "High Island",
+   "x": 66.61,
+   "y": 10.66,
+   "focus": false
+  },
+  {
+   "name": "Conroe",
+   "x": -36.22,
+   "y": 93.47,
+   "focus": false
+  },
+  {
+   "name": "The Woodlands",
+   "x": -36.75,
+   "y": 77.24,
+   "focus": false
+  },
+  {
+   "name": "Lake Conroe",
+   "x": -48.09,
+   "y": 99.97,
+   "focus": false
+  },
+  {
+   "name": "Katy",
+   "x": -71.92,
+   "y": 35.16,
+   "focus": false
+  },
+  {
+   "name": "Museum District",
+   "x": -30.06,
+   "y": 27.85,
+   "focus": false
+  },
+  {
+   "name": "Texas Medical Center",
+   "x": -30.83,
+   "y": 26.18,
+   "focus": false
+  },
+  {
+   "name": "Greenspoint",
+   "x": -32.69,
+   "y": 52.54,
+   "focus": false
+  },
+  {
+   "name": "IAH",
+   "x": -25.26,
+   "y": 56.97,
+   "focus": false
+  },
+  {
+   "name": "Spring",
+   "x": -32.55,
+   "y": 67.67,
+   "focus": false
+  },
+  {
+   "name": "Kingwood",
+   "x": -10.71,
+   "y": 64.29,
+   "focus": false
+  },
+  {
+   "name": "Corpus Christi",
+   "x": -227.95,
+   "y": -183.68,
+   "focus": false
+  },
+  {
+   "name": "Port Aransas",
+   "x": -194.93,
+   "y": -180.49,
+   "focus": false
+  },
+  {
+   "name": "Rockport",
+   "x": -193.9,
+   "y": -159.71,
+   "focus": false
+  },
+  {
+   "name": "Port Lavaca",
+   "x": -151.03,
+   "y": -94.29,
+   "focus": false
+  },
+  {
+   "name": "Victoria",
+   "x": -187.49,
+   "y": -72.62,
+   "focus": false
+  },
+  {
+   "name": "Bay City",
+   "x": -86.6,
+   "y": -54.03,
+   "focus": false
+  },
+  {
+   "name": "Matagorda",
+   "x": -86.74,
+   "y": -86.5,
+   "focus": false
+  },
+  {
+   "name": "Beaumont",
+   "x": 91.58,
+   "y": 67.99,
+   "focus": false
+  },
+  {
+   "name": "Port Arthur",
+   "x": 109.78,
+   "y": 46.47,
+   "focus": false
+  },
+  {
+   "name": "Sabine Pass",
+   "x": 114.4,
+   "y": 29.28,
+   "focus": false
+  },
+  {
+   "name": "Lake Charles",
+   "x": 178.87,
+   "y": 85.4,
+   "focus": false
+  },
+  {
+   "name": "Cameron",
+   "x": 169.22,
+   "y": 37.54,
+   "focus": false
+  },
+  {
+   "name": "Lafayette",
+   "x": 293.86,
+   "y": 87.52,
+   "focus": false
+  },
+  {
+   "name": "College Station",
+   "x": -120.11,
+   "y": 129.21,
+   "focus": false
+  },
+  {
+   "name": "Huntsville",
+   "x": -45.15,
+   "y": 139.32,
+   "focus": false
+  },
+  {
+   "name": "Austin",
+   "x": -255.85,
+   "y": 91.36,
+   "focus": false
+  },
+  {
+   "name": "Galveston Bay",
+   "x": 17.3,
+   "y": 3.14,
+   "focus": true
+  }
+ ],
+ "max_range_km": 460.0
+}

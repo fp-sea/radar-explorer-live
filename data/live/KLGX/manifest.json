@@ -1,0 +1,161 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Langley Hill",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "KLGX",
+  "name": "Langley Hill",
+  "lat": 47.11694336,
+  "lon": -124.10666656,
+  "alt_m": 111.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KLGX",
+   "name": "Langley Hill",
+   "lat": 47.11694336,
+   "lon": -124.10666656,
+   "alt_m": 111.0,
+   "lowest_tilt": 0.2,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -90.0,
+  "x1": 140.0,
+  "y0": -90.0,
+  "y1": 150.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.5,
+  "dz": 0.25,
+  "nx": 461,
+  "ny": 481,
+  "nz": 49
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Seattle",
+   "x": 133.04,
+   "y": 55.89,
+   "focus": false
+  },
+  {
+   "name": "Green Lake",
+   "x": 133.07,
+   "y": 64.13,
+   "focus": false
+  },
+  {
+   "name": "Tacoma",
+   "x": 125.48,
+   "y": 16.46,
+   "focus": false
+  },
+  {
+   "name": "Port Townsend",
+   "x": 99.97,
+   "y": 112.07,
+   "focus": false
+  },
+  {
+   "name": "Port Angeles",
+   "x": 50.23,
+   "y": 111.53,
+   "focus": false
+  },
+  {
+   "name": "Victoria",
+   "x": 54.73,
+   "y": 146.04,
+   "focus": false
+  },
+  {
+   "name": "Olympia",
+   "x": 91.44,
+   "y": -8.18,
+   "focus": false
+  },
+  {
+   "name": "La Push",
+   "x": -39.46,
+   "y": 88.1,
+   "focus": false
+  },
+  {
+   "name": "Westport",
+   "x": 0.2,
+   "y": -25.23,
+   "focus": false
+  },
+  {
+   "name": "Aberdeen",
+   "x": 22.13,
+   "y": -15.74,
+   "focus": false
+  },
+  {
+   "name": "Long Beach",
+   "x": 4.04,
+   "y": -85.06,
+   "focus": false
+  },
+  {
+   "name": "Centralia",
+   "x": 87.87,
+   "y": -43.94,
+   "focus": false
+  },
+  {
+   "name": "Forks",
+   "x": -20.73,
+   "y": 92.67,
+   "focus": false
+  },
+  {
+   "name": "Neah Bay",
+   "x": -38.29,
+   "y": 139.24,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

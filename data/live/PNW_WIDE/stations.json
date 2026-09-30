@@ -1,0 +1,698 @@
+[
+ {
+  "id": "0S9",
+  "name": "Port Townsend",
+  "lat": 48.0538,
+  "lon": -122.8106,
+  "x": -23.41,
+  "y": -15.61
+ },
+ {
+  "id": "1QW",
+  "name": "Yakima Training",
+  "lat": 46.8,
+  "lon": -120.1667,
+  "x": 177.27,
+  "y": -152.41
+ },
+ {
+  "id": "1YT",
+  "name": "Vagabond",
+  "lat": 46.66,
+  "lon": -120.45,
+  "x": 156.12,
+  "y": -168.58
+ },
+ {
+  "id": "4S2",
+  "name": "Hood River",
+  "lat": 45.6726,
+  "lon": -121.5365,
+  "x": 74.55,
+  "y": -279.98
+ },
+ {
+  "id": "6S2",
+  "name": "Florence",
+  "lat": 43.9828,
+  "lon": -124.1114,
+  "x": -129.38,
+  "y": -467.0
+ },
+ {
+  "id": "AST",
+  "name": "ASTORIA/CLATSOP",
+  "lat": 46.1569,
+  "lon": -123.8825,
+  "x": -106.83,
+  "y": -225.63
+ },
+ {
+  "id": "AWO",
+  "name": "ARLINGTON MUNI",
+  "lat": 48.1608,
+  "lon": -122.159,
+  "x": 24.97,
+  "y": -3.7
+ },
+ {
+  "id": "BDN",
+  "name": "Bend",
+  "lat": 44.0946,
+  "lon": -121.2002,
+  "x": 103.54,
+  "y": -455.05
+ },
+ {
+  "id": "BFI",
+  "name": "SEATTLE/BOEING FLD",
+  "lat": 47.53,
+  "lon": -122.3,
+  "x": 14.69,
+  "y": -73.88
+ },
+ {
+  "id": "BLI",
+  "name": "BELLINGHAM INTL",
+  "lat": 48.7927,
+  "lon": -122.5375,
+  "x": -3.06,
+  "y": 66.51
+ },
+ {
+  "id": "BVS",
+  "name": "BURLINGTON/MT_VE",
+  "lat": 48.47,
+  "lon": -122.42,
+  "x": 5.58,
+  "y": 30.62
+ },
+ {
+  "id": "CLM",
+  "name": "Port Angeles",
+  "lat": 48.122,
+  "lon": -123.5066,
+  "x": -75.03,
+  "y": -7.58
+ },
+ {
+  "id": "CLS",
+  "name": "Chehalis",
+  "lat": 46.677,
+  "lon": -122.9827,
+  "x": -37.16,
+  "y": -168.63
+ },
+ {
+  "id": "CVO",
+  "name": "Corvallis Muni",
+  "lat": 44.4971,
+  "lon": -123.2895,
+  "x": -63.0,
+  "y": -410.83
+ },
+ {
+  "id": "CWEB",
+  "name": "ESTEVAN POINT CS  BC",
+  "lat": 49.3833,
+  "lon": -126.5431,
+  "x": -292.86,
+  "y": 139.94
+ },
+ {
+  "id": "CWEL",
+  "name": "Entrance Island CS",
+  "lat": 49.2087,
+  "lon": -123.8106,
+  "x": -95.52,
+  "y": 113.58
+ },
+ {
+  "id": "CWEZ",
+  "name": "SATURNA ISLAND  CS",
+  "lat": 48.783,
+  "lon": -123.0458,
+  "x": -40.31,
+  "y": 65.57
+ },
+ {
+  "id": "CWGB",
+  "name": "BALLENAS ISLAND  BC",
+  "lat": 49.3501,
+  "lon": -124.1597,
+  "x": -120.53,
+  "y": 129.8
+ },
+ {
+  "id": "CWGT",
+  "name": "SISTERS ISLAND  BC",
+  "lat": 49.4864,
+  "lon": -124.4349,
+  "x": -140.08,
+  "y": 145.42
+ },
+ {
+  "id": "CWHC",
+  "name": "VANCOUVER (AUTOB",
+  "lat": 49.2833,
+  "lon": -123.1167,
+  "x": -45.05,
+  "y": 121.24
+ },
+ {
+  "id": "CWKH",
+  "name": "Malahat",
+  "lat": 48.5749,
+  "lon": -123.5297,
+  "x": -76.07,
+  "y": 42.8
+ },
+ {
+  "id": "CWKV",
+  "name": "HOPE SLIDE",
+  "lat": 49.2667,
+  "lon": -121.2167,
+  "x": 92.8,
+  "y": 119.99
+ },
+ {
+  "id": "CWLM",
+  "name": "Victoria Gonzales CS",
+  "lat": 48.4133,
+  "lon": -123.3248,
+  "x": -61.19,
+  "y": 24.65
+ },
+ {
+  "id": "CWMM",
+  "name": "Pitt Meadows CS",
+  "lat": 49.2083,
+  "lon": -122.69,
+  "x": -14.12,
+  "y": 112.74
+ },
+ {
+  "id": "CWPF",
+  "name": "ESQUIMALT HARBOUR",
+  "lat": 48.4319,
+  "lon": -123.4395,
+  "x": -69.63,
+  "y": 26.81
+ },
+ {
+  "id": "CWPR",
+  "name": "PRINCETON CS  BC",
+  "lat": 49.4684,
+  "lon": -120.5143,
+  "x": 143.18,
+  "y": 143.5
+ },
+ {
+  "id": "CWQK",
+  "name": "Race Rocks CS",
+  "lat": 48.298,
+  "lon": -123.5314,
+  "x": -76.61,
+  "y": 12.01
+ },
+ {
+  "id": "CWSP",
+  "name": "SHERINGHAM POINT  BC",
+  "lat": 48.3767,
+  "lon": -123.921,
+  "x": -105.27,
+  "y": 21.22
+ },
+ {
+  "id": "CWVF",
+  "name": "SANDHEADS CS",
+  "lat": 49.1059,
+  "lon": -123.3033,
+  "x": -58.79,
+  "y": 101.64
+ },
+ {
+  "id": "CWVV",
+  "name": "VIC. HARTLAND AU",
+  "lat": 48.5338,
+  "lon": -123.4591,
+  "x": -70.93,
+  "y": 38.16
+ },
+ {
+  "id": "CWWA",
+  "name": "West Vancouver",
+  "lat": 49.3471,
+  "lon": -123.1933,
+  "x": -50.54,
+  "y": 128.38
+ },
+ {
+  "id": "CWWK",
+  "name": "White Rock CS",
+  "lat": 49.0181,
+  "lon": -122.784,
+  "x": -21.02,
+  "y": 91.61
+ },
+ {
+  "id": "CWYJ",
+  "name": "Victoria University CS",
+  "lat": 48.4569,
+  "lon": -123.3047,
+  "x": -59.66,
+  "y": 29.48
+ },
+ {
+  "id": "CWZA",
+  "name": "AGASSIZ CS",
+  "lat": 49.243,
+  "lon": -121.7601,
+  "x": 53.4,
+  "y": 116.83
+ },
+ {
+  "id": "CWZO",
+  "name": "Kelp Reefs",
+  "lat": 48.5476,
+  "lon": -123.2369,
+  "x": -54.56,
+  "y": 39.51
+ },
+ {
+  "id": "CYAZ",
+  "name": "Tofino / Long Beach",
+  "lat": 49.0796,
+  "lon": -125.7666,
+  "x": -238.17,
+  "y": 103.5
+ },
+ {
+  "id": "CYCD",
+  "name": "NANAIMO",
+  "lat": 49.0516,
+  "lon": -123.8741,
+  "x": -100.45,
+  "y": 96.2
+ },
+ {
+  "id": "CYDC",
+  "name": "PRINCETON",
+  "lat": 49.4667,
+  "lon": -120.5167,
+  "x": 143.01,
+  "y": 143.3
+ },
+ {
+  "id": "CYHE",
+  "name": "HOPE AIRPORT (MA",
+  "lat": 49.3699,
+  "lon": -121.4936,
+  "x": 72.56,
+  "y": 131.16
+ },
+ {
+  "id": "CYVR",
+  "name": "VANCOUVER INTL",
+  "lat": 49.183,
+  "lon": -123.1682,
+  "x": -48.88,
+  "y": 110.12
+ },
+ {
+  "id": "CYWH",
+  "name": "VICTORIA HARBOUR",
+  "lat": 48.4235,
+  "lon": -123.3867,
+  "x": -65.75,
+  "y": 25.83
+ },
+ {
+  "id": "CYXX",
+  "name": "ABBOTSFORD",
+  "lat": 49.0274,
+  "lon": -122.3771,
+  "x": 8.65,
+  "y": 92.61
+ },
+ {
+  "id": "CYYJ",
+  "name": "Victoria Intl",
+  "lat": 48.6408,
+  "lon": -123.4328,
+  "x": -68.85,
+  "y": 50.03
+ },
+ {
+  "id": "CZK",
+  "name": "CASCADE LOCKS STATE",
+  "lat": 45.6769,
+  "lon": -121.8789,
+  "x": 47.94,
+  "y": -279.77
+ },
+ {
+  "id": "DLS",
+  "name": "The Dalles Muni",
+  "lat": 45.6186,
+  "lon": -121.1673,
+  "x": 103.34,
+  "y": -285.56
+ },
+ {
+  "id": "EAT",
+  "name": "WENATCHEE/PANGBORN",
+  "lat": 47.399,
+  "lon": -120.207,
+  "x": 172.24,
+  "y": -85.91
+ },
+ {
+  "id": "ELN",
+  "name": "ELLENSBURG/BOWERS",
+  "lat": 47.033,
+  "lon": -120.5307,
+  "x": 148.92,
+  "y": -127.27
+ },
+ {
+  "id": "EUG",
+  "name": "EUGENE/MAHLON SWEET",
+  "lat": 44.1246,
+  "lon": -123.212,
+  "x": -57.22,
+  "y": -452.3
+ },
+ {
+  "id": "FHR",
+  "name": "FRIDAY HARBOR",
+  "lat": 48.522,
+  "lon": -123.0244,
+  "x": -38.94,
+  "y": 36.54
+ },
+ {
+  "id": "GRF",
+  "name": "FORT LEWIS/GRAY AAF",
+  "lat": 47.08,
+  "lon": -122.58,
+  "x": -6.38,
+  "y": -123.94
+ },
+ {
+  "id": "HIO",
+  "name": "PORTLAND/HILLSBORO",
+  "lat": 45.5406,
+  "lon": -122.9502,
+  "x": -35.41,
+  "y": -295.01
+ },
+ {
+  "id": "HQM",
+  "name": "HOQUIAM/BOWERMAN",
+  "lat": 46.9712,
+  "lon": -123.9366,
+  "x": -109.33,
+  "y": -135.02
+ },
+ {
+  "id": "JNW",
+  "name": "NEWPORT",
+  "lat": 44.5833,
+  "lon": -124.0667,
+  "x": -124.49,
+  "y": -400.31
+ },
+ {
+  "id": "KLS",
+  "name": "KELSO-LONGVEIW AWOS",
+  "lat": 46.12,
+  "lon": -122.9,
+  "x": -31.17,
+  "y": -230.6
+ },
+ {
+  "id": "MMV",
+  "name": "MCMINNVILLE MUNICIPAL AIRPORT",
+  "lat": 45.1946,
+  "lon": -123.1361,
+  "x": -50.2,
+  "y": -333.38
+ },
+ {
+  "id": "NOW",
+  "name": "Port Angeles",
+  "lat": 48.1413,
+  "lon": -123.414,
+  "x": -68.14,
+  "y": -5.52
+ },
+ {
+  "id": "NRA",
+  "name": "Coupeville Naval",
+  "lat": 48.1833,
+  "lon": -122.6333,
+  "x": -10.2,
+  "y": -1.25
+ },
+ {
+  "id": "NUW",
+  "name": "WHIDBEY ISLAND NAS",
+  "lat": 48.3518,
+  "lon": -122.656,
+  "x": -11.85,
+  "y": 17.49
+ },
+ {
+  "id": "OKH",
+  "name": "Oak Harbor",
+  "lat": 48.2515,
+  "lon": -122.6737,
+  "x": -13.18,
+  "y": 6.34
+ },
+ {
+  "id": "OLM",
+  "name": "OLYMPIA",
+  "lat": 46.9733,
+  "lon": -122.9033,
+  "x": -30.93,
+  "y": -135.72
+ },
+ {
+  "id": "ONP",
+  "name": "NEWPORT MUNICIP",
+  "lat": 44.5804,
+  "lon": -124.0579,
+  "x": -123.8,
+  "y": -400.65
+ },
+ {
+  "id": "ORS",
+  "name": "EASTSOUND/ORCAS ISLAND AIRPORT",
+  "lat": 48.71,
+  "lon": -122.91,
+  "x": -30.4,
+  "y": 57.39
+ },
+ {
+  "id": "PAE",
+  "name": "Everett - Paine Field",
+  "lat": 47.907,
+  "lon": -122.2816,
+  "x": 15.96,
+  "y": -31.96
+ },
+ {
+  "id": "PDX",
+  "name": "PORTLAND INTL ARPT",
+  "lat": 45.5908,
+  "lon": -122.6003,
+  "x": -8.14,
+  "y": -289.52
+ },
+ {
+  "id": "PLU",
+  "name": "Puyallup",
+  "lat": 47.1039,
+  "lon": -122.2872,
+  "x": 15.78,
+  "y": -121.26
+ },
+ {
+  "id": "PWT",
+  "name": "BREMERTON NTNL AWOS",
+  "lat": 47.4902,
+  "lon": -122.7648,
+  "x": -20.22,
+  "y": -78.29
+ },
+ {
+  "id": "RDM",
+  "name": "REDMOND (AWOS)",
+  "lat": 44.2539,
+  "lon": -121.15,
+  "x": 107.26,
+  "y": -437.27
+ },
+ {
+  "id": "RNT",
+  "name": "RENTON MUNICIPAL",
+  "lat": 47.4931,
+  "lon": -122.2158,
+  "x": 21.03,
+  "y": -77.97
+ },
+ {
+  "id": "S12",
+  "name": "Albany",
+  "lat": 44.6378,
+  "lon": -123.0594,
+  "x": -44.63,
+  "y": -395.34
+ },
+ {
+  "id": "S31",
+  "name": "Lopez",
+  "lat": 48.4839,
+  "lon": -122.9377,
+  "x": -32.58,
+  "y": 32.26
+ },
+ {
+  "id": "S33",
+  "name": "Madras City",
+  "lat": 44.6702,
+  "lon": -121.1551,
+  "x": 106.07,
+  "y": -390.99
+ },
+ {
+  "id": "S39",
+  "name": "Prineville",
+  "lat": 44.287,
+  "lon": -120.9038,
+  "x": 126.8,
+  "y": -433.22
+ },
+ {
+  "id": "S52",
+  "name": "Winthrop",
+  "lat": 48.4249,
+  "lon": -120.1459,
+  "x": 173.36,
+  "y": 28.26
+ },
+ {
+  "id": "SEA",
+  "name": "SEATTLE-TACOMA INTL",
+  "lat": 47.4447,
+  "lon": -122.3144,
+  "x": 13.63,
+  "y": -83.37
+ },
+ {
+  "id": "SHN",
+  "name": "SHELTON/SANDERSON",
+  "lat": 47.2336,
+  "lon": -123.1476,
+  "x": -49.22,
+  "y": -106.65
+ },
+ {
+  "id": "SLE",
+  "name": "SALEM/MCNARY",
+  "lat": 44.9095,
+  "lon": -123.0025,
+  "x": -39.93,
+  "y": -365.16
+ },
+ {
+  "id": "SMP",
+  "name": "Stampede Pass",
+  "lat": 47.2767,
+  "lon": -121.3372,
+  "x": 87.4,
+  "y": -101.41
+ },
+ {
+  "id": "SPB",
+  "name": "SCAPPOOSE INDUSTRIAL APK (1S4)",
+  "lat": 45.77,
+  "lon": -122.86,
+  "x": -28.26,
+  "y": -269.54
+ },
+ {
+  "id": "TCM",
+  "name": "MC CHORD AFB/TACOMA",
+  "lat": 47.1377,
+  "lon": -122.4765,
+  "x": 1.45,
+  "y": -117.52
+ },
+ {
+  "id": "TDO",
+  "name": "TOLEDO-WINLOCK MEM",
+  "lat": 46.4772,
+  "lon": -122.8065,
+  "x": -23.8,
+  "y": -190.92
+ },
+ {
+  "id": "TIW",
+  "name": "TACOMA NARROWS",
+  "lat": 47.2675,
+  "lon": -122.5761,
+  "x": -6.07,
+  "y": -103.09
+ },
+ {
+  "id": "TMK",
+  "name": "Tillamook",
+  "lat": 45.4182,
+  "lon": -123.8144,
+  "x": -102.96,
+  "y": -307.85
+ },
+ {
+  "id": "TTD",
+  "name": "Portland - Troutdale",
+  "lat": 45.551,
+  "lon": -122.4098,
+  "x": 6.69,
+  "y": -293.95
+ },
+ {
+  "id": "UAO",
+  "name": "AURORA STATE",
+  "lat": 45.25,
+  "lon": -122.77,
+  "x": -21.48,
+  "y": -327.39
+ },
+ {
+  "id": "UIL",
+  "name": "QUILLAYUTE STATE",
+  "lat": 47.9366,
+  "lon": -124.5626,
+  "x": -153.96,
+  "y": -26.62
+ },
+ {
+  "id": "VUO",
+  "name": "PEARSON AIRPARK  VANCOUVER",
+  "lat": 45.6204,
+  "lon": -122.6565,
+  "x": -12.51,
+  "y": -286.23
+ },
+ {
+  "id": "YKM",
+  "name": "YAKIMA AIR TERMINAL",
+  "lat": 46.5682,
+  "lon": -120.5441,
+  "x": 149.2,
+  "y": -178.97
+ }
+]

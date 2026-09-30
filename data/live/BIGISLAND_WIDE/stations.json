@@ -1,0 +1,114 @@
+[
+ {
+  "id": "PHHI",
+  "name": "WHEELER_AFB/OAHU",
+  "lat": 21.4776,
+  "lon": -158.0443,
+  "x": -234.54,
+  "y": 152.0
+ },
+ {
+  "id": "PHHN",
+  "name": "HANA/MAUI",
+  "lat": 20.7945,
+  "lon": -156.0156,
+  "x": -24.72,
+  "y": 74.43
+ },
+ {
+  "id": "PHIK",
+  "name": "Hickman AFB",
+  "lat": 21.3187,
+  "lon": -157.9224,
+  "x": -222.16,
+  "y": 134.16
+ },
+ {
+  "id": "PHJH",
+  "name": "LAHAINA/WEST_MAUI",
+  "lat": 20.963,
+  "lon": -156.6748,
+  "x": -93.15,
+  "y": 93.4
+ },
+ {
+  "id": "PHJR",
+  "name": "KALAELOA_AIRPORT",
+  "lat": 21.3074,
+  "lon": -158.0703,
+  "x": -237.5,
+  "y": 133.11
+ },
+ {
+  "id": "PHKO",
+  "name": "KEAHOLE_POINT/KONA_(ASOS)",
+  "lat": 19.7388,
+  "lon": -156.0456,
+  "x": -28.03,
+  "y": -42.95
+ },
+ {
+  "id": "PHMK",
+  "name": "MOLOKAI_(ASOS)",
+  "lat": 21.1529,
+  "lon": -157.0963,
+  "x": -136.74,
+  "y": 114.82
+ },
+ {
+  "id": "PHMU",
+  "name": "Kamuela",
+  "lat": 19.9984,
+  "lon": -155.6743,
+  "x": 10.81,
+  "y": -14.11
+ },
+ {
+  "id": "PHNG",
+  "name": "KANEOHE_MCAS/OAHU",
+  "lat": 21.4509,
+  "lon": -157.7629,
+  "x": -205.46,
+  "y": 148.65
+ },
+ {
+  "id": "PHNL",
+  "name": "Honolulu",
+  "lat": 21.3187,
+  "lon": -157.9224,
+  "x": -222.16,
+  "y": 134.16
+ },
+ {
+  "id": "PHNY",
+  "name": "LANAI_CITY_AIRPORT",
+  "lat": 20.7856,
+  "lon": -156.9514,
+  "x": -122.01,
+  "y": 73.86
+ },
+ {
+  "id": "PHOG",
+  "name": "Kahului",
+  "lat": 20.8889,
+  "lon": -156.4344,
+  "x": -68.22,
+  "y": 85.05
+ },
+ {
+  "id": "PHSF",
+  "name": "BRADSHAW_AAF/HAWAII",
+  "lat": 19.76,
+  "lon": -155.5538,
+  "x": 23.44,
+  "y": -40.6
+ },
+ {
+  "id": "PHTO",
+  "name": "HILO/LYMAN_FIELD_(ASOS)",
+  "lat": 19.7203,
+  "lon": -155.0485,
+  "x": 76.34,
+  "y": -44.87
+ }
+]

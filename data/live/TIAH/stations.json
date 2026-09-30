@@ -1,0 +1,186 @@
+[
+ {
+  "id": "11R",
+  "name": "BRENHAM_MUNICIPAL_APT",
+  "lat": 30.2189,
+  "lon": -96.3742,
+  "x": -77.19,
+  "y": 21.31
+ },
+ {
+  "id": "60R",
+  "name": "Navasota",
+  "lat": 30.3719,
+  "lon": -96.1133,
+  "x": -52.04,
+  "y": 38.17
+ },
+ {
+  "id": "66R",
+  "name": "Columbus",
+  "lat": 29.6411,
+  "lon": -96.5158,
+  "x": -91.33,
+  "y": -42.83
+ },
+ {
+  "id": "6R3",
+  "name": "Cleveland",
+  "lat": 30.3564,
+  "lon": -95.008,
+  "x": 54.0,
+  "y": 36.46
+ },
+ {
+  "id": "ARM",
+  "name": "WHARTON REGIONAL ARPT",
+  "lat": 29.2543,
+  "lon": -96.1544,
+  "x": -56.62,
+  "y": -86.08
+ },
+ {
+  "id": "AXH",
+  "name": "Houston SW",
+  "lat": 29.5061,
+  "lon": -95.4769,
+  "x": 9.09,
+  "y": -58.22
+ },
+ {
+  "id": "CFD",
+  "name": "Brazos",
+  "lat": 30.7157,
+  "lon": -96.3314,
+  "x": -72.71,
+  "y": 76.52
+ },
+ {
+  "id": "CLL",
+  "name": "COLLEGE STATION",
+  "lat": 30.5881,
+  "lon": -96.3639,
+  "x": -75.92,
+  "y": 62.36
+ },
+ {
+  "id": "CXO",
+  "name": "CONROE/MONTGOMERY COUNTY AIRPORT",
+  "lat": 30.3524,
+  "lon": -95.4145,
+  "x": 15.0,
+  "y": 35.89
+ },
+ {
+  "id": "DWH",
+  "name": "HOUSTON/D.W. HOOKS",
+  "lat": 30.068,
+  "lon": -95.5562,
+  "x": 1.4,
+  "y": 4.26
+ },
+ {
+  "id": "EFD",
+  "name": "HOUSTON/ELLINGTON",
+  "lat": 29.6073,
+  "lon": -95.1588,
+  "x": 39.83,
+  "y": -46.9
+ },
+ {
+  "id": "ELA",
+  "name": "Eagle Lake",
+  "lat": 29.6006,
+  "lon": -96.3219,
+  "x": -72.62,
+  "y": -47.48
+ },
+ {
+  "id": "GLS",
+  "name": "GALVESTON/SCHOLES",
+  "lat": 29.2653,
+  "lon": -94.8604,
+  "x": 68.91,
+  "y": -84.79
+ },
+ {
+  "id": "GVW",
+  "name": "Galveston 209B",
+  "lat": 29.1302,
+  "lon": -94.5466,
+  "x": 99.48,
+  "y": -99.58
+ },
+ {
+  "id": "HOU",
+  "name": "HOUSTON/WILL HOBBY",
+  "lat": 29.6375,
+  "lon": -95.2824,
+  "x": 27.87,
+  "y": -43.58
+ },
+ {
+  "id": "IAH",
+  "name": "Houston Intercontinental",
+  "lat": 29.9844,
+  "lon": -95.3607,
+  "x": 20.24,
+  "y": -5.02
+ },
+ {
+  "id": "LVJ",
+  "name": "Pearland Regional",
+  "lat": 29.5189,
+  "lon": -95.2417,
+  "x": 31.84,
+  "y": -56.75
+ },
+ {
+  "id": "MCJ",
+  "name": "Houston Dunn",
+  "lat": 29.714,
+  "lon": -95.395,
+  "x": 16.98,
+  "y": -35.09
+ },
+ {
+  "id": "SGR",
+  "name": "HOUSTON/HULL FIELD",
+  "lat": 29.6222,
+  "lon": -95.6565,
+  "x": -8.28,
+  "y": -45.31
+ },
+ {
+  "id": "T41",
+  "name": "La Porte",
+  "lat": 29.6692,
+  "lon": -95.0641,
+  "x": 48.96,
+  "y": -39.98
+ },
+ {
+  "id": "T78",
+  "name": "Liberty",
+  "lat": 30.0778,
+  "lon": -94.6986,
+  "x": 83.92,
+  "y": 5.67
+ },
+ {
+  "id": "TME",
+  "name": "Houston Exec",
+  "lat": 29.805,
+  "lon": -95.8979,
+  "x": -31.56,
+  "y": -24.94
+ },
+ {
+  "id": "UTS",
+  "name": "HUNTSVILLE MUNICIPAL AIRPORT",
+  "lat": 30.7469,
+  "lon": -95.5872,
+  "x": -1.57,
+  "y": 79.75
+ }
+]

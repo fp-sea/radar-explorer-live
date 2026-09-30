@@ -1,0 +1,139 @@
+{
+ "site": {
+  "id": "KPDT",
+  "name": "Pendleton",
+  "lat": 45.69065094,
+  "lon": -118.85292816,
+  "alt_m": 481.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KPDT",
+   "name": "Pendleton",
+   "lat": 45.69065094,
+   "lon": -118.85292816,
+   "alt_m": 481.0,
+   "lowest_tilt": 0.2,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -200.0,
+  "x1": 150.0,
+  "y0": -130.0,
+  "y1": 170.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.75,
+  "dz": 0.3,
+  "nx": 468,
+  "ny": 401,
+  "nz": 41
+ },
+ "tilts": [
+  0.2,
+  0.5,
+  0.9,
+  1.3,
+  1.8,
+  2.4,
+  3.1,
+  4.0,
+  5.1,
+  6.4,
+  8.0,
+  10.0,
+  12.0
+ ],
+ "terrain": {
+  "file": "terrain.i16.gz",
+  "units": "m",
+  "max_m": 2915
+ },
+ "blockage": {
+  "file": "blockage.u8.gz",
+  "units": "%",
+  "shape": [
+   1,
+   13,
+   401,
+   468
+  ],
+  "summary": [
+   {
+    "radar": "KPDT",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 61.4
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 49.7
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 29.3
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 7.4
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KPDT",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   }
+  ]
+ },
+ "owner": null,
+ "source": "AWS Terrain Tiles (Terrarium, zoom 10); blockage after Bech et al. 2003"
+}

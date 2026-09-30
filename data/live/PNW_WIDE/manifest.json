@@ -1,0 +1,308 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 KATX + KLGX + KRTX \u00b7 Washington & NW Oregon",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "PNW_WIDE",
+  "name": "KATX + KLGX + KRTX \u00b7 Washington & NW Oregon",
+  "lat": 48.1946106,
+  "lon": -122.49569702,
+  "alt_m": 195.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KATX",
+   "name": "Camano Island",
+   "lat": 48.1946106,
+   "lon": -122.49569702,
+   "alt_m": 195.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "KLGX",
+   "name": "Langley Hill",
+   "lat": 47.11694336,
+   "lon": -124.10666656,
+   "alt_m": 111.0,
+   "lowest_tilt": 0.2,
+   "x": -121.898,
+   "y": -118.561
+  },
+  {
+   "id": "KRTX",
+   "name": "Portland",
+   "lat": 45.7150383,
+   "lon": -122.96499634,
+   "alt_m": 526.0,
+   "lowest_tilt": 0.5,
+   "x": -36.447,
+   "y": -275.606
+  }
+ ],
+ "grid": {
+  "x0": -330.0,
+  "x1": 190.0,
+  "y0": -470.0,
+  "y1": 150.0,
+  "z0": 0.0,
+  "z1": 10.0,
+  "dxy": 1.0,
+  "dz": 0.4,
+  "nx": 521,
+  "ny": 621,
+  "nz": 26
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  },
+  {
+   "key": "src",
+   "label": "Source radar",
+   "units": "",
+   "lo": 1.0,
+   "hi": 255.0
+  }
+ ],
+ "places": [
+  {
+   "name": "Seattle",
+   "x": 12.27,
+   "y": -65.44,
+   "focus": false
+  },
+  {
+   "name": "Everett",
+   "x": 21.86,
+   "y": -23.93,
+   "focus": false
+  },
+  {
+   "name": "Tacoma",
+   "x": 3.9,
+   "y": -104.7,
+   "focus": false
+  },
+  {
+   "name": "Port Townsend",
+   "x": -19.62,
+   "y": -8.6,
+   "focus": false
+  },
+  {
+   "name": "Port Angeles",
+   "x": -69.35,
+   "y": -8.1,
+   "focus": false
+  },
+  {
+   "name": "Victoria",
+   "x": -64.14,
+   "y": 26.31,
+   "focus": false
+  },
+  {
+   "name": "Bellingham",
+   "x": 1.22,
+   "y": 61.76,
+   "focus": false
+  },
+  {
+   "name": "Olympia",
+   "x": -30.64,
+   "y": -128.64,
+   "focus": false
+  },
+  {
+   "name": "Neah Bay",
+   "x": -157.28,
+   "y": 21.46,
+   "focus": false
+  },
+  {
+   "name": "La Push",
+   "x": -159.51,
+   "y": -29.65,
+   "focus": false
+  },
+  {
+   "name": "Westport",
+   "x": -122.22,
+   "y": -143.8,
+   "focus": false
+  },
+  {
+   "name": "Aberdeen",
+   "x": -100.1,
+   "y": -134.76,
+   "focus": false
+  },
+  {
+   "name": "Portland",
+   "x": -14.29,
+   "y": -297.94,
+   "focus": false
+  },
+  {
+   "name": "Vancouver, WA",
+   "x": -12.86,
+   "y": -284.16,
+   "focus": false
+  },
+  {
+   "name": "Salem",
+   "x": -42.47,
+   "y": -361.42,
+   "focus": false
+  },
+  {
+   "name": "Eugene",
+   "x": -47.3,
+   "y": -460.46,
+   "focus": false
+  },
+  {
+   "name": "Corvallis",
+   "x": -60.75,
+   "y": -403.3,
+   "focus": false
+  },
+  {
+   "name": "Astoria",
+   "x": -102.81,
+   "y": -222.24,
+   "focus": false
+  },
+  {
+   "name": "Tillamook",
+   "x": -105.2,
+   "y": -303.61,
+   "focus": false
+  },
+  {
+   "name": "Newport",
+   "x": -123.29,
+   "y": -394.36,
+   "focus": false
+  },
+  {
+   "name": "Long Beach",
+   "x": -119.61,
+   "y": -203.69,
+   "focus": false
+  },
+  {
+   "name": "Longview",
+   "x": -34.09,
+   "y": -228.59,
+   "focus": false
+  },
+  {
+   "name": "Centralia",
+   "x": -34.94,
+   "y": -164.31,
+   "focus": false
+  },
+  {
+   "name": "Hood River",
+   "x": 75.71,
+   "y": -276.36,
+   "focus": false
+  },
+  {
+   "name": "The Dalles",
+   "x": 102.48,
+   "y": -288.31,
+   "focus": false
+  },
+  {
+   "name": "Yakima",
+   "x": 152.01,
+   "y": -175.14,
+   "focus": false
+  },
+  {
+   "name": "Ellensburg",
+   "x": 147.71,
+   "y": -131.31,
+   "focus": false
+  },
+  {
+   "name": "Wenatchee",
+   "x": 164.42,
+   "y": -83.47,
+   "focus": false
+  },
+  {
+   "name": "Forks",
+   "x": -140.69,
+   "y": -25.47,
+   "focus": false
+  },
+  {
+   "name": "Mount Rainier",
+   "x": 55.95,
+   "y": -148.91,
+   "focus": false
+  },
+  {
+   "name": "Mount St. Helens",
+   "x": 23.15,
+   "y": -222.75,
+   "focus": false
+  },
+  {
+   "name": "Mount Hood",
+   "x": 62.49,
+   "y": -313.32,
+   "focus": false
+  },
+  {
+   "name": "Mount Baker",
+   "x": 50.03,
+   "y": 64.98,
+   "focus": false
+  },
+  {
+   "name": "Green Lake",
+   "x": 12.48,
+   "y": -57.21,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

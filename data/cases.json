@@ -1,0 +1,17 @@
+{
+ "waterspout-2026-04-15": {
+  "title": "Waterspout off Shilshole",
+  "site": "KATX",
+  "start": "Wed Apr 15 2:32:50 PM PDT"
+ },
+ "waterspout-2026-04-15-klgx": {
+  "title": "Waterspout off Shilshole (KLGX view)",
+  "site": "KLGX",
+  "start": "Wed Apr 15 2:34:14 PM PDT"
+ },
+ "waterspout-2026-04-15-merged": {
+  "title": "Waterspout off Shilshole (KATX + KLGX merged)",
+  "site": "SALISH",
+  "start": "Wed Apr 15 2:32:50 PM PDT"
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Pendleton",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "KPDT",
+  "name": "Pendleton",
+  "lat": 45.69065094,
+  "lon": -118.85292816,
+  "alt_m": 481.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KPDT",
+   "name": "Pendleton",
+   "lat": 45.69065094,
+   "lon": -118.85292816,
+   "alt_m": 481.0,
+   "lowest_tilt": 0.2,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -200.0,
+  "x1": 150.0,
+  "y0": -130.0,
+  "y1": 170.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.75,
+  "dz": 0.3,
+  "nx": 468,
+  "ny": 401,
+  "nz": 41
+ },
+ "max_range_km": 230.0,
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "The Dalles",
+   "x": -180.96,
+   "y": -8.12,
+   "focus": false
+  },
+  {
+   "name": "Yakima",
+   "x": -126.29,
+   "y": 102.65,
+   "focus": false
+  },
+  {
+   "name": "Ellensburg",
+   "x": -128.55,
+   "y": 146.63,
+   "focus": false
+  },
+  {
+   "name": "Pullman",
+   "x": 127.5,
+   "y": 117.02,
+   "focus": false
+  },
+  {
+   "name": "Moscow",
+   "x": 141.21,
+   "y": 117.44,
+   "focus": false
+  },
+  {
+   "name": "Lewiston",
+   "x": 140.73,
+   "y": 82.39,
+   "focus": false
+  },
+  {
+   "name": "Moses Lake",
+   "x": -32.16,
+   "y": 160.13,
+   "focus": false
+  },
+  {
+   "name": "Ritzville",
+   "x": 35.78,
+   "y": 159.82,
+   "focus": false
+  },
+  {
+   "name": "Colfax",
+   "x": 113.17,
+   "y": 133.31,
+   "focus": false
+  },
+  {
+   "name": "Walla Walla",
+   "x": 39.34,
+   "y": 41.75,
+   "focus": false
+  },
+  {
+   "name": "Pendleton",
+   "x": 5.04,
+   "y": -2.07,
+   "focus": false
+  },
+  {
+   "name": "Hermiston",
+   "x": -33.78,
+   "y": 16.7,
+   "focus": false
+  },
+  {
+   "name": "La Grande",
+   "x": 59.8,
+   "y": -40.37,
+   "focus": false
+  },
+  {
+   "name": "Enterprise",
+   "x": 122.9,
+   "y": -28.22,
+   "focus": false
+  },
+  {
+   "name": "Sunnyside",
+   "x": -88.7,
+   "y": 70.96,
+   "focus": false
+  },
+  {
+   "name": "Prosser",
+   "x": -70.49,
+   "y": 57.82,
+   "focus": false
+  },
+  {
+   "name": "Goldendale",
+   "x": -152.57,
+   "y": 16.37,
+   "focus": false
+  },
+  {
+   "name": "Blue Mountains",
+   "x": 66.12,
+   "y": 12.51,
+   "focus": false
+  },
+  {
+   "name": "Tri-Cities",
+   "x": -28.46,
+   "y": 60.59,
+   "focus": true
+  }
+ ]
+}

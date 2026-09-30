@@ -1,0 +1,34 @@
+[
+ {
+  "id": "PHKO",
+  "name": "KEAHOLE_POINT/KONA_(ASOS)",
+  "lat": 19.7388,
+  "lon": -156.0456,
+  "x": -49.89,
+  "y": 71.66
+ },
+ {
+  "id": "PHMU",
+  "name": "Kamuela",
+  "lat": 19.9984,
+  "lon": -155.6743,
+  "x": -11.01,
+  "y": 100.46
+ },
+ {
+  "id": "PHSF",
+  "name": "BRADSHAW_AAF/HAWAII",
+  "lat": 19.76,
+  "lon": -155.5538,
+  "x": 1.58,
+  "y": 73.94
+ },
+ {
+  "id": "PHTO",
+  "name": "HILO/LYMAN_FIELD_(ASOS)",
+  "lat": 19.7203,
+  "lon": -155.0485,
+  "x": 54.47,
+  "y": 69.61
+ }
+]

@@ -1,0 +1,210 @@
+[
+ {
+  "id": "0S9",
+  "name": "Port Townsend",
+  "lat": 48.0538,
+  "lon": -122.8106,
+  "x": 96.33,
+  "y": 104.98
+ },
+ {
+  "id": "BFI",
+  "name": "SEATTLE/BOEING FLD",
+  "lat": 47.53,
+  "lon": -122.3,
+  "x": 135.63,
+  "y": 47.5
+ },
+ {
+  "id": "CLM",
+  "name": "Port Angeles",
+  "lat": 48.122,
+  "lon": -123.5066,
+  "x": 44.54,
+  "y": 111.93
+ },
+ {
+  "id": "CLS",
+  "name": "Chehalis",
+  "lat": 46.677,
+  "lon": -122.9827,
+  "x": 85.75,
+  "y": -48.3
+ },
+ {
+  "id": "CWLM",
+  "name": "Victoria Gonzales CS",
+  "lat": 48.4133,
+  "lon": -123.3248,
+  "x": 57.71,
+  "y": 144.44
+ },
+ {
+  "id": "CWPF",
+  "name": "ESQUIMALT HARBOUR",
+  "lat": 48.4319,
+  "lon": -123.4395,
+  "x": 49.23,
+  "y": 146.43
+ },
+ {
+  "id": "CWQK",
+  "name": "Race Rocks CS",
+  "lat": 48.298,
+  "lon": -123.5314,
+  "x": 42.56,
+  "y": 131.48
+ },
+ {
+  "id": "CWSP",
+  "name": "SHERINGHAM POINT  BC",
+  "lat": 48.3767,
+  "lon": -123.921,
+  "x": 13.71,
+  "y": 140.09
+ },
+ {
+  "id": "CWYJ",
+  "name": "Victoria University CS",
+  "lat": 48.4569,
+  "lon": -123.3047,
+  "x": 59.14,
+  "y": 149.3
+ },
+ {
+  "id": "CYWH",
+  "name": "VICTORIA HARBOUR",
+  "lat": 48.4235,
+  "lon": -123.3867,
+  "x": 53.13,
+  "y": 145.53
+ },
+ {
+  "id": "GRF",
+  "name": "FORT LEWIS/GRAY AAF",
+  "lat": 47.08,
+  "lon": -122.58,
+  "x": 115.59,
+  "y": -2.98
+ },
+ {
+  "id": "HQM",
+  "name": "HOQUIAM/BOWERMAN",
+  "lat": 46.9712,
+  "lon": -123.9366,
+  "x": 12.9,
+  "y": -16.19
+ },
+ {
+  "id": "NOW",
+  "name": "Port Angeles",
+  "lat": 48.1413,
+  "lon": -123.414,
+  "x": 51.4,
+  "y": 114.13
+ },
+ {
+  "id": "NRA",
+  "name": "Coupeville Naval",
+  "lat": 48.1833,
+  "lon": -122.6333,
+  "x": 109.23,
+  "y": 119.61
+ },
+ {
+  "id": "NUW",
+  "name": "WHIDBEY ISLAND NAS",
+  "lat": 48.3518,
+  "lon": -122.656,
+  "x": 107.2,
+  "y": 138.31
+ },
+ {
+  "id": "OKH",
+  "name": "Oak Harbor",
+  "lat": 48.2515,
+  "lon": -122.6737,
+  "x": 106.1,
+  "y": 127.14
+ },
+ {
+  "id": "OLM",
+  "name": "OLYMPIA",
+  "lat": 46.9733,
+  "lon": -122.9033,
+  "x": 91.3,
+  "y": -15.27
+ },
+ {
+  "id": "PAE",
+  "name": "Everett - Paine Field",
+  "lat": 47.907,
+  "lon": -122.2816,
+  "x": 136.03,
+  "y": 89.44
+ },
+ {
+  "id": "PLU",
+  "name": "Puyallup",
+  "lat": 47.1039,
+  "lon": -122.2872,
+  "x": 137.7,
+  "y": 0.15
+ },
+ {
+  "id": "PWT",
+  "name": "BREMERTON NTNL AWOS",
+  "lat": 47.4902,
+  "lon": -122.7648,
+  "x": 100.82,
+  "y": 42.37
+ },
+ {
+  "id": "SEA",
+  "name": "SEATTLE-TACOMA INTL",
+  "lat": 47.4447,
+  "lon": -122.3144,
+  "x": 134.77,
+  "y": 37.99
+ },
+ {
+  "id": "SHN",
+  "name": "SHELTON/SANDERSON",
+  "lat": 47.2336,
+  "lon": -123.1476,
+  "x": 72.41,
+  "y": 13.42
+ },
+ {
+  "id": "TCM",
+  "name": "MC CHORD AFB/TACOMA",
+  "lat": 47.1377,
+  "lon": -122.4765,
+  "x": 123.3,
+  "y": 3.59
+ },
+ {
+  "id": "TDO",
+  "name": "TOLEDO-WINLOCK MEM",
+  "lat": 46.4772,
+  "lon": -122.8065,
+  "x": 99.56,
+  "y": -70.31
+ },
+ {
+  "id": "TIW",
+  "name": "TACOMA NARROWS",
+  "lat": 47.2675,
+  "lon": -122.5761,
+  "x": 115.48,
+  "y": 17.87
+ },
+ {
+  "id": "UIL",
+  "name": "QUILLAYUTE STATE",
+  "lat": 47.9366,
+  "lon": -124.5626,
+  "x": -33.97,
+  "y": 91.24
+ }
+]

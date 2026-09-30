@@ -1,0 +1,139 @@
+{
+ "site": {
+  "id": "KOTX",
+  "name": "Spokane",
+  "lat": 47.68041611,
+  "lon": -117.62677765,
+  "alt_m": 746.0
+ },
+ "region": {
+  "id": "pnw",
+  "name": "Pacific Northwest",
+  "tz": "America/Los_Angeles",
+  "goes": "noaa-goes18"
+ },
+ "radars": [
+  {
+   "id": "KOTX",
+   "name": "Spokane",
+   "lat": 47.68041611,
+   "lon": -117.62677765,
+   "alt_m": 746.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -240.0,
+  "x1": 110.0,
+  "y0": -200.0,
+  "y1": 130.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.75,
+  "dz": 0.3,
+  "nx": 468,
+  "ny": 441,
+  "nz": 41
+ },
+ "tilts": [
+  0.2,
+  0.5,
+  0.9,
+  1.3,
+  1.8,
+  2.4,
+  3.1,
+  4.0,
+  5.1,
+  6.4,
+  8.0,
+  10.0,
+  12.0
+ ],
+ "terrain": {
+  "file": "terrain.i16.gz",
+  "units": "m",
+  "max_m": 2685
+ },
+ "blockage": {
+  "file": "blockage.u8.gz",
+  "units": "%",
+  "shape": [
+   1,
+   13,
+   441,
+   468
+  ],
+  "summary": [
+   {
+    "radar": "KOTX",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 62.9
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 17.5
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 1.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KOTX",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   }
+  ]
+ },
+ "owner": null,
+ "source": "AWS Terrain Tiles (Terrarium, zoom 10); blockage after Bech et al. 2003"
+}

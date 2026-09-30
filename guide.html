@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar Explorer Guide</title>
+<meta name="description" content="How the 3D NEXRAD radar explorer works, how to read each field, and what it cannot see: a reference manual for Puget Sound, Hawaiʻi and Houston.">
+<style>
+:root {
+  --bg: #0b0f16;
+  --panel: #111824;
+  --panel2: #161f2e;
+  --text: #dfe6ef;
+  --muted: #8b97a8;
+  --accent: #5fb3ff;
+  --focus: #ffcc4d;
+  --line: rgba(255,255,255,.10);
+  --warn: #ff8a6b;
+  --good: #6fe08a;
+  --try: #5fb3ff;
+  --in: #3fcf7a;
+  --out: #ff6b6b;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.layout { max-width: 1180px; margin: 0 auto; padding: 0 16px 80px; display: grid; grid-template-columns: minmax(0, 1fr); }
+main { min-width: 0; max-width: 860px; }
+header.top { padding: 20px 0 8px; }
+.back { display: inline-block; font-size: 14px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
+h1 { font-size: 30px; line-height: 1.2; margin: 18px 0 6px; letter-spacing: -.01em; }
+.lede { color: var(--muted); margin: 0 0 12px; }
+h2 { font-size: 23px; line-height: 1.25; margin: 56px 0 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+h3 { font-size: 18px; margin: 32px 0 6px; }
+h4 { font-size: 15.5px; margin: 20px 0 4px; color: var(--text); }
+h2 .num { color: var(--muted); font-weight: 500; margin-right: 6px; }
+p { margin: 0 0 12px; }
+ul, ol { margin: 0 0 12px; padding-left: 22px; }
+li { margin: 3px 0; }
+b, strong { color: #fff; }
+.muted { color: var(--muted); }
+code, kbd {
+  font: 13.5px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px;
+  overflow-wrap: anywhere;
+}
+kbd { border-bottom-width: 2px; }
+.formula {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin: 8px 0 14px;
+  font: 15px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-x: auto;
+}
+.tw { overflow-x: auto; margin: 8px 0 16px; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 9px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.hl td { background: rgba(255,204,77,.07); }
+.callout { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--panel); border-radius: 8px; padding: 10px 14px; margin: 12px 0 16px; }
+.callout > :last-child { margin-bottom: 0; }
+.callout .tag { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+.callout.try { border-left-color: var(--try); } .callout.try .tag { color: var(--try); }
+.callout.pitfall { border-left-color: var(--warn); } .callout.pitfall .tag { color: var(--warn); }
+.callout.marine { border-left-color: var(--good); } .callout.marine .tag { color: var(--good); }
+.callout.note { border-left-color: var(--focus); } .callout.note .tag { color: var(--focus); }
+figure { margin: 14px 0 20px; }
+figure svg { width: 100%; height: auto; display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+figcaption { color: var(--muted); font-size: 14px; margin-top: 6px; }
+svg text { fill: var(--muted); font: 12px -apple-system, "Segoe UI", sans-serif; }
+svg .axis { stroke: rgba(255,255,255,.35); stroke-width: 1; fill: none; }
+svg .grid { stroke: rgba(255,255,255,.08); stroke-width: 1; }
+svg .tilt { stroke: rgba(223,230,239,.55); stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
+svg .band { fill: rgba(95,179,255,.22); stroke: rgba(95,179,255,.8); stroke-width: 1; }
+svg .blind { fill: rgba(255,107,107,.22); }
+svg .cone { fill: rgba(255,204,77,.14); }
+svg .edge { stroke: var(--out); stroke-width: 1.6; fill: none; }
+svg .curve { stroke: var(--accent); stroke-width: 2.2; fill: none; }
+svg .true { stroke: rgba(255,255,255,.35); stroke-width: 1.2; fill: none; stroke-dasharray: 5 4; }
+svg .dots circle { fill: var(--focus); }
+svg .lab { fill: var(--text); }
+svg .lab-in { fill: var(--in); } svg .lab-out { fill: var(--out); } svg .lab-f { fill: var(--focus); }
+.swatch { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; border: 1px solid rgba(255,255,255,.25); }
+dl.gloss dt { font-weight: 700; color: #fff; margin-top: 12px; }
+dl.gloss dd { margin: 2px 0 0 0; color: var(--text); }
+.pill { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); margin-left: 6px; vertical-align: 2px; }
+
+/* table of contents */
+nav.toc ol { list-style: none; padding: 0; margin: 0; }
+nav.toc li { margin: 0; }
+nav.toc a { display: block; color: var(--muted); padding: 3px 8px; border-radius: 6px; font-size: 14px; line-height: 1.35; }
+nav.toc a:hover { color: var(--text); background: var(--panel2); text-decoration: none; }
+nav.toc ol ol a { padding-left: 20px; font-size: 13px; }
+details.toc-m { margin: 14px 0 0; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+details.toc-m summary { cursor: pointer; padding: 10px 14px; font-weight: 600; }
+details.toc-m nav { padding: 0 8px 10px; max-height: 60vh; overflow-y: auto; }
+aside.side { display: none; }
+@media (min-width: 1100px) {
+  .layout { grid-template-columns: 250px minmax(0, 860px); column-gap: 44px; }
+  aside.side { display: block; }
+  aside.side nav { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; padding: 20px 4px 20px 0; }
+  aside.side .ttl { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 0 8px 8px; }
+  details.toc-m { display: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 15.5px; }
+  h1 { font-size: 25px; }
+  h2 { font-size: 20px; }
+  th, td { padding: 6px 7px; font-size: 13.5px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side" aria-label="Contents">
+  <nav class="toc">
+    <div class="ttl">Contents</div>
+    <ol>
+      <li><a href="#start">1 · Using it quickly</a>
+        <ol><li><a href="#tabs">The panel tabs</a></li><li><a href="#keys">Keys</a></li><li><a href="#play">Play and loop</a></li><li><a href="#fast-2d">Fast 2D first, then 3D</a></li><li><a href="#links">Links to a view</a></li><li><a href="#tips">ⓘ Tips panel</a></li><li><a href="#export">Exports</a></li><li><a href="#phone">On a phone</a></li></ol></li>
+      <li><a href="#radar-basics">2 · How radar sees</a>
+        <ol><li><a href="#scanning">Scanning and VCPs</a></li><li><a href="#beam-height">Beam height</a></li><li><a href="#beam-width">Beam width</a></li><li><a href="#cone-of-silence">Cone of silence</a></li><li><a href="#blockage">Terrain blockage</a></li><li><a href="#live-vs-case">Live and cases</a></li><li><a href="#realtime">The newest volume, as it scans</a></li></ol></li>
+      <li><a href="#fields">3 · The fields</a>
+        <ol><li><a href="#reflectivity">Reflectivity</a></li><li><a href="#velocity">Velocity</a></li><li><a href="#srv">Storm-relative velocity</a></li><li><a href="#zdr">ZDR</a></li><li><a href="#cc">CC (ρhv)</a></li><li><a href="#hca">HCA</a></li><li><a href="#source-field">Radar (source)</a></li></ol></li>
+      <li><a href="#volume">4 · How the 3D volume is built</a>
+        <ol><li><a href="#gridding">Gridding</a></li><li><a href="#encoding">Byte encoding</a></li><li><a href="#dualpol-mask">Weak-echo mask</a></li><li><a href="#merging">Merged areas</a></li><li><a href="#exaggeration">Vertical exaggeration</a></li><li><a href="#rendering">Rendering</a></li></ol></li>
+      <li><a href="#holes">5 · Holes and limits</a>
+        <ol><li><a href="#radar-down">When a radar is down</a></li><li><a href="#radar-status">Each radar's own status</a></li></ol></li>
+      <li><a href="#analyze">6 · Analyze tools</a>
+        <ol><li><a href="#cross-section">Cross-section</a></li><li><a href="#qvp">QVP</a></li><li><a href="#vad-winds">VAD winds</a></li><li><a href="#skewt">Skew-T and balloons</a></li><li><a href="#mixing">Vertical mixing (observed)</a></li></ol></li>
+      <li><a href="#cut">7 · Cut tools</a></li>
+      <li><a href="#nowcast">8 · Nowcast</a></li>
+      <li><a href="#layers">9 · Layers</a>
+        <ol><li><a href="#satellite">Satellite</a></li><li><a href="#fog">Fog index</a></li><li><a href="#lightning">Lightning</a></li><li><a href="#airports">Airports</a></li><li><a href="#rain-totals">Rain totals</a></li><li><a href="#mrms">MRMS</a></li><li><a href="#rain-gauges">Rain gauges</a></li><li><a href="#marine-chart">Marine chart</a></li><li><a href="#ground">Ground and marks</a></li><li><a href="#storms">NWS storms</a></li></ol></li>
+      <li><a href="#air">10 · Air tab and models</a>
+        <ol><li><a href="#models">Which model</a></li><li><a href="#model-display">Levels and drawing</a></li><li><a href="#particles">Wind particles</a></li><li><a href="#model-vs-obs">Model vs observation</a></li><li><a href="#wide-area">Wide 2,000 km area</a></li></ol></li>
+      <li><a href="#regions">11 · Regions and radars</a></li>
+      <li><a href="#cases">12 · Cases, situations, spots</a></li>
+      <li><a href="#sources">13 · Data sources</a></li>
+      <li><a href="#accuracy">14 · Assumptions</a></li>
+      <li><a href="#workflows">15 · Workflows on the water</a></li>
+      <li><a href="#performance">16 · Performance and data</a></li>
+      <li><a href="#glossary">17 · Glossary</a></li><li><a href="#changes">Changes</a></li>
+    </ol>
+  </nav>
+</aside>
+
+<main>
+<header class="top">
+  <a class="back" href="./">← Back to the explorer</a>
+  <h1>Radar Explorer Guide</h1>
+  <p class="lede">A reference manual for the 3D NEXRAD explorer: how to drive it, how the radar and the code turn pulses into a volume, how to read each field, and, just as important, what the radar cannot see. Written for use on Puget Sound and the Salish Sea first, with the Big Island and Houston alongside.</p>
+  <details class="toc-m">
+    <summary>Contents</summary>
+    <nav class="toc">
+      <ol>
+        <li><a href="#start">1 · Using it quickly</a></li>
+        <li><a href="#radar-basics">2 · How radar sees</a></li>
+        <li><a href="#fields">3 · The fields</a></li>
+        <li><a href="#volume">4 · How the 3D volume is built</a></li>
+        <li><a href="#holes">5 · Holes and limits</a></li>
+        <li><a href="#analyze">6 · Analyze tools</a></li>
+        <li><a href="#cut">7 · Cut tools</a></li>
+        <li><a href="#nowcast">8 · Nowcast</a></li>
+        <li><a href="#layers">9 · Layers</a></li>
+        <li><a href="#rain-totals">&nbsp;&nbsp;· Rain totals</a></li>
+        <li><a href="#marine-chart">&nbsp;&nbsp;· Marine chart</a></li>
+        <li><a href="#air">10 · Air tab and models</a></li>
+        <li><a href="#regions">11 · Regions and radars</a></li>
+        <li><a href="#cases">12 · Cases, situations, spots</a></li>
+        <li><a href="#sources">13 · Data sources</a></li>
+        <li><a href="#accuracy">14 · Assumptions</a></li>
+        <li><a href="#workflows">15 · Workflows on the water</a></li>
+        <li><a href="#performance">16 · Performance and data</a></li>
+        <li><a href="#glossary">17 · Glossary</a></li><li><a href="#changes">Changes</a></li>
+      </ol>
+    </nav>
+  </details>
+</header>
+
+<div class="callout note"><span class="tag">What this is, and is not</span>
+<p>The explorer runs entirely in your browser. In live mode it reads NOAA's public data buckets directly, decodes each radar volume, and grids it into 3D on your own machine. Past cases were built ahead of time in Python. Nothing here is an official product or a warning service; the NWS, NHC/CPHC and the Coast Guard are. The marine chart layer is <b>not for navigation</b>.</p>
+</div>
+
+<!-- ============================================================ 1 -->
+<h2 id="start"><span class="num">1</span>Using it quickly</h2>
+<p>The picture fills the screen. Controls sit in a panel (left on a wide screen, a bottom sheet on a phone) with six tabs. The time bar runs along the bottom, the colour key sits at a corner, and a dock opens below the scene for 2D charts: cross-section, QVP, winds and Skew-T.</p>
+
+<h3 id="tabs">The panel tabs</h3>
+<p>A small dot on a tab means something in it is switched on. Under the title, <b>chips</b> name the extra layers in use (satellite, rain totals, a slab, a cutaway, the model with its look-ahead hour, and so on); tap a chip to jump to the tab that controls it.</p>
+<div class="tw"><table>
+<tr><th>Tab</th><th>What lives there</th></tr>
+<tr><td>📍 <b>Where</b></td><td><b>Region</b>; <b>Situation</b> (presets, <a href="#presets">§12</a>); <b>Radar source</b> buttons (one radar, or several merged; in the Northwest they are grouped West · Puget Sound &amp; coast and East · Columbia Basin &amp; Palouse); each radar's <a href="#radar-status">status line</a> under them; <b>Time</b>: ● Live with a 30 / 60 / 90 min loop, <b>⚡ 2D / 3D</b> (<a href="#fast-2d">opens in 2D, moves to 3D</a>) and <b>Load 3D in background</b>, or a past case; <b>Focus point</b> (list, 📍 Pick on map, ☆ Save); <b>View</b> menu and quick buttons (⌂ Home, Whole ▢, Whole 3D, Focus 3D); 👁 Stand here; ✈ Fly-through; ⬇ Export; 🔗 Copy link to this view.</td></tr>
+<tr><td>📡 <b>Radar</b></td><td><b>Field</b> buttons (dBZ, Vel, SRV, ZDR, CC, plus Radar in merged areas and HCA where a NEXRAD makes it); storm motion for SRV; <b>Render</b>: Volume, Surface, Max; <b>Show</b> threshold; <b>Opacity</b>; <b>Vertical exaggeration</b> (1× to 12×, opens at 2×); <b>Look ahead (nowcast)</b>; Hide 3D volume; High quality (slower).</td></tr>
+<tr><td>🗺 <b>Layers</b></td><td>Ground: Terrain and its relief, ground type (shaded relief, satellite photo, plain dark), Roads &amp; waterways, ⚓ Marine chart. Marks: Labels, Focus pole, height units (ft / m / km), Range rings, Beam. Weather layers: ⚡ Lightning (off by default), ✈ Airports (with gusts), 🌊 Sea − air temperature, ⛈ NWS storm cells, VAD wind arrows, Beam blockage. 🛰 Satellite. 🌧 Rain totals, 🪣 Rain gauges and the in / mm switch.</td></tr>
+<tr><td>🌡 <b>Air</b></td><td>Observed: 🎈 Balloon sounding (and "spread its levels across the area"). Model: 🌐 model layers, the radar or wide 2,000 km area, look-ahead hours, levels, fills, winds, particles. <b>Vertical mixing (observed)</b>: the <a href="#mixing">readout</a> of how much wind aloft can reach the surface.</td></tr>
+<tr><td>✂ <b>Cut</b></td><td>Cutaway box (W, E, S, N, Top) and Low levels; Slab scan (CT style); Beam &amp; sweep.</td></tr>
+<tr><td>📊 <b>Analyze</b></td><td>Cross-section (Draw, Along beam, Across beam); Skew-T; QVP and Winds.</td></tr>
+</table></div>
+<p><b>The top line</b> of the picture reads, for example, <i>local time · UTC · VCP 215 · 3 min ago</i>, and adds flags when they apply: <i>low-level update</i> (a SAILS frame, <a href="#scanning">§2</a>), <i>incomplete volume (n tilts)</i>, a partner radar whose scan is not in yet (merged live areas), and <i>NOWCAST +N min (extrapolated)</i>.</p>
+<p><b>Hover</b> anywhere over the map and a readout lists everything shown at that spot: latitude/longitude, distance in nm and bearing from the radar, ground height; the radar column under the cursor (the strongest value and at what height, and the lowest echo seen; the lowest value for CC; the largest speed for Vel; the classes up the column for HCA); satellite cloud-top height, IR temperature, visible brightness and fog index; rain total; the nearest gauge; chart depth and nearest sounding; and model values at each level.</p>
+
+<h3 id="keys">Keys</h3>
+<div class="tw"><table>
+<tr><th>Key</th><th>Does</th></tr>
+<tr><td><kbd>Space</kbd></td><td>Play / pause the loop.</td></tr>
+<tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Step one frame back / forward (pauses; skips incomplete volumes, frames not yet loaded, and 3-min low-level frames if that box is unticked).</td></tr>
+<tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Beam tilt up / down (Beam &amp; sweep). A running sweep carries on at the new tilt.</td></tr>
+<tr><td><kbd>1</kbd>–<kbd>9</kbd></td><td>Pick a view, in the order of the View menu (only views whose centre lies inside this area are listed).</td></tr>
+<tr><td><kbd>H</kbd></td><td>Hide or show all controls (the picture, time bar and key stay).</td></tr>
+<tr><td><kbd>S</kbd></td><td>Satellite layer on / off.</td></tr>
+<tr><td><kbd>[</kbd> <kbd>]</kbd></td><td>Step the slab back / forward (when a slab mode is on).</td></tr>
+<tr><td><kbd>Esc</kbd></td><td>Cancel drawing a section or picking a focus.</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>Save the focus name you are typing.</td></tr>
+</table></div>
+<p>Mouse: drag to orbit, scroll to zoom, right-drag to pan (three.js orbit controls). While standing, the wheel or a pinch zooms the lens instead.</p>
+
+<h4 id="views">Views</h4>
+<p>A view is a centre (the whole grid, the focus, a radar, or a named place), how much ground to fit in the visible part of the screen, and an angle: 0° is straight down, about 52–58° is the "3D" look, 86° is side-on. Tilted views sit to the south-west, looking the way Northwest weather usually arrives. Named places include Green Lake &amp; Seattle, Puget Sound, the Strait, the Alenuihāhā Channel, Kona, Hilo, Galveston Bay and central Houston. <b>Home</b> is the area's opening view: Green Lake &amp; Seattle 3D for KATX and KATX+KLGX, Central Houston 3D for the Houston areas, the whole area in 3D for other merged live areas, and Focus 3D otherwise.</p>
+<p><b>👁 Stand here</b> puts the camera at the focus or a radar, at a height from eye level (2 m) to 40 km (presets: ground, hilltop 300 m, light plane 3 km, airliner 10 km, above the storm tops 25 km). While standing, heights are true (exaggeration 1×), the lens zooms 1–10×, and only labels within 40 km show. It first faces where weather usually comes from: 225° in the Northwest and Houston, 60° in Hawaiʻi.</p>
+
+<h3 id="play">Play and loop</h3>
+<p>A case starts playing as soon as two frames' data are in. Live opens in <a href="#fast-2d">Fast 2D</a>, which plays once its loop is in (a second or two), then moves to 3D once the whole 3D loop has loaded; in 3D alone (TIAH, or 3D chosen) the newest scan stays still until most of the loop is in (60% of the first radar's volumes, or after 90 s). Add <code>?play=0</code> to a link to open paused.</p>
+<p>Live keeps a loop of 30, 60 or 90 minutes. The default is 60 min for one radar and 30 min for a merged area, and 30 min on a phone (switching area keeps the loop you had unless the new default is shorter), because every volume is held in memory. Single-radar <b>cases</b> include the radar's ~3-minute low-level updates as extra frames; untick <b>3-min low level</b> in the time bar to step only through full volumes.</p>
+
+<h3 id="fast-2d">Fast 2D first, then 3D</h3>
+<p>A full radar volume (Level II) is about 5&nbsp;MB and lands in the public archive only when the radar has finished it: about <b>4.5 minutes</b> after it starts in precipitation mode, 7&ndash;10 in clear air (the 3D view shows the newest one <a href="#realtime">as it scans</a>). The NWS radar software also publishes small products for the lowest (0.5°) tilt alone: <b>N0B</b> reflectivity (0.5&nbsp;dB steps, 0.25&nbsp;km bins every 0.5°, out to 460&nbsp;km, ~150&nbsp;KB) and <b>N0G</b> radial velocity (0.5&nbsp;m/s steps, out to 300&nbsp;km, ~95&nbsp;KB). They land about <b>80 seconds</b> after the scan starts, and in storms each extra low-level (SAILS) scan comes as its own file, so the lowest tilt refreshes every 1.5&ndash;2 minutes instead of once a volume.</p>
+<p><b>How live opens:</b></p>
+<ol>
+<li><b>⚡ 2D straight away.</b> The loop of lowest-tilt scans loads in a second or two (about 1&ndash;2&nbsp;MB for 30 minutes) and plays, looking straight down on the whole area. Only <b>dBZ</b> and <b>Vel</b>; the other fields are greyed out.</li>
+<li><b>3D behind it.</b> The full volumes download in the background. The <b>3D</b> button (Where → Time) counts them in (&ldquo;3D 3/6&rdquo;) and turns <b>green</b> when the whole 3D loop is in.</li>
+<li><b>Then it switches to 3D</b> by itself, on the nearest time, tilting into the usual 3D view (if you've moved the camera, it stays where you put it).</li>
+</ol>
+<ul>
+<li><b>Press ⚡ 2D</b> to stay in 2D: it won't switch again (the 3D button still goes green, so you can switch when you like). A link made then carries <code>fast=1</code> and opens the same way.</li>
+<li><b>Press 3D</b> any time: if the volumes aren't all in yet, it switches as soon as they are.</li>
+<li><b>Load 3D in background</b> (on by default, remembered on your device): off means 2D only, with no volume downloads at all, for a phone or a slow connection; press 3D to load them anyway. Link form <code>bg3d=0</code>.</li>
+<li>The two loops have different frames (2D has every low-level scan, 3D one per volume); switching lands on the nearest time.</li>
+<li>The sheet takes the field's colours and the threshold slider. In merged areas each point comes from the nearest radar that reaches it. It lies flat over the map (not at beam height), so read it as a map of the 0.5° tilt: its height grows with range, about 1&nbsp;km up at 60&nbsp;km out and 3&nbsp;km at 150&nbsp;km (see <a href="#beam-height">beam height</a>).</li>
+<li>TDWRs (TIAH) publish no such products here: that area opens straight in 3D.</li>
+</ul>
+<div class="callout try"><span class="tag">When to stay in 2D</span>
+<p>On a phone or a slow connection, or when you want the very latest low-level picture (a squall line coming ashore, showers crossing the Sound). For structure (how tall, is it rotating aloft, where the melting layer is), let it go to 3D.</p>
+</div>
+
+<h3 id="links">Links to a view</h3>
+<p><b>🔗 Copy link to this view</b> writes the page's state into the address bar and copies it. A live link always opens with the newest data. Everything in it is optional: <code>?case=live:KATX</code> alone works.</p>
+<div class="tw"><table>
+<tr><th>Parameter</th><th>Carries</th></tr>
+<tr><td><code>case</code></td><td><code>live:AREA</code> (e.g. <code>live:SALISH</code>) or a case id. <code>region</code> can pick a region instead.</td></tr>
+<tr><td><code>loop</code></td><td>Live loop minutes.</td></tr>
+<tr><td><code>focus</code></td><td><code>lat,lon,name</code>, or <code>none</code>.</td></tr>
+<tr><td><code>cam</code>, <code>view</code></td><td>Camera position and target (km, heights already exaggerated), and the named view.</td></tr>
+<tr><td><code>field</code>, <code>mode</code>, <code>thr</code>, <code>op</code>, <code>vex</code></td><td>Field; 0 volume, 1 surface, 2 max; threshold; opacity; exaggeration.</td></tr>
+<tr><td><code>srv</code></td><td>Hand-set storm motion <code>dir,kt</code> (only when not automatic).</td></tr>
+<tr><td><code>sat</code></td><td><code>off</code>, <code>auto</code>, <code>vis</code>, <code>ir</code>, <code>fog</code>.</td></tr>
+<tr><td><code>ltg</code>, <code>metar</code>, <code>terrain</code>, <code>lines</code>, <code>pole</code>, <code>rings</code>, <code>beam</code></td><td>On (1) or off (0).</td></tr>
+<tr><td><code>relief</code>, <code>ground</code></td><td>Terrain relief and ground type.</td></tr>
+<tr><td><code>rain</code>, <code>rainunits</code>, <code>gauges</code></td><td>Rain window (<code>loop</code> or hours), in / mm, gauge days.</td></tr>
+<tr><td><code>satop</code>, <code>wideop</code></td><td>Opacity of the radar-area satellite and of the wide-area satellite, when not the default 0.85.</td></tr>
+<tr><td><code>chart</code></td><td>Chart opacity, plus <code>snd</code> (soundings) and <code>key</code> (depth key) when on.</td></tr>
+<tr><td><code>volume=0</code>, <code>storms=1</code>, <code>nowcast</code></td><td>3D volume hidden, NWS storms on, nowcast lead minutes.</td></tr>
+<tr><td><code>balloon</code></td><td>Station, with <code>,spread</code> if its levels are spread across the area.</td></tr>
+<tr><td><code>model</code>, <code>ahead</code>, <code>modelarea</code></td><td>Model levels (lines and fill letters), wind style, wire mesh, freezing level, smoothing, particle options, spacing, opacity; look-ahead hours; wide area and its satellite mode.</td></tr>
+</table></div>
+<p class="muted">Not carried in a link (as the code stands): the cutaway box, slab settings, a drawn cross-section, the beam azimuth and tilt, satellite shape and height, loop speed, High quality and Labels. Height units, rain units, saved spots, tour stops and the last focus are remembered in your browser instead.</p>
+
+<h3 id="tips">The ⓘ Tips panel</h3>
+<p>The <b>ⓘ Tips</b> button opens a panel with four tabs: <b>Situation</b> (the chosen preset's advice), <b>Reading this field</b> (a short primer on the field on screen), <b>Empty spaces</b> (why parts of the volume are blank), and <b>This case</b>. That last tab does live beam arithmetic for your focus: how far it is from the radar, the lowest tilt's bottom, centre and top heights there, the beam width, the frame's VCP and tilt list, and, for a low-level update frame, what is new in it.</p>
+
+<h3 id="export">Exports (GIF and MP4)</h3>
+<p><b>⬇ Export</b> makes a file of the picture with its time line, colour keys, labels and data credits, entirely in the browser. Choose what to record:</p>
+<ul>
+<li><b>Loop playing</b>: every frame of the loop at the playback speed (incomplete volumes left out; low-level frames left out if that box is unticked). The last frame is held an extra 1.5 s.</li>
+<li><b>Circle</b>: one orbit round the view's centre (60 steps for a GIF, 120 for an MP4).</li>
+<li><b>Tour</b>: flies between your tour stops (each leg eased over 2.5 s, then held 1.2 s). Needs at least two stops.</li>
+<li><b>Fly the line</b>: along the Fly-through line at its height and duration, looking ahead.</li>
+</ul>
+<p>For Circle, Tour and Fly the line, <b>Radar loop plays during the move</b> (on by default) advances the radar frames at the playback speed as the camera moves; off holds the frame on screen. The live Fly-through and tour have the same choice as <b>Loop plays while flying</b>.</p>
+<p><b>Every frame's data is prepared first.</b> Before recording, the exporter loads the radar field for every frame the file will show (and builds derived fields such as HCA and SRV), plus satellite images and the wide-area satellite when those are on, with a progress note. If it cannot have everything within about three minutes, it records nothing rather than a file with gaps. While recording, each frame also waits for rain totals, NWS storms and the model's hour to settle. Wind particles are advanced by the exporter so they move in the file.</p>
+<p>Format: MP4 uses the browser's own H.264 encoder (WebCodecs) and is far smaller than GIF, which matters for flights; where WebCodecs is missing it records in real time, as WebM if the browser cannot do MP4. Widths: 800, 1280 or 1920 px (never more than your screen's pixels).</p>
+
+<h3 id="phone">On a phone</h3>
+<p>At 760 px wide or less the controls become a bottom sheet that opens folded, so the picture comes first. Tap a tab to open it; tap the open tab again to fold it. The time bar rides on top of the sheet. Opening a chart in the dock folds the sheet. Live loops default to 30 minutes and open in ⚡ 2D (untick <b>Load 3D in background</b> to stay in 2D with no volume downloads), and the satellite's visible band is read only for the newest frame unless you choose Visible.</p>
+
+<!-- ============================================================ 2 -->
+<h2 id="radar-basics"><span class="num">2</span>How radar sees</h2>
+<p>Most confusion about radar comes from picturing it as a camera that photographs a block of sky. It is not. It is a spotlight on a turntable: a narrow beam, spun in circles, one angle at a time. Everything in this section follows from that.</p>
+
+<h3 id="scanning">Scanning, tilts and VCPs</h3>
+<p>A WSR-88D (NEXRAD) sends out pulses and listens for echoes. Time to the echo gives the range; strength gives <i>reflectivity</i>; the phase shift from pulse to pulse gives the <i>radial velocity</i>; comparing horizontal and vertical pulses gives the dual-polarization fields. The antenna turns a full circle at one elevation angle (a <b>tilt</b> or sweep), steps up, and turns again. The set of tilts and speeds is the <b>volume coverage pattern (VCP)</b>, shown on every frame. A full volume takes roughly 5–6 minutes.</p>
+<ul>
+<li><b>Split cuts.</b> The low tilts are scanned twice back to back: once for long-range reflectivity, once for Doppler velocity. The code keeps, for each field and each angle (to 0.1°), the sweep with the most valid gates, which picks the right half of each split cut automatically.</li>
+<li><b>SAILS.</b> VCPs 215 and 212 repeat the lowest tilt in the middle of the volume (MESO-SAILS does it twice). Single-radar cases turn each repeat into its own frame, about 3 minutes after the volume began, labelled <i>low-level update</i>. Only the lowest tilt is new in it; everything above repeats the volume before. Live mode grids each volume file whole, so it has no separate low-level frames.</li>
+<li><b>AVSET</b> skips the high tilts when no storm is tall enough to need them, so the top of the volume varies from scan to scan.</li>
+<li><b>Lowest tilt</b> differs by radar (as configured in the code; the frame's own tilt list is the truth): 0.5° at KATX, KRTX, KOTX, PHKM, PHWA, KHGX and KLCH; 0.3° at KCRP; 0.2° at KLGX and KPDT; 0.1° at the TIAH terminal radar. A lower first tilt means seeing closer to the surface far out.</li>
+</ul>
+<p>Each frame's tilt list is in the Tips panel's <i>This case</i> tab and in the Beam &amp; sweep tilt menu.</p>
+
+<h3 id="beam-height">Beam height: why the radar misses the bottom</h3>
+<p>A beam leaves the antenna in a straight line, but the Earth curves away beneath it, and the atmosphere bends the beam slightly back down. The standard way to handle both, used by the radar's own products and by every calculation here, is the <b>4/3-Earth model</b>: pretend the Earth's radius is 4/3 of its true 6,371 km (so R′ ≈ 8,495 km) and the beam is straight. Then the height of the beam centre at slant range <i>r</i> and elevation <i>e</i> is:</p>
+<div class="formula">h = √( r² + R′² + 2·r·R′·sin e ) − R′ + h<sub>antenna</sub></div>
+<p>The code also uses the equivalent form by ground distance <i>s</i>: (R′ + h) = (R′ + h<sub>ant</sub>) · cos e / cos(e + s/R′). Heights grow roughly with the square of range, so the blind layer under the beam deepens quickly.</p>
+<figure>
+<svg viewBox="0 0 720 320" role="img" aria-label="Beam heights of each tilt against range, with the blind layer below the lowest beam and the cone of silence above the top tilt">
+  <g class="grid">
+    <line x1="50" y1="226.7" x2="690" y2="226.7"/><line x1="50" y1="183.3" x2="690" y2="183.3"/><line x1="50" y1="140" x2="690" y2="140"/><line x1="50" y1="96.7" x2="690" y2="96.7"/><line x1="50" y1="53.3" x2="690" y2="53.3"/><line x1="50" y1="10" x2="690" y2="10"/>
+    <line x1="189.1" y1="10" x2="189.1" y2="270"/><line x1="328.3" y1="10" x2="328.3" y2="270"/><line x1="467.4" y1="10" x2="467.4" y2="270"/><line x1="606.5" y1="10" x2="606.5" y2="270"/>
+  </g>
+  <polygon class="cone" points="50,10 50,266 56,258 61,250 67,242 72,234 78,226 83,218 89,209 95,201 100,193 106,185 111,177 117,169 122,161 128,153 133,144 139,136 145,128 150,120 156,112 161,103 167,95 172,87 178,79 184,70 189,62 195,54 200,45 206,37 211,29 217,20 223,12 224,10"/>
+  <polygon class="blind" points="50,266 78,266 106,265 133,264 161,263 189,262 217,261 245,259 273,257 300,255 328,252 356,249 384,246 412,243 440,239 467,236 495,232 523,227 551,223 579,218 607,213 634,208 662,202 690,196 690,270 50,270"/>
+  <polygon class="band" points="50,266 78,262 106,258 133,254 161,249 189,244 217,239 245,234 273,228 300,222 328,216 356,210 384,203 412,196 440,189 467,182 495,174 523,166 551,158 579,150 607,141 634,132 662,123 690,113 690,196 662,202 634,208 607,213 579,218 551,223 523,227 495,232 467,236 440,239 412,243 384,246 356,249 328,252 300,255 273,257 245,259 217,261 189,262 161,263 133,264 106,265 78,266 50,266"/>
+  <polyline class="tilt" points="50,266 78,264 106,261 133,259 161,256 189,253 217,250 245,246 273,242 300,238 328,234 356,230 384,225 412,220 440,214 467,209 495,203 523,197 551,190 579,184 607,177 634,170 662,162 690,155"/>
+  <polyline class="tilt" points="50,266 78,262 106,258 133,254 161,250 189,246 217,241 245,236 273,230 300,225 328,219 356,213 384,207 412,200 440,193 467,186 495,179 523,171 551,163 579,155 607,147 634,138 662,129 690,120"/>
+  <polyline class="tilt" points="50,266 78,261 106,255 133,250 161,244 189,238 217,232 245,225 273,218 300,211 328,204 356,196 384,188 412,180 440,172 467,163 495,154 523,145 551,136 579,126 607,116 634,106 662,96 690,85"/>
+  <polyline class="tilt" points="50,266 78,259 106,252 133,244 161,236 189,229 217,220 245,212 273,203 300,194 328,185 356,175 384,166 412,156 440,145 467,135 495,124 523,113 551,102 579,90 607,78 634,66 662,54 690,41"/>
+  <polyline class="tilt" points="50,266 78,257 106,247 133,237 161,227 189,217 217,207 245,196 273,185 300,174 328,162 356,150 384,138 412,126 440,114 467,101 495,88 523,74 551,61 579,47 607,33 634,19 651,10"/>
+  <polyline class="tilt" points="50,266 78,254 106,242 133,229 161,217 189,204 217,191 245,177 273,164 300,150 328,136 356,121 384,106 412,92 440,76 467,61 495,45 523,29 551,13 556,10"/>
+  <polyline class="tilt" points="50,266 78,250 106,235 133,219 161,203 189,187 217,170 245,153 273,136 300,119 328,101 356,84 384,65 412,47 440,28 467,10"/>
+  <polyline class="tilt" points="50,266 78,246 106,227 133,207 161,186 189,166 217,145 245,124 273,103 300,81 328,59 356,37 384,15 390,10"/>
+  <polyline class="tilt" points="50,266 78,241 106,217 133,192 161,166 189,141 217,115 245,89 273,63 300,36 328,10"/>
+  <polyline class="tilt" points="50,266 78,235 106,204 133,173 161,142 189,110 217,78 245,46 273,14 276,10"/>
+  <polyline class="tilt" points="50,266 78,227 106,189 133,150 161,111 189,71 217,32 232,10"/>
+  <polyline class="edge" points="50,266 78,266 106,265 133,264 161,263 189,262 217,261 245,259 273,257 300,255 328,252 356,249 384,246 412,243 440,239 467,236 495,232 523,227 551,223 579,218 607,213 634,208 662,202 690,196"/>
+  <line x1="211" y1="270" x2="211" y2="236" stroke="#ffcc4d" stroke-width="1.5"/>
+  <circle cx="211" cy="261" r="3.5" fill="#ffcc4d"/>
+  <text class="lab-f" x="216" y="232">Shilshole, 58 km: lowest beam bottom ≈ 418 m</text>
+  <g class="axis"><line x1="50" y1="270" x2="690" y2="270"/><line x1="50" y1="10" x2="50" y2="270"/></g>
+  <text x="50" y="288" text-anchor="middle">0</text><text x="189" y="288" text-anchor="middle">50</text><text x="328" y="288" text-anchor="middle">100</text><text x="467" y="288" text-anchor="middle">150</text><text x="606" y="288" text-anchor="middle">200 km</text>
+  <text x="44" y="274" text-anchor="end">0</text><text x="44" y="187" text-anchor="end">4</text><text x="44" y="100" text-anchor="end">8</text><text x="44" y="14" text-anchor="end">12 km</text>
+  <text class="lab" x="600" y="102">0.5° beam (±0.475°)</text>
+  <text class="lab" x="470" y="262">blind: under the lowest beam</text>
+  <text class="lab" x="58" y="30">cone of silence</text>
+  <text x="360" y="310" text-anchor="middle">range from KATX (antenna 195 m), 4/3-Earth; dashed lines: beam centres of 0.5° to 10° tilts</text>
+</svg>
+<figcaption>Every tilt's beam centre (dashed), the 0.5° beam's full width (blue band), the blind wedge under its lower edge (red), and the cone of silence above a 10° top tilt (yellow). Heights are true, not exaggerated.</figcaption>
+</figure>
+
+<p>The same arithmetic for KATX's 0.5° beam (antenna 195 m), with the beam's half-power edges at ±0.475°:</p>
+<div class="tw"><table>
+<tr><th class="n">Range</th><th class="n">Bottom edge</th><th class="n">Centre</th><th class="n">Top edge</th><th class="n">Beam width</th></tr>
+<tr><td class="n">10 km (5 nm)</td><td class="n">670 ft (205 m)</td><td class="n">940 ft (288 m)</td><td class="n">1,220 ft (371 m)</td><td class="n">540 ft (166 m)</td></tr>
+<tr><td class="n">25 km (13 nm)</td><td class="n">800 ft (243 m)</td><td class="n">1,480 ft (450 m)</td><td class="n">2,160 ft (657 m)</td><td class="n">1,360 ft (415 m)</td></tr>
+<tr><td class="n">50 km (27 nm)</td><td class="n">1,190 ft (364 m)</td><td class="n">2,550 ft (778 m)</td><td class="n">3,910 ft (1,193 m)</td><td class="n">2,720 ft (829 m)</td></tr>
+<tr class="hl"><td class="n">58 km (31 nm) · Shilshole</td><td class="n">1,370 ft (418 m)</td><td class="n">2,950 ft (899 m)</td><td class="n">4,530 ft (1,380 m)</td><td class="n">3,160 ft (962 m)</td></tr>
+<tr><td class="n">100 km (54 nm)</td><td class="n">2,710 ft (827 m)</td><td class="n">5,430 ft (1,656 m)</td><td class="n">8,150 ft (2,485 m)</td><td class="n">5,440 ft (1,658 m)</td></tr>
+<tr><td class="n">150 km (81 nm)</td><td class="n">5,200 ft (1,585 m)</td><td class="n">9,280 ft (2,828 m)</td><td class="n">13,360 ft (4,071 m)</td><td class="n">8,160 ft (2,487 m)</td></tr>
+<tr><td class="n">200 km (108 nm)</td><td class="n">8,650 ft (2,636 m)</td><td class="n">14,090 ft (4,294 m)</td><td class="n">19,520 ft (5,951 m)</td><td class="n">10,880 ft (3,316 m)</td></tr>
+<tr><td class="n">230 km (124 nm)</td><td class="n">11,180 ft (3,408 m)</td><td class="n">17,430 ft (5,314 m)</td><td class="n">23,690 ft (7,220 m)</td><td class="n">12,510 ft (3,814 m)</td></tr>
+</table></div>
+<p class="muted">Computed with the formula above (slant range; for these low angles ground distance is nearly the same). The Tips panel computes the same numbers for whatever focus you choose.</p>
+<p>Two comparisons worth remembering. KLGX, on the coast 140 km from Shilshole, has its 0.2° beam centre about 5,750 ft (1.75 km) up there: the same shower looks higher and coarser than from KATX. PHKM sits 1,208 m (3,960 ft) up on Kohala, so its lowest beam starts over a kilometre above the Alenuihāhā Channel before range adds anything.</p>
+<div class="callout marine"><span class="tag">On the water</span>
+<p>Nothing below the bottom edge is seen. At Shilshole that is the lowest ~1,400 ft: exactly where waterspouts, gust fronts, fog and the wind you sail or row in live. The radar sees the parent shower above; you infer the rest.</p>
+</div>
+
+<h3 id="beam-width">Beam width and beam filling</h3>
+<p>The WSR-88D beam is 0.95° wide between its half-power points. Its width is 2·r·tan(0.475°), about 17 m for every km of range: roughly 900–960 m at Shilshole, 1.7 km at 100 km, 3.8 km at 230 km. Everything inside that cone at one range gate is blended into one number.</p>
+<ul>
+<li>A feature smaller than the beam is averaged with whatever surrounds it. A waterspout, tens of metres wide, is never resolved; its parent shower, and sometimes the shower's rotation, is.</li>
+<li>A thin layer of rain that only partly fills a wide, distant beam reads weaker than it is (partial beam filling).</li>
+<li>Far out, the beam straddles the melting layer and both rain and snow at once, which confuses reflectivity and the dual-pol fields.</li>
+</ul>
+
+<h3 id="cone-of-silence">The cone of silence</h3>
+<p>Above the highest tilt, near the radar, no beam passes at all. The gap is a funnel over the antenna: with a 10° top tilt, the top edge of the beam is about 2 km up at 10 km out and about 3.9 km up at 20 km (4/3-Earth, KATX's antenna). The top tilt varies with the VCP and with AVSET; the highest angle in each frame's tilt list is the one that sets the cone. In 3D it shows as an empty funnel; in an along-beam cross-section it cuts the tops off storms close to the radar.</p>
+
+<h3 id="blockage">Terrain blockage</h3>
+<p>Mountains stop beams. The blockage maps were computed per radar and per tilt from AWS Terrarium elevation tiles (zoom 10, about 100 m), with the method of Bech et al. (2003): treat the beam's cross-section as a disc of radius r·tan(beamwidth/2); terrain rising above the beam centre covers a circular segment of it; the blocked fraction is that segment's share of the disc. Blockage only accumulates outward: once a ridge has cut a beam, every gate beyond is at least that blocked (cumulative beam blockage).</p>
+<ul>
+<li>Above about 10% blocked, reflectivity behind the obstacle reads low. NWS precipitation algorithms correct up to about 50%.</li>
+<li>Above about 50%, the tilt is effectively blind there and higher tilts must stand in.</li>
+</ul>
+<p>Switch on <b>Layers → Beam blockage</b> to shade the ground for the chosen tilt: clear under 10%, then yellow to red to dark red. In Beam &amp; sweep, the beam itself is coloured by how blocked it already is (light blue under 10%, yellow 10–50%, orange 50–90%, dark red above) and stops where it is fully blocked. The Olympics shadow the coast and western Strait for KATX (one reason KLGX was built on the coast); the Cascades shadow the east; Mauna Kea and Mauna Loa block Kohala's view of the windward slopes.</p>
+<div class="callout try"><span class="tag">Try it</span>
+<p>Choose the <b>Radar blind spots</b> situation. It hides the volume, shows blockage for the chosen tilt and the tilt's cone, and opens an along-beam section. Aim the beam along your route (Cut → Beam &amp; sweep → Aim at focus) and read the red "blind" line in the section.</p>
+</div>
+
+<h3 id="live-vs-case">Live data and case data</h3>
+<div class="tw"><table>
+<tr><th></th><th>Live</th><th>Case</th></tr>
+<tr><td>Where it is processed</td><td>In your browser: a worker downloads each Level II file from Unidata's public bucket, decompresses it (its own bzip2), decodes message 31 radials, fits the VAD, grids the volume and computes the QVP.</td><td>Ahead of time in Python with Py-ART, then saved as one gzipped byte volume per field per frame.</td></tr>
+<tr><td>Freshness</td><td>The newest volume arrives as the radar scans (<a href="#realtime">real-time chunks</a>): its lowest tilt within about a minute of the scan starting, the rest filling in until it's whole (4.5&ndash;10 minutes after it began). Older volumes come from the archive. The ⚡ 2D lowest tilt lands about 80 seconds after the scan starts. The bucket is checked every 2 minutes.</td><td>Fixed window (the Shilshole case: 21:30–22:50 UTC frames, a wider 19:00–01:00 UTC QVP window).</td></tr>
+<tr><td>Velocity</td><td>Unfolded against each scan's own VAD profile (<a href="#velocity">§3</a>); raw where no profile could be fitted.</td><td>Dealiased with Py-ART's region-based method.</td></tr>
+<tr><td>Low-level updates</td><td>3D: no separate SAILS frames. ⚡ 2D: every low-level scan is its own frame.</td><td>SAILS repeats become ~3-min frames (single-radar cases).</td></tr>
+<tr><td>Satellite, lightning, airports</td><td>Read from NOAA and IEM as the loop fills (only while each layer is on; the satellite's whole loop is loaded before it shows, in one band).</td><td>Built with the case (satellite images, GLM flashes ±10 min, airport reports).</td></tr>
+</table></div>
+<p>The two gridders are twins: the same geometry, sweep choice, vertical rule and byte encoding, so a live frame and a case frame of the same volume should look the same. A test page in the project compares them.</p>
+
+<!-- ============================================================ 3 -->
+<h3 id="realtime">The newest volume, as it scans</h3>
+<p>The archive gets a volume only once the radar has finished it. But NOAA also publishes each volume <b>as it is being scanned</b>: about 55 pieces, one every ~5 seconds, in the order the radar collects them, lowest tilt first. Joined together they are the archive file, byte for byte.</p>
+<p>So in 3D the explorer follows the newest volume piece by piece (checking every 10 seconds) and regrids it as its tilts come in (every six new pieces, at most every 20 seconds, and once more when it's complete). In a test, a KATX volume that began scanning at 00:31:14Z was on screen with its 0.5° tilt at 00:31:31Z, 17 seconds later; the archive would have had it only after 00:35.</p>
+<ul>
+<li>While it fills in, the frame says <b>IN PROGRESS</b> with the tilts so far. Its low levels are real and current; above the highest tilt so far it is simply empty (not clear air), so don't read echo tops from it until it's whole.</li>
+<li>Wind and QVP profiles are added once the volume is whole. When the finished volume then appears in the archive, it isn't downloaded again.</li>
+<li>A volume that was already whole when the page first saw it comes from the archive as usual; one whose pieces stop arriving for 2 minutes is handed back to the archive.</li>
+<li>Merged areas follow each radar's volume in progress; each radar's part fills in as its pieces arrive.</li>
+</ul>
+
+<h2 id="fields"><span class="num">3</span>The fields</h2>
+<p>Each field button changes what the volume shows, the colour key and the threshold slider. The threshold decides what is drawn at all: values at or above it (dBZ, ZDR), speeds at or beyond it either way (Vel, SRV), or values at or below it (CC, where the interesting part is low). Colours fade in the key where values are hidden.</p>
+<div class="tw"><table>
+<tr><th>Field</th><th>Stored range</th><th>Shows by default</th><th>Slider</th></tr>
+<tr><td>dBZ Reflectivity</td><td>−20 to 80 dBZ</td><td>≥ 20 dBZ</td><td>−10 to 60</td></tr>
+<tr><td>Vel Radial velocity</td><td>−50 to 50 m/s</td><td>|v| ≥ 8 m/s</td><td>0 to 40</td></tr>
+<tr><td>SRV Storm-relative velocity</td><td>as Vel (derived)</td><td>|v| ≥ 8 m/s</td><td>0 to 40</td></tr>
+<tr><td>ZDR Differential reflectivity</td><td>−2 to 6 dB</td><td>≥ 1.5 dB</td><td>−1 to 5</td></tr>
+<tr><td>CC Correlation coefficient</td><td>0.5 to 1.05</td><td>≤ 0.93</td><td>0.6 to 1.0</td></tr>
+<tr><td>HCA Hydrometeor class (NWS)</td><td>class codes 10–150</td><td>codes ≥ 25 (hides birds/insects and clutter)</td><td>5 to 155</td></tr>
+<tr><td>Radar (merged areas)</td><td>1, 2, 3 = which radar</td><td>all</td><td>—</td></tr>
+</table></div>
+
+<h3 id="reflectivity">Reflectivity (dBZ)</h3>
+<p><b>What it measures:</b> how much of the pulse comes back. For raindrops it scales with drop diameter to the <i>sixth</i> power, so a few big drops outweigh a cloud of small ones. It is expressed on a log scale: dBZ = 10·log<sub>10</sub>(Z).</p>
+<p><b>Rough guide</b> (from the app's own notes): 20 dBZ light rain, 35 moderate, 45+ heavy shower rain or graupel. In the Rain totals layer the conversion to rain rate is explicit (<a href="#rain-totals">§9</a>).</p>
+<p><b>Read the shape in 3D.</b> A tall, narrow core is convection: a shower with an updraft. A flat sheet with a brighter layer near 1–2 km is stratiform rain with a melting-layer <b>bright band</b>: wet snowflakes look like huge raindrops to the radar. Use Surface mode at 35 dBZ to see cores, Max from above to see a composite.</p>
+<div class="callout pitfall"><span class="tag">Pitfalls</span>
+<ul>
+<li><b>Echo on a clear day over water</b> is often sea clutter or anomalous propagation, when warm air over cold water bends the beam down onto the waves (summer afternoons and fair-weather evenings). Check CC before believing it.</li>
+<li><b>Bird and insect blooms</b> rise around sunset as rings of weak echo.</li>
+<li><b>Behind terrain</b> it reads low; far out the beam overshoots shallow rain and drizzle entirely.</li>
+<li>The bright band exaggerates rain in a ring round the radar.</li>
+</ul>
+</div>
+<div class="callout marine"><span class="tag">On the water</span>
+<p>Post-frontal showers over Puget Sound are compact, fast-moving cells. Their heavy cores are where the gusts come from; a tall core that then collapses pushes a gust front out ahead of the rain. Follow one core through the loop: its track and speed give its arrival time at your spot.</p>
+</div>
+
+<h3 id="velocity">Radial velocity (Vel)</h3>
+<p><b>What it measures:</b> only the part of the wind blowing <span style="color:var(--in)">toward the radar (green, negative)</span> or <span style="color:var(--out)">away from it (red, positive)</span>. Wind crossing the beam at right angles reads zero, so a uniform wind looks like a green half and a red half with a grey zero line between. 1 m/s is 1.94 kt.</p>
+<ul>
+<li><b>Rotation</b> shows as a tight green–red pair side by side <i>across</i> the beam: a couplet. Looking out from the radar, <b>inbound on the left and outbound on the right is counter-clockwise</b> (cyclonic in the Northern Hemisphere). The Shilshole case at 22:22 UTC shows exactly that: outbound just SW of Shilshole beside inbound to its east, seen from KATX to the north.</li>
+<li><b>Convergence or divergence</b> is a pair lined up <i>along</i> the beam.</li>
+<li>The zero line bends with height when the wind turns with height (veering or backing).</li>
+</ul>
+
+<h4 id="nyquist">The Nyquist limit and folding</h4>
+<p>A pulsed Doppler radar measures speed from the phase change between pulses, and phase wraps round every 360°. The highest speed it can measure unambiguously is the <b>Nyquist velocity</b> V<sub>N</sub>; the app's notes put it at about 25 m/s (49 kt) for the low tilts here. A faster wind <b>folds</b>: it reappears at the opposite end of the scale.</p>
+<div class="formula">measured = true − 2·V<sub>N</sub> · round( true / 2V<sub>N</sub> )</div>
+<figure>
+<svg viewBox="0 0 720 280" role="img" aria-label="Measured radial velocity against true radial velocity: a sawtooth that jumps at plus and minus the Nyquist velocity">
+  <g class="grid"><line x1="60" y1="140" x2="660" y2="140"/><line x1="360" y1="30" x2="360" y2="250"/><line x1="60" y1="40" x2="660" y2="40"/><line x1="60" y1="240" x2="660" y2="240"/></g>
+  <line class="true" x1="235" y1="240" x2="485" y2="40"/>
+  <polyline class="curve" points="60,180 230,44"/>
+  <polyline class="curve" points="235,240 485,40"/>
+  <polyline class="curve" points="490,236 660,100"/>
+  <g class="axis"><line x1="60" y1="250" x2="660" y2="250"/><line x1="60" y1="30" x2="60" y2="250"/></g>
+  <text x="60" y="268" text-anchor="middle">−60</text><text x="235" y="268" text-anchor="middle">−25</text><text x="360" y="268" text-anchor="middle">0</text><text x="485" y="268" text-anchor="middle">+25</text><text x="660" y="268" text-anchor="middle">+60 m/s true</text>
+  <text x="54" y="44" text-anchor="end">+25</text><text x="54" y="144" text-anchor="end">0</text><text x="54" y="244" text-anchor="end">−25</text>
+  <text class="lab-out" x="500" y="60">35 m/s away reads −15 (inbound!)</text>
+  <circle cx="535" cy="200" r="4" fill="#ff6b6b"/>
+  <text class="lab" x="250" y="30">measured (V<tspan baseline-shift="sub" font-size="9">N</tspan> = 25 m/s)</text>
+</svg>
+<figcaption>With V<sub>N</sub> = 25 m/s, true speeds beyond ±25 m/s jump to the other colour. A strong wind can then look like a false couplet: a sharp red/green boundary where there is no rotation.</figcaption>
+</figure>
+<p><b>Unfolding in cases.</b> Case volumes are dealiased with Py-ART's region-based method before gridding. An isolated patch of the wrong colour can still be a dealiasing error.</p>
+<p><b>Unfolding in live mode (reference-wind method).</b> Each live volume's VAD profile (<a href="#vad-winds">§6</a>) is fitted first, from raw velocities, by a method that does not care about folds. That profile then serves as the reference: at every gate, the wind the profile predicts along that beam is</p>
+<div class="formula">v<sub>ref</sub> = cos(e) · ( u·sin(az) + v·cos(az) )</div>
+<p>and the reading is moved by whole multiples of 2V<sub>N</sub> to sit nearest it: v′ = v + 2V<sub>N</sub>·round((v<sub>ref</sub> − v) / 2V<sub>N</sub>). The profile is interpolated linearly between fitted heights, carried up to 1.5 km above the top fit and 1 km below the lowest, and not across a gap wider than 2 km; with fewer than three fitted heights there is no reference and the velocities stay raw. This fixes folding wherever the real wind is close to the ring-average wind; it cannot fix a small, intense circulation that differs from the average by more than V<sub>N</sub>.</p>
+<div class="callout pitfall"><span class="tag">Pitfalls</span>
+<ul>
+<li>With little echo (clear air, isolated showers) there may be no VAD profile, so live velocities stay raw. A sharp red/green boundary in strong wind may then be folding, not rotation. Check that the colours make sense against the wind.</li>
+<li>In a <b>merged area</b> each point's colour is motion toward or away from <i>the radar that owns that point</i>, so colours change meaning across the boundary between radars.</li>
+<li>Velocity is drawn with nearest-neighbour sampling in 3D: blending with the empty "no data" code at echo edges would invent strong speeds.</li>
+</ul>
+</div>
+
+<h3 id="srv">Storm-relative velocity (SRV)</h3>
+<p>A shower moving at 25 kt paints everything ahead of it outbound and behind it inbound, which hides small circulations. SRV subtracts the storm's motion, so what is left is the flow <i>inside</i> the storm, and a rotating updraft stands out as a tight inbound/outbound pair across the beam.</p>
+<p><b>How storm motion is chosen.</b> By default (<i>auto</i>) it is the mean of the VAD wind at every fitted height between 1 and 6 km, from the VAD profile nearest this frame in time (within 4 minutes); it needs at least three heights. Otherwise, or by choice, set it by hand as a direction <i>from</i> and a speed in knots (default from 240° at 25 kt). The panel says which is in use, e.g. "Removing 25 kt from 240° (mean 1–6 km VAD wind (12 heights))".</p>
+<p><b>What is subtracted:</b> for each point, the storm motion's component along the horizontal line from its owning radar: v<sub>SRV</sub> = v − (u<sub>s</sub>·sin az + v<sub>s</sub>·cos az). The beam's tilt is ignored (cos e ≈ 1 at the low tilts that matter), so SRV reads best near the radar's low tilts. With no motion known, SRV shows plain velocity.</p>
+<div class="callout marine"><span class="tag">Waterspouts</span>
+<p>Look for a small couplet (a few km or less) under a shower base in SRV. The beam is too wide to see the spout itself, and at Shilshole the lowest beam bottom is ~1,400 ft up. Hand-set the motion when a cell moves differently from the mean wind (cells on a boundary, right-movers).</p>
+</div>
+
+<h3 id="zdr">Differential reflectivity (ZDR)</h3>
+<p><b>What it measures:</b> the ratio of horizontal to vertical reflectivity, in dB. Big raindrops fall flattened like hamburger buns and read +2 to +4 dB. Tumbling hail, graupel and dry snow look round on average and read near 0.</p>
+<ul>
+<li>ZDR ≥ 2 dB means large, flattened drops: typical under shower cores and at the leading edge of cells.</li>
+<li>Big ZDR with modest reflectivity: a few large drops, an edge or a new cell.</li>
+<li>High reflectivity with near-zero ZDR in a core: graupel or hail rather than rain.</li>
+<li>A <b>ZDR column</b>, a finger of positive ZDR poking above the freezing level, marks an updraft strong enough to carry liquid drops into cold air: one of the best signs of an active, growing shower.</li>
+</ul>
+<p>ZDR is hidden where the echo is too weak for it to mean anything (<a href="#dualpol-mask">§4</a>). TIAH, the terminal radar, has no dual-pol, so ZDR and CC are empty in its area.</p>
+
+<h3 id="cc">Correlation coefficient (CC, ρhv)</h3>
+<p><b>What it measures:</b> how alike the targets in the beam are from pulse to pulse, between the two polarizations. Pure rain or pure snow is very uniform (above 0.97). A mix (wet melting snow, rain with hail) drops to about 0.85–0.95. Non-weather targets (birds, insects, sea or ground clutter, smoke, tornado debris) fall below about 0.8.</p>
+<p>The default view shows only the <i>low</i> values (≤ 0.93). In widespread rain the melting layer appears as a ring-shaped shell round the radar, because every beam crosses the layer at a different range; the shell's height is the melting level. The snow level on the slopes is usually about 300 m below the bright-band peak (the Melting level situation's note).</p>
+<div class="callout try"><span class="tag">Try it</span>
+<p>Echo over the water on a fair day? Pick <b>Is it real? Clutter, birds, sea clutter, smoke</b>: CC below 0.8 at low levels, Max from above. CC below ~0.8 at low levels is almost never rain.</p>
+</div>
+
+<h3 id="hca">Hydrometeor classification (HCA)</h3>
+<p>This is the NWS radar software's own call on <i>what</i> each echo is, from reflectivity, ZDR, CC, KDP and the melting level together. The explorer reads the Level III products <b>N0H, N1H, N2H and N3H</b> (the four lowest tilts) from Unidata's public Level III bucket, for each NEXRAD in the area, choosing for each product the newest file at or before the frame time (allowing up to 3 minutes after it) within an 8-minute window.</p>
+<p><b>Into 3D:</b> for each voxel, the code finds the elevation angle at which that radar's beam reaches it; if one of the four tilts is within 0.5° of it, the voxel takes that (nearest) tilt's class at that azimuth and range. So HCA lives in a thin layer that rises with distance from the radar. In merged areas each voxel uses only the radar that owns it. TDWRs (TIAH) do not make these products. Classification is built per frame in the background; the status line shows "classifying n/N".</p>
+<div class="tw"><table>
+<tr><th>Code</th><th>Class</th><th>Code</th><th>Class</th></tr>
+<tr><td><span class="swatch" style="background:#9c9c9c"></span>10 BI</td><td>biological (birds, insects)</td><td><span class="swatch" style="background:#ffff66"></span>80 BD</td><td>big drops</td></tr>
+<tr><td><span class="swatch" style="background:#6e6e6e"></span>20 GC</td><td>ground clutter / AP</td><td><span class="swatch" style="background:#e3a62a"></span>90 GR</td><td>graupel</td></tr>
+<tr><td><span class="swatch" style="background:#f3b4ff"></span>30 IC</td><td>ice crystals</td><td><span class="swatch" style="background:#ff4040"></span>100 HA</td><td>hail with rain</td></tr>
+<tr><td><span class="swatch" style="background:#6ab6ff"></span>40 DS</td><td>dry snow</td><td><span class="swatch" style="background:#b3001b"></span>110 LH</td><td>large hail</td></tr>
+<tr><td><span class="swatch" style="background:#3d6dff"></span>50 WS</td><td>wet snow</td><td><span class="swatch" style="background:#6a0010"></span>120 GH</td><td>giant hail</td></tr>
+<tr><td><span class="swatch" style="background:#6ce06c"></span>60 RA</td><td>light / moderate rain</td><td><span class="swatch" style="background:#c8c8e8"></span>140 UK</td><td>unknown</td></tr>
+<tr><td><span class="swatch" style="background:#1d9a1d"></span>70 HR</td><td>heavy rain</td><td><span class="swatch" style="background:#7a3fbf"></span>150 RF</td><td>range folded</td></tr>
+</table></div>
+<p><b>Reading it:</b> a band of wet snow over rain is the melting layer from above; graupel in a shower's core means strong updrafts, and lightning is likely. The code's own check on the Shilshole day (freezing level ~2,500 ft) found the 0.5° beam 30–100 km out, above the melting level, mostly dry snow. It is an algorithm's best guess: near the melting level and at long range it errs, and it cannot see below the lowest beam.</p>
+
+<h3 id="source-field">Radar (source) field</h3>
+<p>In merged areas only: which radar each point is taken from, <span style="color:#4f9dff">blue</span> the first, <span style="color:#ff9f43">orange</span> the second, <span style="color:#3ce07a">green</span> a third. It is geometry only and does not change with the weather (<a href="#merging">§4</a>). For KATX + KLGX: low down, KATX owns everything within about 70 km of Camano Island; KLGX owns the coast and ocean and, from about 1 km up, the western Strait entrance; near the surface the central Strait and much of Vancouver Island belong to <i>neither</i>.</p>
+<p class="muted"><b>Derived fields:</b> SRV and HCA are made in the browser from other data, frame by frame; they are not stored in the case files.</p>
+
+<!-- ============================================================ 4 -->
+<h2 id="volume"><span class="num">4</span>How the 3D volume is built</h2>
+<p>The radar measures along cones in polar coordinates (azimuth, range, tilt). A GPU renders boxes of voxels. Getting from one to the other honestly is the heart of the explorer.</p>
+
+<h3 id="gridding">Gridding: from polar to Cartesian</h3>
+<p>Each area has a fixed grid, centred on its first radar, in an azimuthal-equidistant projection (x east, y north, in km; z is height above sea level). The grid spacing and levels come from each area's specification and are sent to the page in its manifest:</p>
+<div class="tw"><table>
+<tr><th>Area</th><th class="n">Extent (km)</th><th class="n">Cell</th><th class="n">Levels</th><th class="n">Top</th><th class="n">Voxels</th></tr>
+<tr><td>KATX</td><td class="n">200 × 210</td><td class="n">0.5 km</td><td class="n">0.25 km</td><td class="n">12 km</td><td class="n">8.3 M</td></tr>
+<tr><td>KLGX</td><td class="n">230 × 240</td><td class="n">0.5</td><td class="n">0.25</td><td class="n">12</td><td class="n">10.9 M</td></tr>
+<tr><td>SALISH (KATX + KLGX)</td><td class="n">290 × 260</td><td class="n">0.75</td><td class="n">0.25</td><td class="n">12</td><td class="n">6.6 M</td></tr>
+<tr><td>PNW_WIDE (+ KRTX)</td><td class="n">520 × 620</td><td class="n">1.0</td><td class="n">0.4</td><td class="n">10</td><td class="n">8.4 M</td></tr>
+<tr><td>KOTX</td><td class="n">350 × 330</td><td class="n">0.75</td><td class="n">0.3</td><td class="n">12</td><td class="n">8.5 M</td></tr>
+<tr><td>KPDT</td><td class="n">350 × 300</td><td class="n">0.75</td><td class="n">0.3</td><td class="n">12</td><td class="n">7.7 M</td></tr>
+<tr><td>EASTWA (KOTX + KPDT)</td><td class="n">400 × 450</td><td class="n">1.0</td><td class="n">0.3</td><td class="n">12</td><td class="n">7.4 M</td></tr>
+<tr><td>PHKM, PHWA</td><td class="n">200 × 220</td><td class="n">0.5</td><td class="n">0.4</td><td class="n">16</td><td class="n">7.3 M each</td></tr>
+<tr><td>BIGISLAND</td><td class="n">260 × 280</td><td class="n">0.75</td><td class="n">0.4</td><td class="n">16</td><td class="n">5.3 M</td></tr>
+<tr><td>BIGISLAND_WIDE</td><td class="n">600 × 600</td><td class="n">1.25</td><td class="n">0.5</td><td class="n">16</td><td class="n">7.6 M</td></tr>
+<tr><td>KHGX</td><td class="n">260 × 270</td><td class="n">0.6</td><td class="n">0.4</td><td class="n">16</td><td class="n">8.0 M</td></tr>
+<tr><td>TIAH</td><td class="n">200 × 200</td><td class="n">0.5</td><td class="n">0.4</td><td class="n">16</td><td class="n">6.6 M</td></tr>
+<tr><td>HOUSTON (KHGX + TIAH)</td><td class="n">260 × 310</td><td class="n">0.75</td><td class="n">0.4</td><td class="n">16</td><td class="n">5.9 M</td></tr>
+<tr><td>HOUSTON_WIDE</td><td class="n">600 × 600</td><td class="n">1.25</td><td class="n">0.5</td><td class="n">16</td><td class="n">7.6 M</td></tr>
+</table></div>
+<p>Tropical grids reach 16 km because trade-wind and hurricane convection tops out at 14–17 km; the Northwest grids stop at 12 km (10 km for the wide one). Cell sizes are chosen to keep each grid near the same voxel count, so live mode stays within memory.</p>
+<p><b>Tracing each voxel back along the beam.</b> Rather than spreading gates outward, the code asks, for every voxel: which beam, leaving this antenna, would pass through me? In the 4/3-Earth frame, a voxel at ground distance <i>s</i> and height <i>h</i> above the antenna sits at central angle θ = s/R′, so</p>
+<div class="formula">dx = (R′ + h)·sin θ &nbsp;&nbsp; dy = (R′ + h)·cos θ − R′<br>slant range = √(dx² + dy²) &nbsp;&nbsp; elevation = atan2(dy, dx) &nbsp;&nbsp; azimuth = atan2(x, y)</div>
+<p>In a merged area, a radar that is not at the grid centre gets each column re-expressed in its own frame through latitude and longitude first.</p>
+<ol>
+<li><b>Sweep choice.</b> For each field, one sweep per elevation angle (rounded to 0.1°): the one with the most valid gates. That handles split cuts and SAILS repeats.</li>
+<li><b>Horizontal sampling.</b> Within a sweep, the nearest ray in azimuth (no further than 1.1° away) and the nearest range gate.</li>
+<li><b>Vertical rule.</b> A voxel is filled only if its elevation lies between the lowest tilt minus half a beamwidth and the highest tilt plus half a beamwidth. Within half a beam of a tilt (below the lowest, or above the highest), it takes that tilt's value. Between two tilts it is interpolated linearly in elevation angle; if one of the two has no echo there, the other is kept only if the voxel is within half a beamwidth (0.475°) of it.</li>
+<li><b>Velocity is nearest-tilt.</b> Averaging two velocities (either of which may be folded) makes a value neither tilt measured, so velocity takes the nearer tilt instead of interpolating.</li>
+</ol>
+<p>A voxel no beam came near stays empty. That is the point: the cone of silence and the wedge under the lowest tilt appear as the holes they are, instead of being smoothed over.</p>
+
+<h3 id="encoding">Byte encoding</h3>
+<p>Every voxel is one byte. 0 means no data; 1–255 spans the field's range linearly:</p>
+<div class="formula">code = clamp( round( (value − lo) / (hi − lo) × 254 + 1 ), 1, 255 )</div>
+<p>So one step is 100/254 ≈ 0.39 dB for reflectivity, 100/254 ≈ 0.39 m/s for velocity, 8/254 ≈ 0.03 dB for ZDR and 0.55/254 ≈ 0.002 for CC. Values beyond the range are clamped to its ends. Case files are gzipped per field per frame; live frames are encoded the same way in memory.</p>
+
+<h3 id="dualpol-mask">Weak-echo masking for dual-pol</h3>
+<p>Dual-pol values from weak returns are mostly receiver noise, and noise has <i>low</i> correlation, so an unmasked CC view is a fog of fake "non-weather". A flat cut would also throw away the light snow aloft near the radar that QVPs rely on. The cut here rises with range the way the radar's sensitivity falls:</p>
+<div class="formula">ZDR and CC kept only where dBZ ≥ −31.5 + 20·log<sub>10</sub>(range in km)</div>
+<p>That is about −11.5 dBZ at 10 km, +2.5 dBZ at 50 km and +8.5 dBZ at 100 km. Each dual-pol gate is judged against the reflectivity of its own sweep. The constant is nominal (roughly 10 dB above the radar's noise level), not calibrated per site. The same rule applies to the QVP's ZDR and CC.</p>
+
+<h3 id="merging">Merged multi-radar areas: the owner map</h3>
+<p>Two radars' values are never blended. Instead, once per area, an <b>owner map</b> gives every voxel to one radar (or none), from geometry alone:</p>
+<ol>
+<li>A radar is a candidate for a voxel if its beams pass through it: elevation between its lowest tilt minus half a beam and 10° plus half a beam, and within the area's echo range (230 km; 460 km for the two 600 km storm-scale areas).</li>
+<li>Its beam there must be less than 50% blocked by terrain (at the nearest precomputed tilt).</li>
+<li>Among candidates, the <b>nearest</b> (smallest slant range) wins: nearer means a lower, narrower beam.</li>
+</ol>
+<p>A merged frame is then each radar gridded into only the voxels it owns. Frames follow the first radar's volumes; each other radar contributes its volume nearest in time, within 4 minutes. If a partner radar had no scan within 4 minutes, its part of that frame stays empty and the time line says so. Because each voxel comes from one known radar, velocity at every point is radial to that radar (the Radar field shows which).</p>
+
+<h3 id="exaggeration">Vertical exaggeration</h3>
+<p>Weather is thin: a 200 km wide area and a 12 km deep sky. At true scale showers look like smears. The page therefore opens at <b>×2</b>, with the terrain relief set to <b>"relief = radar"</b> so terrain is stretched by the same amount. Why ×2 and matched: at ×3 Mount Rainier looked too steep, and an older mismatch (radar ×5, terrain ×2) misled about where beams meet ridges. With the two matched, a beam visibly hits the ridge that blocks it.</p>
+<ul>
+<li>The slider runs 1× to 12×. Balloon, model levels, focus-pole marks and satellite cloud tops all follow the radar's exaggeration.</li>
+<li>Terrain relief can be set on its own (1×, 1.5×, 2×, 3×) but never above the radar's; when the two differ a note warns that rain and model levels then sit higher over hills than they really are.</li>
+<li>Situation presets deliberately use more (3× to 6×) where structure matters more than realism.</li>
+<li>Standing (👁) and flying drop to 1×, true heights, until you leave.</li>
+<li>The focus pole's altitude marks are in your chosen units, labelled with the standard-atmosphere pressure for that height (a guide to "which level", not the day's actual pressure).</li>
+</ul>
+
+<h3 id="rendering">Rendering: ray-marching, threshold and opacity</h3>
+<p>The grid is uploaded to the GPU as a 3D texture. For every pixel, a ray is marched through the box in steps (0.8 of a voxel normally, 0.35 in High quality, which also renders at your screen's full pixel ratio). At each step the byte is looked up in a 256-entry <b>transfer table</b> that gives a colour and an opacity:</p>
+<div class="formula">shown? = value ≥ thr (dBZ, ZDR) · |value| ≥ thr (Vel, SRV) · value ≤ thr (CC)<br>alpha = opacity × (0.12 + 0.88 × strength)</div>
+<p>where <i>strength</i> rises from 0 at the threshold to 1 further into the field's range (for dBZ, (v − thr)/max(5, 60 − thr)). So the slider sets what appears and the opacity sets how much each shown value adds.</p>
+<ul>
+<li><b>Volume</b>: emission and absorption, front to back, corrected for step length; the ray stops once 97% opaque. A glowing cloud.</li>
+<li><b>Surface</b>: the first shown sample is drawn as a lit surface, coloured by the strongest value a little way inside it so cores still show. Best for storm shape.</li>
+<li><b>Max</b>: the strongest shown value along the ray (lowest for CC, furthest from zero for velocity): a 3D composite.</li>
+</ul>
+<p>Terrain is opaque: a ray stops where it meets the ground as drawn. Reflectivity is sampled with smooth (linear) filtering; every other field uses nearest-voxel sampling so that "no data" is never blended into a value. The cutaway and slab simply restrict which samples the ray may use.</p>
+
+<!-- ============================================================ 5 -->
+<h2 id="holes"><span class="num">5</span>Holes and limits</h2>
+<p><b>The empty spaces are real.</b> Each voxel is traced back along the beam, and only voxels a beam actually passed through are drawn. The Tips panel's <i>Empty spaces</i> tab summarizes them; here is the full list.</p>
+<ul>
+<li><b>Under the lowest tilt.</b> The beam climbs with range and the Earth curves away, so the radar is blind to the lowest few hundred metres over most water, and to kilometres far out (<a href="#beam-height">table</a>).</li>
+<li><b>Cone of silence.</b> The empty funnel over the radar, above the top tilt.</li>
+<li><b>Top of the scan.</b> The highest tilt depends on the VCP, and AVSET skips high tilts when no storm needs them. Storm tops near the radar can be cut off.</li>
+<li><b>Between the high tilts.</b> Upper tilts are spaced more widely than a beam. Where both neighbouring tilts have echo the grid interpolates between them; dashed lines in the cross-section show where the beams actually were.</li>
+<li><b>Behind terrain.</b> Blocked beams read low (over ~10%) or see nothing (over ~50%).</li>
+<li><b>Range.</b> Far out the beam is high and wide: shallow rain, drizzle and low cloud vanish, and whatever is seen is averaged over kilometres.</li>
+<li><b>Merged gaps.</b> Voxels that no radar sees well (owner "none") stay empty; a partner radar with no scan within 4 minutes leaves its share empty for that frame.</li>
+<li><b>Partial volumes.</b> A live volume with far fewer tilts than the rest (a restart or a cut-short scan: fewer than 60% of the median tilt count, or fewer than 3) is flagged <i>incomplete</i>, skipped in playback, and never chosen as "latest", but stays reachable on the slider.</li>
+<li><b>Live lag.</b> The newest volume is shown while it is still being scanned: its low tilts are real and current, its upper tilts are missing until they arrive (the frame says IN PROGRESS and how many tilts it has). A complete volume is 4.5&ndash;10 minutes old by the time it's whole. "3 min ago" means the volume's start time.</li>
+<li><b>Velocity folding.</b> Cases are dealiased with Py-ART; live velocities are unfolded only against the VAD reference wind, and stay raw where no profile could be fitted.</li>
+<li><b>Dual-pol masked</b> where echo is weak; none at all from TIAH.</li>
+<li><b>C-band TIAH</b> attenuates behind heavy rain: echo beyond a strong core can be missing or weak.</li>
+</ul>
+
+<h3 id="radar-down">When a radar is down</h3>
+<p>NEXRADs go off the air for maintenance (days, occasionally weeks) or stop uploading. Live keeps the newest volumes by count, so without a check a down radar would just play its last scans. Each time a radar's bucket is checked (every 2 minutes), the page notes its newest volume; if that is more than 20 minutes old (a volume every 4.5&ndash;10 minutes, archived when the radar finishes it; the ⚡ 2D lowest-tilt files count too), an orange line under the title says so: <i>&ldquo;KATX: no new scan since 1:05 PM (2 h ago). The radar may be down; what's shown is its last scans.&rdquo;</i> The newest of the two sources counts: the 3D volumes (while they are loading) and the ⚡ 2D lowest-tilt files, so with <b>Load 3D in background</b> off the check still runs on the 2D files alone. With no volumes at all today or yesterday (UTC), it says that instead of waiting; with only the 2D files to go on it says &ldquo;no scans in the last <i>n</i> min&rdquo; (the loop plus 4 minutes is all it looks at). In a merged area, a down partner's part of each frame is labelled &ldquo;down: no data&rdquo; rather than &ldquo;not in yet&rdquo;, in 3D and in ⚡ 2D alike (in 2D a partner with no lowest-tilt scan within 4 minutes of a frame is otherwise labelled as a gap there).</p>
+<p>A button offers a neighbouring area of the region without the down radar (same group first, single radars first), for example <b>Show KLGX (Langley Hill)</b> when KATX is down. Nothing switches by itself, so you always know which radar you are looking at. A radar that goes off the air <i>mid-scan</i> leaves a short last volume: the real-time follower waits 2 minutes for more pieces, then leaves it to the archive, where it shows as an <b>incomplete volume</b> (few tilts) that playback skips; the warning follows once the last scan is 20 minutes old. (KLGX did exactly this on 2026-09-29 at 00:46Z, stopping 16 pieces into a 79-piece volume.) Check the frame's &ldquo;min ago&rdquo; before trusting any live picture.</p>
+
+<!-- ============================================================ 6 -->
+<h3 id="radar-status">Each radar's own status</h3>
+<p>Under the radar source buttons (Where), each radar of the area has a line: a <b>dot</b>, its status and scan pattern in words, any fault it has logged, and how old its newest data here are. Open a line for the details: operability explained, alarms now, the scan pattern (for example <i>215: precipitation, general</i> or <i>35: clear air</i>), super-resolution, power source (utility or generator), transmitter power, the reflectivity calibration correction the radar applies, the ZDR calibration (vertical Δ dBZ0), radome and shelter temperatures, the software build, and the radar's <b>alarm log for the last 24 hours</b>.</p>
+<ul>
+<li>It comes from the radar's own reports to the NWS (<code>api.weather.gov/radar/stations</code>), refreshed every 10 minutes (about 10&nbsp;KB a radar). It is the status <i>now</i>: in a past case it says so.</li>
+<li><b>Dot:</b> green, reporting no faults; amber, the radar has logged a fault (&ldquo;maintenance required&rdquo; or &ldquo;mandatory&rdquo;) but data are arriving; red, no new data here for 20 minutes. A logged fault doesn't always spoil the data: KATX reported &ldquo;maintenance mandatory&rdquo; (a transmitter alarm) on 2026-09-28 while its scans were fine, so the page's own test of arriving data decides &ldquo;down&rdquo;, and the orange warning quotes the NWS status alongside.</li>
+<li>Worth a look in the alarm log: messages about elevation or azimuth angle data (tilts in the wrong place), calibration (dBZ or ZDR off), or power and link faults.</li>
+</ul>
+
+<h2 id="analyze"><span class="num">6</span>Analyze tools</h2>
+
+<h3 id="cross-section">Cross-section</h3>
+<p>A vertical slice through the gridded volume, sampled from exactly the voxels the 3D view shows (nearest voxel), from sea level to 10 km. Three ways to make one: <b>✎ Draw section</b> (click start, then end), <b>Along beam</b> (from 2 km out from the radar along the beam's azimuth to the edge of the grid; it follows the beam when you change azimuth), and <b>Across beam</b> (40 km long, centred on the focus, square to the line from the radar).</p>
+<ul>
+<li>Dashed lines are the beam centres of every tilt; between them the grid interpolates.</li>
+<li>The <b>red line</b>, labelled "blind", is the lower edge of the lowest beam: nothing under it is seen.</li>
+<li>The tilt chosen in Beam &amp; sweep is drawn as its full half-power beam, shaded.</li>
+<li>The ground along the section is filled in brown.</li>
+<li>Hover for distance from A, height, distance from the radar and the value.</li>
+</ul>
+<p>Across the beam, rotation shows as green beside red; along the beam, beam height climbs with range. The slab tools can drive the section (<a href="#cut">§7</a>).</p>
+
+<h3 id="qvp">QVP: quasi-vertical profile</h3>
+<p>At a steep tilt every range gate maps to one height, and averaging the full 360° ring smooths away horizontal detail. What remains is how each field changes with <i>height</i>; stacking one profile per volume in time turns layers into bands you can follow for hours. The method is from Ryzhkov et al. (2016).</p>
+<ol>
+<li><b>Tilt:</b> the one nearest 10°, among tilts of at least 6° (a volume cut short by AVSET at 8° or a pattern topping at 6.4° still works; below 6° a "profile" is too wide a ring). A volume with no such tilt gives an empty column.</li>
+<li><b>Averaging:</b> reflectivity and ZDR are averaged as <b>power</b> (converted to linear units, averaged, converted back to dB) so one strong gate is not diluted the way averaging decibels would; CC is averaged as is.</li>
+<li><b>Coverage rule:</b> a height is kept only when at least 25% of the azimuths had a value there.</li>
+<li>Heights use the 4/3-Earth formula with the antenna height, on a 50 m ladder up to 10 km; the display shows 0–8 km. ZDR and CC use the weak-echo mask first.</li>
+</ol>
+<p>Live mode builds a QVP for every radar in the area as volumes arrive (the dock's radar menu picks which). A case has the one built for its first radar, over a window wider than its 3D frames: layers need hours to read. The yellow line marks the frame on screen.</p>
+<p><b>Read it:</b> a bright band in dBZ and a dip in CC mark the melting level; a rising bright band means warming (snow level up, more runoff), a falling one means the cold air is arriving. It works best in widespread (stratiform) rain; scattered showers make it patchy.</p>
+
+<h3 id="vad-winds">VAD winds</h3>
+<p>Take a ring of gates at one slant range on one tilt. If the wind is uniform across the ring, a radar looking round the circle sees it as a sine wave in azimuth:</p>
+<div class="formula">v<sub>r</sub> = cos(e) · ( u·sin(az) + v·cos(az) ) + a<sub>0</sub></div>
+<figure>
+<svg viewBox="0 0 720 280" role="img" aria-label="VAD: radial velocity round a ring of gates follows a sine wave; its peak shows where the wind blows toward">
+  <g class="grid"><line x1="60" y1="140" x2="660" y2="140"/><line x1="60" y1="40" x2="660" y2="40"/><line x1="60" y1="240" x2="660" y2="240"/><line x1="210" y1="30" x2="210" y2="250"/><line x1="360" y1="30" x2="360" y2="250"/><line x1="510" y1="30" x2="510" y2="250"/></g>
+  <polyline class="curve" points="60,83 77,74 93,67 110,63 127,60 143,60 160,63 177,67 193,74 210,83 227,94 243,106 260,119 277,133 293,147 310,161 327,174 343,186 360,197 377,206 393,213 410,217 427,220 443,220 460,217 477,213 493,206 510,197 527,186 543,174 560,161 577,147 593,133 610,119 627,106 643,94 660,83"/>
+  <g class="dots"><circle cx="68" cy="78" r="3"/><circle cx="93" cy="58" r="3"/><circle cx="118" cy="68" r="3"/><circle cx="143" cy="53" r="3"/><circle cx="168" cy="67" r="3"/><circle cx="193" cy="76" r="3"/><circle cx="218" cy="75" r="3"/><circle cx="243" cy="105" r="3"/><circle cx="268" cy="126" r="3"/><circle cx="293" cy="142" r="3"/><circle cx="318" cy="159" r="3"/><circle cx="343" cy="186" r="3"/><circle cx="368" cy="197" r="3"/><circle cx="393" cy="220" r="3"/><circle cx="418" cy="221" r="3"/><circle cx="443" cy="223" r="3"/><circle cx="468" cy="225" r="3"/><circle cx="493" cy="216" r="3"/><circle cx="518" cy="203" r="3"/><circle cx="543" cy="176" r="3"/><circle cx="568" cy="155" r="3"/><circle cx="593" cy="135" r="3"/><circle cx="618" cy="112" r="3"/><circle cx="643" cy="104" r="3"/></g>
+  <g class="axis"><line x1="60" y1="250" x2="660" y2="250"/><line x1="60" y1="30" x2="60" y2="250"/></g>
+  <text x="60" y="268" text-anchor="middle">0° N</text><text x="210" y="268" text-anchor="middle">90° E</text><text x="360" y="268" text-anchor="middle">180° S</text><text x="510" y="268" text-anchor="middle">270° W</text><text x="660" y="268" text-anchor="middle">360°</text>
+  <text x="54" y="44" text-anchor="end">+25</text><text x="54" y="144" text-anchor="end">0</text><text x="54" y="244" text-anchor="end">−25</text>
+  <text class="lab-out" x="120" y="46">peak outbound at 45°: the wind blows toward NE</text>
+  <text class="lab-in" x="330" y="238">peak inbound at 225°: it comes from SW</text>
+  <text class="lab" x="560" y="60">fitted sine</text>
+</svg>
+<figcaption>A 20 m/s wind from 225° seen round a ring: readings (dots) scatter about a sine. The fit's amplitude is the speed; its phase is the direction.</figcaption>
+</figure>
+<p><b>The explorer's method</b> (the same in Python for cases and JavaScript for live):</p>
+<ol>
+<li><b>Heights:</b> every 0.25 km from 0.25 to 8 km above sea level.</li>
+<li><b>Rings:</b> for each height, every Doppler sweep (best-populated per 0.1°) whose ring at that height lies 8–50 km from the radar in ground distance; the ring nearest 25 km is tried first, then the next. Five gates across the ring's range (±2) are used, thinned evenly to at most 360 points.</li>
+<li><b>Coverage QC:</b> at least 24 of the 36 ten-degree sectors must have data, and no gap wider than 60°.</li>
+<li><b>Alias-proof grid search:</b> candidate winds u, v from −60 to +60 m/s in 2 m/s steps are scored by the mean of 1 − cos(π·(observed − model)/V<sub>N</sub>), which ignores whole folds; then refined ±2 m/s in 0.25 m/s steps.</li>
+<li><b>Least squares:</b> the readings are unfolded against that best guess, and (a<sub>0</sub>, u, v) is solved by ordinary least squares.</li>
+<li><b>Fit QC:</b> the ring is rejected if the RMS residual exceeds 3.5 m/s; the next candidate ring is tried.</li>
+</ol>
+<p>TDWR files record no Nyquist velocity, so for TIAH the fit is plain least squares with no unfolding; a ring that does fold fails the RMS test and is left blank rather than given a wrong wind.</p>
+<p><b>Display:</b> the <b>Winds</b> dock shows a time–height chart of barbs in knots, pointing into the wind (half barb 5 kt, full 10, pennant 50), coloured by speed, with a right-hand axis in thousands of feet. Gaps are heights with too little echo, or too uneven a wind, for a clean fit. <b>Layers → VAD wind arrows</b> draws the current frame's profile as arrows over the radar at every other height, pointing where the wind blows (40 kt draws 20 km long).</p>
+<div class="callout pitfall"><span class="tag">Remember</span>
+<p>It is <b>one average wind for a ring 16–100 km across</b>, not the wind at your spot. In a hurricane, a sea breeze or a convergence zone the ring is not uniform, so treat it as indicative. Winds veering (turning clockwise) with height mean warm advection; backing means cold advection.</p>
+</div>
+
+<h3 id="skewt">Balloon soundings and the Skew-T</h3>
+<p>Weather balloons (radiosondes) are <b>observed</b> temperature, dew point and wind with height, launched at 00Z and 12Z. The explorer reads them from the Iowa Environmental Mesonet's RAOB service.</p>
+<div class="tw"><table>
+<tr><th>Region</th><th>Launch sites (nearest to the area first)</th></tr>
+<tr><td>Pacific Northwest</td><td>Quillayute (KUIL), Salem (KSLE), Spokane (KOTX), Boise (KBOI)</td></tr>
+<tr><td>Hawaiʻi</td><td>Hilo (PITO), Līhuʻe (PHLI)</td></tr>
+<tr><td>Houston</td><td>Lake Charles (KLCH), Corpus Christi (KCRP)</td></tr>
+</table></div>
+<ul>
+<li>The list is sorted by distance from the area's centre, and the nearest is chosen unless you pick one. On the east side that gives Spokane, with Boise as the next fallback.</li>
+<li>For live, the latest launch; for a case, the launch at or before the case's first frame. Up to four launch times back (two days) are tried, and a profile needs at least 15 temperature levels.</li>
+<li>Launches get missed: unless you picked the site yourself, the next-nearest site is tried and the panel says so ("No recent … launch; using …").</li>
+<li>The age and distance are always shown. If the site lies outside the area it is drawn at the nearest edge, labelled with how far away it really is.</li>
+</ul>
+<p><b>Key levels</b> found in the profile: the <b>melting level</b> (the highest 0 °C crossing; crossings within 0.6 km of each other are one near-0 °C layer, and separate ones below mean a warm layer aloft), the <b>snow-growth layer</b> (−12 to −18 °C), and <b>inversions below 5 km</b> of at least 1 °C, split into surface-based (base within 150 m of the ground) and elevated. An elevated inversion with air more than 3 °C drier above caps clouds and showers beneath it, as the trade-wind inversion does in Hawaiʻi.</p>
+<p><b>"Spread its levels across the area"</b> draws the balloon's 0 °C level, snow-growth layer and inversion as planes over the whole area. That is an <b>assumption</b>: one balloon describes one place at one time, and the air can differ away from it and since its launch.</p>
+<p><b>The Skew-T</b> (Analyze → Skew-T) plots temperature (red) and dew point (green) against pressure on a log scale from 1050 to 100 hPa, with isotherms leaning 45°, dry adiabats (thin orange) and moist adiabats (dashed green), winds on the right and heights in your units on the left. Where the two lines meet the air is saturated (cloud). A temperature line leaning further right than the adiabats is stable.</p>
+
+<!-- ============================================================ 7 -->
+<h3 id="mixing">Vertical mixing, stability and the lid (observed)</h3>
+<p>How much of the wind aloft can reach the water <i>now</i>, from observations only. The readout is in <b>Air → Vertical mixing (observed)</b> (with a <i>How to read this</i> under it); the <b>Vertical mixing &amp; gusts (observed)</b> situation (Where) switches on everything it uses: the balloon, airports, sea minus air and the VAD winds.</p>
+
+<h4>Why the wind at the surface differs from the wind aloft</h4>
+<p>Friction with the water and land slows the air near the surface; a few hundred metres up, it barely feels the surface and blows faster, often turned 10&ndash;30° clockwise (in the northern hemisphere). How much of that faster air reaches you depends on <b>mixing</b>: eddies that carry parcels of air up and down. A parcel brought down from 500&nbsp;m keeps most of its speed for a few seconds: that is a <b>gust</b>. So gusts are not random: they are samples of the wind higher in the stirred layer, and their ceiling is roughly the strongest wind in it.</p>
+<p>Two things stir the air: <b>mechanical</b> turbulence (wind over rough ground, waves, hills, and the shear between slow air below and fast air above) and <b>convection</b> (air heated from below rises in plumes, and the air above sinks to replace it). Convection is the strong one: on a sunny afternoon over land, or when cold air moves over warmer water, the stirred layer can be 1&ndash;2&nbsp;km deep. Without it (at night over land, or warm air over cold water) the stirred layer is shallow and the surface wind is decoupled from the wind aloft.</p>
+
+<h4>Potential temperature: the tool for seeing mixing</h4>
+<p>Air cools as it rises (lower pressure, it expands): 9.8&nbsp;°C per km when dry. So raw temperature always falls with height in stirred air, which hides the pattern. <b>Potential temperature θ</b> removes that: it is the temperature a parcel would have if brought down (or up) to the 1000&nbsp;mb level without heat added or lost, θ = T&nbsp;·&nbsp;(1000/p)<sup>0.286</sup> in kelvin. Example: 10&nbsp;°C at 850&nbsp;mb is θ&nbsp;≈&nbsp;297&nbsp;K, warmer in θ than 20&nbsp;°C at 1000&nbsp;mb (293&nbsp;K), so that upper air is lighter and sits stably on top.</p>
+<ul>
+<li><b>θ constant with height</b>: the air is well stirred (neutral): a parcel moved up or down finds itself the same as its surroundings, so nothing stops the stirring.</li>
+<li><b>θ rising with height</b>: stable: a parcel pushed up is colder and heavier than its new surroundings and sinks back. The faster θ rises, the more stable.</li>
+<li><b>θ falling with height</b> (only near the ground on a hot afternoon): unstable: plumes rise on their own.</li>
+<li>An <b>inversion</b> (temperature itself rising with height) is a very steep jump in θ: a strong lid.</li>
+</ul>
+<figure>
+<svg viewBox="0 0 720 300" role="img" aria-label="Potential temperature against height: constant through the mixed layer, jumping through the inversion, rising slowly above; the parcel test line at the surface value plus 0.5 K meets the profile at the mixed-layer top">
+  <g class="grid"><line x1="70" y1="204.0" x2="680" y2="204.0"/><line x1="70" y1="158.0" x2="680" y2="158.0"/><line x1="70" y1="112.0" x2="680" y2="112.0"/><line x1="70" y1="66.0" x2="680" y2="66.0"/><line x1="70" y1="20.0" x2="680" y2="20.0"/><line x1="157.1" y1="20" x2="157.1" y2="250"/><line x1="244.3" y1="20" x2="244.3" y2="250"/><line x1="331.4" y1="20" x2="331.4" y2="250"/><line x1="418.6" y1="20" x2="418.6" y2="250"/><line x1="505.7" y1="20" x2="505.7" y2="250"/><line x1="592.8" y1="20" x2="592.8" y2="250"/><line x1="680.0" y1="20" x2="680.0" y2="250"/></g>
+  <rect x="70" y="167.2" width="610" height="82.8" fill="rgba(76,217,100,0.10)"/>
+  <rect x="70" y="153.4" width="610" height="13.8" fill="rgba(255,154,60,0.22)"/>
+  <polyline points="255.2,250.0 244.3,240.8 244.3,167.2 462.1,153.4 505.7,112.0 571.1,66.0 636.4,20.0" fill="none" stroke="#ff5a4f" stroke-width="2.5"/>
+  <line x1="277.0" y1="250" x2="277.0" y2="167.2" stroke="#4cd964" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="70" y1="167.2" x2="680" y2="167.2" stroke="#4cd964" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="62" y="254.0" text-anchor="end">0 km</text><text x="62" y="208.0" text-anchor="end">0.5 km</text><text x="62" y="162.0" text-anchor="end">1 km</text><text x="62" y="116.0" text-anchor="end">1.5 km</text><text x="62" y="70.0" text-anchor="end">2 km</text><text x="62" y="24.0" text-anchor="end">2.5 km</text><text x="70.0" y="268" text-anchor="middle">286</text><text x="157.1" y="268" text-anchor="middle">288</text><text x="244.3" y="268" text-anchor="middle">290</text><text x="331.4" y="268" text-anchor="middle">292</text><text x="418.6" y="268" text-anchor="middle">294</text><text x="505.7" y="268" text-anchor="middle">296</text><text x="592.8" y="268" text-anchor="middle">298</text><text x="680.0" y="268" text-anchor="middle">300</text>
+  <text x="375" y="292" text-anchor="middle">potential temperature θ (K)</text>
+  <text x="285.0" y="208.6" style="fill:#4cd964">parcel: surface θ + 0.5 K</text>
+  <text x="340.1" y="227.0">mixed layer: θ constant (stirred)</text>
+  <text x="488.3" y="159.8" style="fill:#ffb36b">inversion: θ jumps (the lid)</text>
+  <text x="553.6" y="107.4">stable above: θ rising</text>
+  <text x="78.7" y="161.2" style="fill:#4cd964">mixed-layer top</text>
+</svg>
+<figcaption>A daytime profile over land or a cold-air day over water. Potential temperature is constant through the stirred layer; the parcel test (dashed green) runs up from the surface value plus 0.5&nbsp;K and meets the profile at the lid. Anything below that line can be carried up and down by eddies, and with it the wind of every height in the green band.</figcaption>
+</figure>
+
+<h4>The parcel method: finding the mixed-layer top</h4>
+<p>Take the air at the surface, give it a little extra warmth (0.5&nbsp;K, standing for the plumes a warm surface sends up), and lift it: it rises freely while it is warmer in θ than the air around it, and stops where the profile's θ catches up. That height is the <b>mixed-layer top</b>. It is the long-standing operational method for mixing height (after Holzworth, used in air-quality work; reviewed by Seibert and others in 2000), and it works best in the daytime or cold-advection cases that matter most for gusts.</p>
+<ul>
+<li><b>The lid:</b> if an inversion starts below that height, the mixed layer stops at the inversion base: eddies can't punch through warm air above.</li>
+<li><b>The surface value</b> is the warmest θ in the lowest 150&nbsp;m, not just the lowest reading: a balloon's first point is the screen at the launch site, which at night can be a degree colder than the air 50&nbsp;m up. On 2026-09-29 the Līhuʻe trade-wind balloon's lowest reading alone put the top at 90&nbsp;m in a layer that was clearly stirred.</li>
+<li><b>Stable:</b> a surface-based inversion (temperature rising from the ground) means the stirred layer is only tens of metres deep. <b>Shallow:</b> a top under 300&nbsp;m without one (the air above stable, θ rising steadily). In both, little of the wind aloft reaches the surface.</li>
+<li><b>The gust ceiling:</b> the strongest wind the balloon reported between the surface and the top: what eddies could bring down on the strongest gusts.</li>
+</ul>
+
+<h4>Where the lids come from here</h4>
+<ul>
+<li><b>Hawaiʻi, the trade-wind inversion</b> (~1.5&ndash;2.5&nbsp;km): air sinking in the subtropical high warms as it is compressed and dries; it caps the trade cumulus (their flat tops) and the stirred layer below. A low, strong inversion squeezes the trades and makes them gustier through the channels; the balloon line flags it, with how much drier the air above is.</li>
+<li><b>Salish Sea summer, the marine inversion</b> (a few hundred metres): warm air over the cold water; the sea cools the air next to it, making a shallow stable layer under warmer air. Light, smooth surface winds under stronger winds aloft, fog and stratus in the mornings.</li>
+<li><b>Night over land, the radiation inversion</b>: the ground cools and chills the air in contact with it. The morning balloons (12Z: 5&nbsp;am Pacific in summer, 4&nbsp;am in winter) often show it; by afternoon heating has usually erased it over land, but not over the water.</li>
+<li><b>After a cold front</b>: cold air over warmer water; no lid for a kilometre or two, deep stirring, showers and squalls.</li>
+</ul>
+
+<h4>The wind that can mix down now (VAD)</h4>
+<p>The balloon is twice a day; the radar measures the wind with height every volume (the <a href="#vad-winds">VAD</a>). The readout takes the strongest VAD wind from its lowest fitted level up to the balloon's mixed-layer top: the fastest air within reach of the eddies right now. With no usable balloon it looks up to 1.5&nbsp;km and says so; with a stable or shallow layer it quotes the VAD's lowest level instead, as the wind waiting above the lid.</p>
+
+<h4>What the airports say: wind, gust and gust factor</h4>
+<p>The two airports nearest your focus give the surface side: wind and gust from their METAR (the &ldquo;16016G24KT&rdquo; group: 160° at 16&nbsp;kt gusting 24), and the <b>gust factor</b> = gust ÷ mean. Airports report a gust only when peaks exceed the mean by about 10&nbsp;kt, so no gust group doesn't mean perfectly smooth. As a rough guide: a gust factor around 1.3 is ordinary gusty mixing; 1.5 and up is strong mixing, squalls or showers passing. Gusting airports show e.g. &ldquo;16G24&rdquo; on their map markers.</p>
+
+<h4>Stability over the water: sea minus air</h4>
+<p>Over the water it is the sea that heats or cools the air from below, so the difference between the water and the air decides whether the air over it is stirred:</p>
+<ul>
+<li><b>Sea warmer (+)</b>: the sea heats the lowest air, it rises, and the stirring reaches up to the lid: gusts close to the wind aloft, cumulus and showers if the air is moist. Typical after a front, and in autumn and winter when the water is warmer than the air.</li>
+<li><b>Air warmer (−)</b>: the sea cools the lowest air, which stays put: a stable, shallow layer, the wind aloft skating over it. Smoother water, lighter wind, and fog if the air's dew point is above the sea temperature. Typical in spring and summer over the cold Salish Sea and Pacific.</li>
+<li><b>Within ±1&nbsp;°C</b>: near neutral: the wind and the terrain do the stirring.</li>
+</ul>
+<p>The dots are NOAA tide stations (CO-OPS) that measure both water and air temperature: harbour and pier gauges (Port Townsend, Port Angeles, La Push, Westport, Toke Point, Astoria, South Beach; Kawaihae, Kahului, Honolulu, Mokuoloe, Nawiliwili; Galveston Bay and the Texas coast). NDBC's offshore buoys would be better placed, but their data can't be read by a web page and relaying them would need a server; the tide stations are live, and in the Sound arguably closer to the water you sail. Hover a dot for the two temperatures and how old they are. Layers → 🌊 Sea − air; link <code>seaair=1</code>.</p>
+
+<h4>Putting it together: a reading routine</h4>
+<ol>
+<li><b>Stability over the water</b> (the dots, the readout): red, grey or blue near you?</li>
+<li><b>The mixed layer</b> (the balloon line or the Skew-T's green band): deep (a kilometre or more), shallow, or stable? Under which lid, how high?</li>
+<li><b>The wind within reach</b> (the VAD part): how strong, and from where?</li>
+<li><b>The surface check</b> (airports): is the surface getting it? Gusts, gust factor.</li>
+<li><b>The radar</b>: showers and squalls stir locally; a gust front or outflow can bring wind down anywhere, whatever the average profile says.</li>
+</ol>
+<p>The readout's last phrase does this comparison when both sides are there: <i>mixing brings the wind aloft down</i> (gusty, or most of the wind aloft at the surface; with the gust ceiling), <i>the surface wind is well below the wind aloft</i> (little mixing, or sheltered sites), <i>stable / shallow mixing</i> (the wind aloft stays aloft), or <i>the surface is as windy as the radar's profile or more</i> (local effects: terrain, channels, sea breeze).</p>
+
+<h4>Worked examples (2026-09-29)</h4>
+<ul>
+<li><b>Salish Sea, 6 pm:</b> the Quillayute balloon (12Z) showed only ~100&nbsp;m of stirred air under a stable layer; the VAD had 16&nbsp;kt at 300&nbsp;m; Boeing Field was variable at 4&nbsp;kt and Renton 10&nbsp;kt; Port Townsend's water was 1.9&nbsp;°C colder than the air (Port Angeles 4.2&nbsp;°C). Everything agrees: a stable evening, the 16&nbsp;kt above not reaching the water; expect lighter, smoother winds, with the stronger wind arriving where it's funnelled (Admiralty Inlet, the Strait's gaps).</li>
+<li><b>Big Island, 3 pm:</b> Līhuʻe's balloon (262&nbsp;km away) had ~400&nbsp;m stirred; the Kohala radar's VAD only 2&nbsp;kt (clear air, few echoes); Upolu Point 14G19 (gust factor 1.4), Kona 9&nbsp;kt; Kawaihae +0.6&nbsp;°C (neutral). The surface is windier than the radar's average: the trades funnelling round Kohala, a local effect the VAD's ring round the radar can't see.</li>
+</ul>
+
+<div class="callout marine"><span class="tag">On the water</span>
+<p><b>Unstable</b> (sea warmer than the air), a <b>deep mixed layer</b> and <b>strong wind aloft</b>: gusts well above the mean, toward the VAD speed, often in bursts under the showers. Reef early, before the squall line arrives.</p>
+<p><b>Stable</b> (air warmer than the sea) and a <b>shallow mixed layer</b>: the surface wind is lighter than aloft and smoother, but it can arrive suddenly where the land funnels it down: off headlands, in the passes and gaps, and when a shower or afternoon heating breaks the lid.</p>
+</div>
+
+<h4>Pitfalls and limits</h4>
+<ul>
+<li><b>Time:</b> the balloon is up to 12 hours old (it flies at 00Z and 12Z: 5&nbsp;am and 5&nbsp;pm Pacific in summer, 4 in winter; 2&nbsp;am and 2&nbsp;pm in Hawaiʻi). A morning balloon's night-time inversion is often gone over land by afternoon, but not over cold water.</li>
+<li><b>Place:</b> one balloon, often 50&ndash;260&nbsp;km away (Hawaiʻi: Hilo, in the area, when it flies; recently it hasn't, and Līhuʻe is used, which the balloon line says). The VAD is an average round a ring 16&ndash;100&nbsp;km across the radar, and needs scatterers: patchy in clear air. Airports are over land. Tide stations measure shallow harbour water at one pier and miss the tidal stirring in the passes.</li>
+<li><b>What it isn't:</b> not a forecast. Nothing here is modelled or filled in: where a source is missing, the readout says so.</li>
+</ul>
+
+<h2 id="cut"><span class="num">7</span>Cut tools</h2>
+<h3 id="cutaway">Cutaway</h3>
+<p>Five sliders trim the box from the west, east, south, north and top. <b>Low levels</b> keeps only the lowest 1.5 km, which is what the low-level situations use: combined with Max from above it is the closest thing to "what's near the water". <b>reset</b> restores the whole box.</p>
+
+<h3 id="slab">Slab scan (CT style)</h3>
+<p>Like a medical CT, a slab of chosen thickness (0.25, 0.5, 1, 2, 5 or 10 nm) is stepped through the volume, and only what lies inside it is drawn. Modes:</p>
+<ul>
+<li>N–S slices stepping west → east; E–W slices stepping south → north; height slices stepping upward.</li>
+<li><b>Across a line</b>, stepping along it; <b>Along a line</b>, stepping sideways up to 60 km either side. The line is your drawn section, or else the beam from the radar out through the focus. These slabs can also be <b>turned</b> (±90° about the vertical) and <b>tilted</b> (0–85° from upright) about a spot on the line 2 km up; <b>Square up</b> resets. A tilted slab has no 2D section.</li>
+<li><b>Radial slice (RHI)</b>: a vertical wall from the radar out along an azimuth; stepping rotates it round the radar by about one slab width at 40 km (between 0.5° and 10° a step). It rides with a running sweep.</li>
+</ul>
+<p>◀ step / step ▶ (or <kbd>[</kbd> <kbd>]</kbd>) move one slab thickness; ▶ plays (0.45 s a step, 0.15 s for the radial slice); <b>Face slab</b> points the camera straight at it. With <b>2D cross-section follows the slab</b> ticked and the section dock open, the section shows the slab's own plane. A slab starts through the focus.</p>
+
+<h3 id="beam-sweep">Beam &amp; sweep explorer</h3>
+<p>A radar does not "see a volume": it turns in circles, one tilt at a time, and each tilt paints a cone. This tool shows that.</p>
+<ul>
+<li><b>Radar</b> (merged areas), <b>Tilt</b> (this frame's tilts) and <b>Az</b> (0–359.5°) aim one beam, drawn out to 200 km with its centre and half-power edges and coloured by blockage. <b>Aim at focus</b> points it at the focus.</li>
+<li><b>Tilt surface</b> shows the cone one tilt sees, coloured with the data it sampled.</li>
+<li><b>▶ Sweep tilt</b> turns the antenna round one tilt; <b>▶ Volume scan</b> runs every tilt from the lowest up, the cones building one after another. Speeds: real-ish (18°/s), fast (60°/s), faster (150°/s).</li>
+<li><b>Steering while it turns:</b> change Tilt (or press <kbd>↑</kbd> / <kbd>↓</kbd>) and the sweep carries on at the new angle; in a volume scan the tilts below count as done. Drag <b>Az</b> to move the antenna to a new azimuth and it continues from there.</li>
+<li>The 3D volume is hidden while a sweep runs and comes back when it stops. An along-beam section follows the beam.</li>
+</ul>
+
+<!-- ============================================================ 8 -->
+<h2 id="nowcast"><span class="num">8</span>Nowcast (look ahead)</h2>
+<p>Radar → <b>Look ahead</b> slides the frame on screen forward by 5 to 60 minutes along the echoes' recent motion. It is <b>extrapolated, not observed</b>: nothing grows, fades, forms or dies. Honest for 10–30 minutes in organised rain, rough beyond, and wrong for new storms.</p>
+<h4>Motion</h4>
+<ol>
+<li>The frame is paired with the most recent earlier <b>full</b> scan (not a low-level update, not incomplete) at least 3 minutes and no more than 20 minutes before it.</li>
+<li>Both volumes' reflectivity is collapsed to a column maximum on ~2 km cells.</li>
+<li>Blocks about 24 km across, every 12 km, of the newer picture are matched against the older one by sliding them around (least absolute difference), up to the distance a 150 km/h motion would cover. A block needs at least 8% of its cells at 20 dBZ or more to be tracked.</li>
+<li>Outliers (more than 2.5 median deviations from the median motion) are dropped. With three or more good blocks, the motion at any point is an inverse-distance blend of the block vectors with the echo-weighted mean as a weak background.</li>
+<li>With fewer than three, one mean motion is used; if there is none, the <b>steering wind</b> is used: the same storm motion as SRV (the 1–6 km VAD mean, or your hand-set motion).</li>
+</ol>
+<h4>Advection</h4>
+<p>Every column of the 3D volume is carried along that motion for the lead time, the whole column together, working backwards (each point takes the value from where its air was). Displacements are computed on a ~4 km lattice and interpolated per column. The nowcast applies to whichever field is on screen; the motion always comes from reflectivity.</p>
+<p><b>Controls:</b> ▶ plays +5 min every 0.4 s, pausing at +60, and round again; the radar loop stops while it plays (one clock at a time). <b>⇩ Prepare all steps</b> works out +5 to +60 for the frame on screen so dragging is smooth (no download: it uses the scans already loaded). The info line gives the mean speed and direction, the two scan times used and how many areas were tracked, or "too few echoes: steering wind used". The top line reads <i>NOWCAST +N min (extrapolated)</i>. In a case, step forward to the real frame to see how it did.</p>
+
+<!-- ============================================================ 9 -->
+<h2 id="layers"><span class="num">9</span>Layers</h2>
+
+<h3 id="satellite">Satellite (GOES)</h3>
+<p>GOES imagery on the radar's grid, matched to each frame: GOES-18 (GOES-West) for the Northwest and Hawaiʻi, GOES-19 (GOES-East) for Houston. Press <kbd>S</kbd> to toggle it.</p>
+<div class="tw"><table>
+<tr><th>Band button</th><th>What it shows</th></tr>
+<tr><td>Visible</td><td>Band 2 (0.64 µm), 0.5 km: clouds as the eye sees them, daytime only.</td></tr>
+<tr><td>Infrared</td><td>Band 13 clean IR (10.3 µm), 2 km: cloud-top temperature, day and night, in an enhanced colour scale (greys for warm, low cloud; a new colour every 10 °C from −20 °C).</td></tr>
+<tr><td>Fog</td><td>The fog / low-stratus index (next section), from bands 13, 7 (3.9 µm) and 2.</td></tr>
+<tr><td>Auto</td><td>Visible by day, IR at night, but <b>one band for the whole loop</b>: visible only if every frame has a daylight visible image, otherwise IR throughout, so the loop never flickers between the two across sunset.</td></tr>
+</table></div>
+<p><b>Loaded before it's shown.</b> In live mode, when you switch the satellite on or change band, the whole loop is fetched first (the info line counts the frames) and only then shown, so a half-loaded loop never plays. Changing band keeps the old band up until the new one is ready for every frame, so the loop is always <b>one band</b>, never infrared on some frames and visible on others. A frame whose scan can't be had (none near that time, or the newest not posted yet) borrows the nearest frame's scan within 15 minutes, and the info line says so; after 2 minutes it shows what it has. In a case, a frame without a visible image shows no satellite rather than infrared.</p>
+<p><b>Opacity</b> (Layers → Satellite, 0.1&ndash;1, default 0.85) sets how solid the radar-area image is; the wide-area satellite has its own slider in the Air tab. Turn it down to see the radar volume, terrain or chart through the cloud; turn it up to judge cloud edges.</p>
+<ul>
+<li><b>Flat ⟷ cloud tops 3D</b> morphs the image between a flat sheet (at a height you choose, 0–12 km, default 10) and a surface at the estimated cloud-top height. <b>Clear sky see-through</b> lets the ground show where there is no cloud.</li>
+<li><b>Cloud-top height</b> comes from NOAA's ACHA product (10 km resolution, or 4 km in mesoscale sectors), with the 2 km IR detail added within it: h = ACHA + (h<sub>IR</sub> − h<sub>IR</sub> smoothed to ACHA's scale), where h<sub>IR</sub> = (T<sub>surface</sub> − T<sub>cloud</sub>) / 6.5 K per km and T<sub>surface</sub> is the warmest 2% of the scene. Where ACHA finds no cloud, the IR estimate alone.</li>
+<li><b>Parallax-corrected:</b> GOES-West sees Puget Sound from ~55° off vertical, so a 10 km anvil would land ~15 km north-east on a flat map. Each grid point is looked up where the satellite saw it, raised to its cloud top (iterated, since the height depends on where you look).</li>
+<li><b>Live:</b> a 1-minute mesoscale sector when one covers the area within a minute of the radar time, else the standard 5-minute sector (PACUS for GOES-West, CONUS for GOES-East). Files are read by HTTP range requests, only the rows over the area. Visible is fetched only when it would be shown and the sun is more than about 6° up; on a phone, only for the newest frame unless you choose Visible.</li>
+<li><b>Cases:</b> the nearest CONUS/PACUS scan within 4 minutes of the middle of each radar volume.</li>
+</ul>
+<div class="callout try"><span class="tag">Try it</span>
+<p><b>Clouds vs rain</b> drapes the imagery at cloud-top height above the radar's rain. A tall, cold top over a tall core is an active shower; a cold top with little echo under it is anvil or cirrus; bright cloud with a <i>warm</i> top and no echo is low stratus or fog, which radar cannot see at all.</p>
+</div>
+
+<h3 id="fog">Fog and low stratus index</h3>
+<p>Computed in the browser for every frame (cases and live) from GOES bands 13 (10.3 µm) and 7 (3.9 µm), plus the visible when there is one. The info line says which test was used.</p>
+<ul>
+<li><b>Night</b> (sun more than 90° from overhead): small water droplets emit less at 3.9 µm than at 10.3 µm, so BT13 − BT7 is positive over fog and stratus, typically +2 to +5 K; ~0 over clear ground or water, negative under cirrus. The index ramps up from +1 to +3.5 K.</li>
+<li><b>Day</b> (sun within 80° of overhead): water-droplet tops reflect sunlight at 3.9 µm, so BT7 reads well above BT13 (the index ramps from 8 to 20 K); clear land does that too, so the cloud must also be bright in the visible (reflectance ramping from 0.18 to 0.35). With no visible image the day test uses IR cloudiness instead and is capped at 60%.</li>
+<li><b>Twilight</b> (80–90°): the two tests blended; least reliable.</li>
+<li><b>Both:</b> the top must be warm, within about 8–16 K of the surface temperature (i.e. low), and any column with radar echo of 15 dBZ or more in the lowest 2 km is cut to 15%: a cloud producing rain is not fog.</li>
+</ul>
+<p>Teal shows where the index is 25% or more (brighter with higher values); other cloud shows faint grey. Hover for the index. Satellite cannot tell fog from low stratus whose base is off the water: the airport reports settle that.</p>
+
+<h3 id="lightning">Lightning (GOES GLM)</h3>
+<p>The Geostationary Lightning Mapper is an optical camera on the GOES satellite that sees lightning light up cloud tops, day and night. It reports each <i>flash</i> with time, position, energy and area; only flashes with a good quality flag are kept. It counts total lightning, in-cloud and cloud-to-ground alike, which is what matters on the water: in-cloud flashes come first and signal a charging storm. <b>Off by default</b> (Layers → ⚡ Lightning): live, it means about 30&nbsp;MB of GOES files for a loop. Switch it on before relying on the lightning badge below; the <i>Lightning</i> situation preset switches it on for you.</p>
+<ul>
+<li>Every flash from the start of the loop up to the end of the frame's volume is drawn, so they build up as the loop plays; colour by age: newest white-yellow, then orange, oldest red.</li>
+<li>The badge at the top counts flashes within 20 nm of the focus over the loop and in the last 10 minutes, the nearest in the last 10 minutes (nm), and the total in the area. It highlights when a flash in the last 10 minutes was within 10 nm.</li>
+<li>Live: the bucket is checked every minute (a file every 20 s, ~220 KB each: about 30 MB for a 45-minute window). Files download only while the ⚡ Lightning layer is on: switch it off and the feed pauses; switch it on again and it fetches just the files it hasn't read yet. When a live area opens, lightning waits until the radar loop is in (or 45 s) and then reads three files at a time, so the radar gets the connection first; cases carry flashes from 10 minutes before to 10 minutes after the case. Files already read are kept for the visit (switching area doesn't read them again) and on this device for 2 hours (a reload doesn't either).</li>
+</ul>
+<div class="callout pitfall"><span class="tag">Limits</span>
+<p>Pixels are about 10 km across here; positions are good to a few km. It sees light through cloud tops, so weak flashes low in thick cloud and small, shallow Northwest storms can be missed. It cannot separate cloud-to-ground from in-cloud. <b>No flashes shown is not an all-clear</b>; if you can hear thunder, you are within range.</p>
+</div>
+
+<h3 id="airports">Airport visibility and ceiling (METAR)</h3>
+<p>Satellite sees the top of fog; radar does not see it at all; airport reports say whether it reaches the ground. Each marker shows the station's latest report within 90 minutes before the frame: visibility in statute miles, ceiling (the lowest broken or overcast layer) in feet, and fog, mist, haze, smoke or precipitation codes. Hover for the full METAR and its age.</p>
+<div class="tw"><table>
+<tr><th>Category</th><th>Ceiling</th><th>or visibility</th></tr>
+<tr><td><span class="swatch" style="background:#e05cff"></span>LIFR</td><td>under 500 ft</td><td>under 1 mi</td></tr>
+<tr><td><span class="swatch" style="background:#ff5a4f"></span>IFR</td><td>under 1,000 ft</td><td>under 3 mi</td></tr>
+<tr><td><span class="swatch" style="background:#5fa8ff"></span>MVFR</td><td>up to 3,000 ft</td><td>up to 5 mi</td></tr>
+<tr><td><span class="swatch" style="background:#4cd964"></span>VFR</td><td colspan="2">otherwise (stations reporting neither visibility nor sky are marked "no vis/sky", not VFR)</td></tr>
+</table></div>
+<p><b>Fetching:</b> live reports come from the Iowa Environmental Mesonet's ASOS service (the Aviation Weather Center's API has the same data but no CORS header, so a page cannot read it). They are fetched <b>only while the layer is on</b>, only for <b>the area's own stations</b>, the last 3 hours, refreshed every 5 minutes, with a <b>5-minute per-station cache</b> shared across the page, so switching areas or toggling the layer does not refetch. Networks: WA, OR, ID and British Columbia ASOS in the Northwest; Hawaiʻi ASOS; Texas and Louisiana ASOS for Houston. Cases carry their reports from 90 minutes before the case.</p>
+
+<h3 id="rain-totals">Rain totals</h3>
+<p>🌧 <b>Rain totals</b> colours the ground by rainfall over a window ending at the frame on screen. The 3D volume steps aside while they show (tick <b>3D volume</b> beside it to bring it back). The window menu labels each choice with the source it will actually use.</p>
+<h4>From this radar (the loop, or any window the loop covers)</h4>
+<ol>
+<li><b>Lowest echo per column:</b> for each grid column, the lowest voxel with echo within 3 km of sea level.</li>
+<li><b>Z–R relationship:</b> reflectivity to rain rate, with Z = 10<sup>dBZ/10</sup> and R in mm/h:
+<div class="formula">Northwest (Marshall–Palmer): Z = 200 R<sup>1.6</sup><br>Houston and Hawaiʻi (NWS tropical): Z = 250 R<sup>1.2</sup></div>
+Tropical rain (many small-to-medium drops, warm clouds) gives more rain for the same reflectivity. Echo under 15 dBZ counts as no rain, and reflectivity is capped at 53 dBZ, as NWS precipitation algorithms do, so hail cores do not read as absurd rain.</li>
+<li><b>Accumulation:</b> each frame's rate is applied for the time it stands for (until the next frame starts, or its recorded span), clipped to the window and to "now", and summed.</li>
+</ol>
+<p>It updates every scan. Choosing a fixed window the loop already covers (within 5%) uses this radar too.</p>
+<div class="callout pitfall"><span class="tag">How good is it?</span>
+<p>Typically within 30–50% of gauges, often worse: the beam is high far from the radar (it misses shallow rain and sees melting snow), terrain blocks it, and one Z–R cannot fit every storm. Treat totals as a <b>pattern</b> (where the heavy rain fell) more than a number.</p>
+</div>
+
+<h3 id="mrms">MRMS totals (longer windows)</h3>
+<p>Windows of 1, 3, 6, 12, 24, 48 or 72 hours that the loop does not cover come from NOAA <b>MRMS</b> (Multi-Radar/Multi-Sensor), read straight from NOAA's public bucket, decoded in the browser (GRIB2 with PNG packing) and resampled to the nearest MRMS cell. Hawaiʻi uses MRMS's Hawaiʻi domain; the others CONUS.</p>
+<ul>
+<li><b>Gauge-corrected</b> ("MultiSensor Pass 2") is used when one ends within 2 hours before the frame. It is multi-radar with its <b>bias scaled to the rain gauges that reported</b>. It is not gauge totals: where the radar sees little, it stays low. It runs 1–2 hours behind, so the latest hour or two is not in it yet.</li>
+<li><b>Radar-only</b> is used otherwise (within 1.5 hours): fresher, not gauge-adjusted.</li>
+<li>The info line names which, when it ends, how many minutes before the frame, and the maximum.</li>
+</ul>
+<div class="callout pitfall"><span class="tag">Hawaiʻi: windward under-count</span>
+<p>The Big Island's radars see little of the windward slopes' rain: Mauna Kea and Mauna Loa block Kohala's beams, South Point's beams pass over it, and trade-wind rain is shallow. Checked against IEM gauges on 2026-09-27 (48 h): the <b>Mountain View 5SW</b> gauge measured <b>9.8 in</b> where MRMS gauge-corrected had <b>5.8 in</b> and radar-only <b>1.5 in</b>; Hakalau measured 6.6 in against 0.0. MRMS "maxima" sat on the radar sites (clutter). The panel carries a caution in Hawaiʻi: gauges have measured 2–4× the radar amounts on the windward (Hilo, Puna, Hāmākua) slopes.</p>
+</div>
+
+<h3 id="rain-gauges">Rain gauges</h3>
+<p>🪣 <b>Rain gauges</b> shows what actually fell, to set against the radar and MRMS: daily totals from the Iowa Environmental Mesonet for NWS <b>HADS</b> automated gauges (many in the hills), airport <b>ASOS</b>, and <b>CoCoRaHS</b> volunteers.</p>
+<ul>
+<li><b>Days:</b> today so far, 2, 3 or 7 <b>local calendar days</b> ending on the frame's day. CoCoRaHS totals are 7 am readings of the 24 h before, dated the morning they are read.</li>
+<li><b>QC:</b> a gauge counts only if it reported <b>every day</b> of the window; any day over <b>25 in</b> is taken as a bad reading and the gauge is dropped.</li>
+<li>Stations are those inside the region's areas that reported within the last year. Past days are cached; today is refreshed every 10 minutes.</li>
+<li>Dots use the rain colours (dry gauges small and grey); the wettest are labelled, more as you zoom in (up to 90). Hover for name, type and total.</li>
+</ul>
+<h4 id="rain-units">Inches or millimetres</h4>
+<p><b>Rain in</b> switches rain totals, gauge labels and the rain key between inches and mm. It is independent of the height units: it first follows them (ft → in, m or km → mm), then remembers your choice. The key uses NWS-style colours: green under half an inch, yellow–orange 0.5–2 in, red 2–4 in, magenta and purple above 4 in, white at 10 in.</p>
+
+<h3 id="marine-chart">Marine chart (NOAA ENC)</h3>
+<p>⚓ <b>Marine chart</b> draws NOAA electronic navigational chart data over the water, built once per area from <b>NOAA ENC Direct to GIS</b> as vectors, so it is sharp at any zoom and nothing is fetched while viewing. For each area the <b>coastal</b> band is used everywhere, with the <b>approach</b> and <b>harbour</b> bands (finer) drawn over it where they exist; coarser shading is trimmed where finer covers it so see-through colours never stack darker.</p>
+<ul>
+<li><b>Depth shading</b> by the shallow edge of each depth area: dries, 0–2, 2–5, 5–10, 10–20, 20–50, 50–100, 100–200, 200+ m, pale to deep blue, drawn see-through so the map shows beneath; depth contours as fine lines.</li>
+<li><b>Traffic lanes</b> and separation zones, dredged channels and fairways; lateral <b>buoys</b> and lights as dots in their colours.</li>
+<li><b>Soundings</b> as numbers when zoomed in close (off by default: <i>Soundings when zoomed in</i>); hover anywhere for the depth area and the nearest sounding within 1 km. Depths follow your height units (feet or metres).</li>
+<li><b>Depth key</b> (off by default) adds the depth colours to the keys and to exports. Chart opacity 0.15–1.</li>
+<li>Built for the marine and coastal areas (not the inland Eastern Washington ones).</li>
+</ul>
+<div class="callout pitfall"><span class="tag">Not for navigation</span>
+<p>Simplified to each band's scale, rounded to 10 m, and styled to sit under the radar rather than in chart symbology. For seeing where the water is and how deep, next to the weather. Use official charts to navigate.</p>
+</div>
+
+<h3 id="ground">Ground, roads, rings and beam</h3>
+<ul>
+<li><b>Terrain</b> from AWS Terrarium elevation tiles on the grid, shaded with a hypsometric tint (low green, mid tan, high grey, snow above ~2.2 km), water kept dark. Relief as in <a href="#exaggeration">§4</a>.</li>
+<li><b>Ground: satellite photo</b> is the Sentinel-2 cloudless 2024 mosaic by EOX (10 m source, reprojected onto the grid), draped on the terrain so it keeps its shape. Houston opens on the photo (it is flat); the other regions on shaded relief.</li>
+<li><b>Roads &amp; waterways</b> from OpenStreetMap: freeways to orient by and, in Houston, the named bayous, creeks and channels, because flooding there is about which bayou watershed the heavy rain lands on. Elsewhere only named rivers.</li>
+<li><b>Coastline</b> is the full-resolution GSHHG shoreline (~100 m): Natural Earth's 10 m coastline loses Shilshole Bay entirely.</li>
+<li><b>Range rings</b> round each radar: every 25 km for one radar, every 50 km for merged areas (each radar in its own colour), every 100 km to 400 km for the 600 km storm-scale areas. Labels sit where the ring crosses the lowest ground.</li>
+<li><b>Beam</b> shows the Beam &amp; sweep beam (a running sweep always shows it).</li>
+<li><b>Labels</b> and the <b>Focus pole</b> (with altitude marks every 5,000 ft, 1,500 m or 2 km) can be turned off. Labels hidden behind terrain from your viewpoint are hidden.</li>
+</ul>
+
+<h3 id="storms">NWS storm cells and signatures</h3>
+<p>⛈ <b>NWS storm cells &amp; signatures</b> reads the radar software's own storm tracking from Level III products, for each NEXRAD in the area (TDWRs do not make them), nearest the frame time: <b>NST</b> storm cells (ID, current position, grey past track, orange forecast track with a tick every 15 minutes and an arrow at the end), <b>NMD</b> mesocyclones (yellow circles at their radius), <b>NTV</b> tornado vortex signatures (red triangles) and <b>NHI</b> hail (green triangles with probability of severe hail and maximum size). The info line counts each. These are algorithm outputs, not warnings.</p>
+<p><b>VAD wind arrows</b> and <b>Beam blockage</b> are described in <a href="#vad-winds">§6</a> and <a href="#blockage">§2</a>.</p>
+
+<!-- ============================================================ 10 -->
+<h2 id="air"><span class="num">10</span>The Air tab and models</h2>
+<p>The Air tab keeps two kinds of information strictly apart: <b>observed</b> (balloon soundings, <a href="#skewt">§6</a>) and <b>model</b>, a forecast system's best estimate of the air, which is good for the pattern and can be wrong in detail.</p>
+
+<h3 id="models">Which model, where</h3>
+<div class="tw"><table>
+<tr><th>Where</th><th>Model</th><th>Analysis (look-ahead 0)</th><th>Look-ahead</th></tr>
+<tr><td>Northwest, Houston (radar area)</td><td><b>HRRR</b>, 3 km, hourly</td><td>Hourly analyses from the University of Utah's HRRR Zarr archive: 150 × 150-point tiles (~10 KB each), so only the tiles over the area are read.</td><td>To <b>+18 h</b>, 1 h steps, from NOAA's own HRRR forecast files (one range request per field). Every hourly run reaches 18 h.</td></tr>
+<tr><td>Hawaiʻi (radar area)</td><td><b>GFS</b>, 0.25° (~27 km), runs every 6 h</td><td>The newest run's forecast for the hour nearest the frame (GFS has no hourly analysis).</td><td>To <b>+24 h</b> (played and preloaded in 3 h steps).</td></tr>
+<tr><td>Wide 2,000 km area, any region</td><td><b>GFS</b></td><td>As above</td><td>To <b>+24 h</b> (played and preloaded in 3 h steps).</td></tr>
+</table></div>
+<p>HRRR does not cover Hawaiʻi, and it stops a few hundred km off the Northwest coast and in the southern Gulf, so the wide area uses GFS everywhere; at that scale its 27 km is what the picture can show anyway. A forecast always comes from the newest run started at or before the frame (or now). <b>Load all hours</b> downloads every forecast hour first (two at a time, with an estimate of the megabytes) so playing and dragging are smooth; ▶ steps through the hours, about 0.8 s each, loading the next few ahead.</p>
+<p><b>Labels:</b> the panel always reads <b>Model, not observation</b>, with the model and resolution, the <b>Run</b> (initialisation time and how long ago), the <b>Valid</b> time in UTC and local time, whether it is the analysis (+0 h) or a forecast (+N h, also flagged <b>FORECAST +N h</b>), and how far the valid time is from the frame. If part of an hour has not arrived in the archive yet, it says so and tries again after 90 seconds.</p>
+
+<h3 id="model-display">Levels, fills, lines and winds</h3>
+<ul>
+<li><b>Levels:</b> surface, 925, 850, 700, 500, 300 and 250 mb. Each level is drawn at the height the model gives it (times the exaggeration), not a standard height; the menu shows the standard-atmosphere height as a guide (850 mb ~1.46 km, 500 mb ~5.57 km, 250 mb ~10.36 km). Parts of a level below the ground are masked.</li>
+<li><b>Lines</b> per level: winds, plus isobars at the surface (magenta, every 2 hPa, or 1 hPa when the pressure is flat; 4 or 2 hPa over the wide area) with low centres marked, and height contours in dam aloft.</li>
+<li><b>Fill</b> per level: wind speed (UW's banded 5 kt palette, as in the Salish Sea briefing maps), temperature (−40 to +30 °C) or humidity. Fills on several levels stack at their own heights: tilt the view to see them apart.</li>
+<li><b>Defaults:</b> surface pressure and wind with a wind-speed fill; 850 mb wind; 500 mb heights and wind.</li>
+<li><b>Wind as:</b> Auto (streamlines at the surface, barbs aloft, since stacked streamlines tangle), Streamlines, Barbs, or ✦ Particles. <b>Spacing</b> (6–40 km, default 14) sets the distance between barbs or streamlines, never closer than 25 km for GFS.</li>
+<li><b>Levels aloft as wire mesh</b> draws each level in use as a faint mesh at its true height, so troughs dip and ridges bulge. <b>Freezing level (0 °C) surface</b> draws the model's own freezing level.</li>
+<li><b>Smooth between model points</b> on blends between grid points; off shows each model point's own value, so you see the model's resolution.</li>
+</ul>
+
+<h3 id="particles">Wind particles</h3>
+<p>✦ <b>Particles</b> shows the wind on each level whose box is ticked (the ✓ beside each level in the list; with particles on, the list's heading and a note in the particle options say so) as drifting streaks in that level's colour (surface white, 925 cyan, 850 green, 700 yellow, 500 orange, 300 pink, 250 violet). The motion is sped up to read: about 10 m/s crosses 3% of the area a second, whatever the area's size. Faster wind draws longer and brighter streaks.</p>
+<ul>
+<li><b>✦ low + barbs</b> (a Wind-as choice): particles on the surface and 925&nbsp;mb levels, where the flow over the water and through the gaps matters, and barbs on the ticked levels above, so the boundary layer moves while the winds aloft stay readable. The same ✓ boxes decide which levels show.</li>
+<li><b>Between levels (3D, interpolated)</b>: particles at every height from the lowest ticked level to the highest (a single ticked level gives a band round it; none ticked, none), each taking the wind interpolated linearly in height between the model levels above and below it, coloured by the level at or below. It loads every level. Smooth where the wind changes smoothly with height; it softens sharp shear (an inversion top, a front, a jet core). Particles keep their own height: the model's vertical motion is not used.</li>
+<li><b>Density</b> 0.25–12×, weighted to low levels (surface and 925 mb get more).</li>
+<li><b>Low-level boost</b> 1–4×: extra particles at the surface and 925 mb (in 3D, more of them near the ground), where the detail is: terrain channelling, sea breezes, gap winds.</li>
+<li><b>Bright heads</b> (a dot at the head of each streak), <b>Size</b> 1–5 px, <b>Opacity</b>.</li>
+</ul>
+<p class="muted">At the highest densities particles can cost around 10 ms a frame and may stutter on a phone.</p>
+
+<h3 id="model-vs-obs">Comparing model with observation</h3>
+<p>The model is a consistent, gap-free picture of the whole air; the radar and balloon are real but partial. Use each for what it is good at:</p>
+<ul>
+<li><b>Model winds vs VAD:</b> hover a spot near the radar for the model's wind at each level and compare with the Winds dock at the same heights. Agreement builds trust in the model's steering flow; disagreement near the surface is common where terrain channels the wind.</li>
+<li><b>Model freezing level vs radar:</b> compare the model's 0 °C surface with the CC melting-layer ring or the QVP bright band (the band sits a little below 0 °C, where snow melts).</li>
+<li><b>Model vs balloon:</b> turn on both; the balloon's levels (spread across the area, as an assumption) against the model's. The balloon is truth at one point and time.</li>
+<li>Check the <b>valid time</b> line: an HRRR analysis can lag the frame by up to an hour; GFS in Hawaiʻi is a forecast for the nearest hour.</li>
+</ul>
+
+<h3 id="wide-area">The wide 2,000 km area</h3>
+<p>Air → Area → <b>wide 2,000 km</b> centres a 2,000 km square on the radar area: the scale of a hurricane or a front. <b>🗺 Map view</b> flies straight down onto the whole area, north up.</p>
+<ul>
+<li>Beyond the radar area the map comes from <b>Natural Earth</b> (public domain): land, coastlines, country and state borders, a 5° grid and the main places.</li>
+<li><b>Wide satellite:</b> IR (band 13, on ~5 km cells, about 3 MB a scan), visible (band 1, 1 km, daytime, about 14 MB per 10 minutes, one scan per 10 minutes), Auto (visible only if the sun is at least 15° up over the area's centre at every frame of the loop, else IR), or off. The 5-minute sector is used wherever it covers, and the 10-minute full disk fills only the rest (Hawaiʻi south of ~14.6°N, the Northwest north of ~52°N).</li>
+<li><b>Wide satellite opacity</b> has its own slider beside the band menu (0.1&ndash;1, default 0.85), separate from the radar-area satellite's. Lower it to let the model's colours, isobars and the map show through the clouds; it changes instantly, even while the loop plays.</li>
+<li>While the wide area is on, the radar area's own ground <b>lies flat and hidden</b>, so the GFS fill, the wide satellite and the map run unbroken across it; it comes back when you return to the radar area.</li>
+</ul>
+
+<!-- ============================================================ 11 -->
+<h2 id="regions"><span class="num">11</span>Regions, areas and radars</h2>
+<p>A <b>region</b> sets the time zone, which GOES satellite (and lightning mapper) sees it, the airport networks, places, spots and presets. An <b>area</b> is what a view is drawn on: one radar, or several merged on one grid.</p>
+<div class="tw"><table>
+<tr><th>Radar</th><th>Name</th><th class="n">Antenna</th><th class="n">Lowest tilt</th><th>Notes</th></tr>
+<tr><td>KATX</td><td>Camano Island</td><td class="n">195 m</td><td class="n">0.5°</td><td>Puget Sound; the Olympics block its view west.</td></tr>
+<tr><td>KLGX</td><td>Langley Hill</td><td class="n">111 m</td><td class="n">0.2°</td><td>On the coast; VCP 212 with a 0.2° tilt to get under Pacific weather.</td></tr>
+<tr><td>KRTX</td><td>Portland</td><td class="n">526 m</td><td class="n">0.5°</td><td>NW Oregon, SW Washington, the Gorge, the coast south of KLGX.</td></tr>
+<tr><td>KOTX</td><td>Spokane</td><td class="n">746 m</td><td class="n">0.5°</td><td>Eastern Washington, the Palouse; Tri-Cities and Wenatchee ~200 km out.</td></tr>
+<tr><td>KPDT</td><td>Pendleton</td><td class="n">481 m</td><td class="n">0.2°</td><td>Columbia Basin, Tri-Cities (67 km), Yakima (163 km), Blue Mountains.</td></tr>
+<tr><td>PHKM</td><td>Kohala</td><td class="n">1,208 m</td><td class="n">0.5°</td><td>Over the Alenuihāhā Channel; lowest beam already ~1.2 km up at the antenna.</td></tr>
+<tr><td>PHWA</td><td>South Shore</td><td class="n">445 m</td><td class="n">0.5°</td><td>South and Kona side.</td></tr>
+<tr><td>KHGX</td><td>Houston/Galveston</td><td class="n">34 m</td><td class="n">0.5°</td><td>Near the bay.</td></tr>
+<tr><td>TIAH</td><td>Houston Intercontinental (TDWR)</td><td class="n">77 m</td><td class="n">0.1°</td><td>FAA terminal radar: C-band, narrower beam, 150 m gates; no dual-pol; attenuates in heavy rain; no Nyquist recorded; no Level III products.</td></tr>
+<tr><td>KLCH</td><td>Lake Charles</td><td class="n">41 m</td><td class="n">0.5°</td><td>SW Louisiana; only in the 600 km Houston area.</td></tr>
+<tr><td>KCRP</td><td>Corpus Christi</td><td class="n">43 m</td><td class="n">0.3°</td><td>Only in the 600 km Houston area.</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>Region</th><th>Areas (Radar source buttons)</th><th>Default focus</th></tr>
+<tr><td>Pacific Northwest<br><span class="muted">GOES-18</span></td><td><b>West · Puget Sound &amp; coast:</b> KATX; KLGX; KATX + KLGX (SALISH); KATX + KLGX + KRTX (PNW_WIDE, Washington &amp; NW Oregon, 230 km range).<br><b>East · Columbia Basin &amp; Palouse:</b> KOTX; KPDT; KOTX + KPDT (EASTWA).</td><td>Green Lake (KATX, SALISH, PNW_WIDE), Neah Bay (KLGX), Pullman (KOTX, EASTWA), Tri-Cities (KPDT)</td></tr>
+<tr><td>Hawaiʻi · Big Island<br><span class="muted">GOES-18</span></td><td>PHKM; PHWA; PHKM + PHWA (BIGISLAND); PHKM + PHWA wide 600 km (BIGISLAND_WIDE, echo to 460 km)</td><td>Alenuihāhā Channel (PHKM, both merged), Kailua-Kona (PHWA)</td></tr>
+<tr><td>Houston · Galveston Bay<br><span class="muted">GOES-19</span></td><td>KHGX; TIAH; KHGX + TIAH (HOUSTON); KHGX + KLCH + KCRP wide 600 km (HOUSTON_WIDE, echo to 460 km; TIAH left out on purpose)</td><td>Museum District; Galveston Bay (wide)</td></tr>
+</table></div>
+<p><b>Balloon fallbacks:</b> sites are tried nearest first, so the east side of the Cascades gets Spokane, then Boise. <b>No Canadian radars:</b> Environment Canada publishes only images, not volume scans, so the Canadian side of the Salish Sea is seen only by KATX and KLGX from a distance (much of Vancouver Island near the surface belongs to neither).</p>
+<p>The PNW rain is shallow, so the Northwest's wide area keeps the normal 230 km echo range (a farther beam overshoots it); only the two tropical 600 km areas use the radars' full range, where the beam is several km up.</p>
+
+<!-- ============================================================ 12 -->
+<h2 id="cases"><span class="num">12</span>Cases, situations and spots</h2>
+<h3 id="case-studies">Case studies</h3>
+<p>Cases are past events built ahead of time (config in <code>config/cases.yaml</code>). Versions of one event for different areas share a name, and the Radar source buttons switch between them; a source with no version of the event switches to live.</p>
+<div class="tw"><table>
+<tr><th>Case</th><th>Area</th><th>What to look for</th></tr>
+<tr><td><b>Waterspout off Shilshole</b>, 2026-04-15</td><td>KATX</td><td>Reported around 15:00–15:30 PDT in post-frontal showers over Puget Sound. Frames 21:30–22:50 UTC, QVP 19:00–01:00 UTC. At 22:22 UTC (3:22 PM PDT), low-level velocity (Vel, Max, Low levels, from above) shows outbound just SW of Shilshole beside inbound to its east: a pair across the beam, counter-clockwise rotation.</td></tr>
+<tr><td>… (KLGX view)</td><td>KLGX</td><td>The same afternoon from Langley Hill, 140 km away: the lowest beam is well over 1 km up at Shilshole, so the shower looks higher and coarser, but KLGX sees the coast and Strait entrance KATX cannot.</td></tr>
+<tr><td>… (KATX + KLGX merged)</td><td>SALISH</td><td>Both radars on one grid; the Radar field shows which owns each point, and velocity colours flip meaning across the boundary.</td></tr>
+</table></div>
+
+<h3 id="presets">Situations (presets)</h3>
+<p><b>Where → Situation</b> sets the field, render mode, threshold, opacity, view, cutaway and analysis panel for a question, and opens its advice in the Tips panel. Everything stays adjustable. Presets use their own exaggeration, 3× to 6×, on purpose.</p>
+<div class="tw"><table>
+<tr><th>Situation</th><th>Sets</th><th class="n">Exag.</th></tr>
+<tr><td>What's coming? Showers &amp; squalls</td><td>dBZ Surface ≥ 35, focus view, plays</td><td class="n">4×</td></tr>
+<tr><td>Rotation / waterspout check</td><td>Vel Max, all speeds, low 1.5 km, from above, across-beam section</td><td class="n">5×</td></tr>
+<tr><td>Storm structure: how tall, how strong?</td><td>dBZ Surface ≥ 20, side-on, along-beam section</td><td class="n">6×</td></tr>
+<tr><td>Lightning: how close, how active?</td><td>dBZ Surface ≥ 35, focus, plays</td><td class="n">5×</td></tr>
+<tr><td>Clouds vs rain (satellite + radar, 3D)</td><td>dBZ Volume, satellite on at cloud-top shape</td><td class="n">5×</td></tr>
+<tr><td>Fog &amp; low stratus</td><td>dBZ Max low levels ≥ 15, satellite Fog, airports on</td><td class="n">5×</td></tr>
+<tr><td>Heavy rain &amp; flooding (rain totals)</td><td>dBZ Max low ≥ 25, photo ground, 24 h rain</td><td class="n">5×</td></tr>
+<tr><td>Melting level / snow level</td><td>CC Volume ≤ 0.95, side-on, QVP</td><td class="n">6×</td></tr>
+<tr><td>Is it real? Clutter, birds, sea clutter, smoke</td><td>CC Max low ≤ 0.8, from above</td><td class="n">5×</td></tr>
+<tr><td>Heavy rain &amp; big drops</td><td>ZDR Surface ≥ 2</td><td class="n">5×</td></tr>
+<tr><td>Winds aloft (VAD profile)</td><td>Vel Volume ≥ 10, Winds dock, arrows</td><td class="n">5×</td></tr>
+<tr><td>Gap winds, fronts &amp; convergence <span class="pill">PNW</span></td><td>Vel Max low, from above, along-beam</td><td class="n">5×</td></tr>
+<tr><td>Puget Sound Convergence Zone <span class="pill">PNW</span></td><td>dBZ Max low ≥ 25, from above, plays</td><td class="n">5×</td></tr>
+<tr><td>Radar blind spots: terrain &amp; beam height</td><td>Volume hidden, blockage and tilt cone, along-beam</td><td class="n">5×</td></tr>
+<tr><td>Steady rain / atmospheric river</td><td>dBZ Volume ≥ 15, side-on, QVP</td><td class="n">6×</td></tr>
+<tr><td>Tropical cyclone / hurricane structure <span class="pill">HI · TX</span></td><td>dBZ Surface ≥ 30, whole 3D, Winds, IR satellite 3D</td><td class="n">3×</td></tr>
+<tr><td>Trade-wind showers &amp; channel winds <span class="pill">HI</span></td><td>Vel Max low, Alenuihāhā Channel from above</td><td class="n">5×</td></tr>
+</table></div>
+<p class="muted">One correction to the Rotation preset's in-app note: it says outbound on the left means counter-clockwise. Standard geometry (and the Shilshole case note) give the opposite: looking out from the radar, <b>inbound left, outbound right</b> is counter-clockwise.</p>
+
+<h3 id="spots">Focus and saved spots</h3>
+<p>The <b>focus</b> is the spot the pole, Focus views, across-beam sections, beam aim, lightning distances and the Tips beam facts are about. Pick from the built-in list (marine spots such as Shilshole, Elliott Bay, Tacoma Narrows, Admiralty Inlet, Rosario and Haro Straits, Neah Bay, Grays Harbor entrance; Alenuihāhā Channel, Kawaihae, Māhukona, Honokōhau, Hilo Bay, Māʻalaea; Galveston Bay, Kemah, Bolivar Roads, Freeport entrance, and Houston city spots), a radar, or <b>📍 Pick on map</b>; <b>☆ Save</b> names it. Saved spots and the last focus live only in this browser. Choose <i>(none)</i> to mark nothing; tools that need a spot then quietly use the area's default. Cases open on their own focus; live remembers your last one when it lies inside the area.</p>
+<p><b>Tour stops</b> (Fly-through) are saved per area in this browser too.</p>
+
+<!-- ============================================================ 13 -->
+<h2 id="sources"><span class="num">13</span>Data sources</h2>
+<p>Credits for whatever is on screen appear along the bottom of the page and in every export.</p>
+<div class="tw"><table>
+<tr><th>Source</th><th>Provider / where from</th><th>What</th><th>Cadence and lag</th><th>Resolution</th><th>Credit / licence</th></tr>
+<tr><td>NEXRAD Level II</td><td>NOAA; Unidata's public AWS bucket <code>unidata-nexrad-level2</code></td><td>Radar volumes: reflectivity, velocity, ZDR, CC (TIAH: no dual-pol)</td><td>A volume every ~4.5–10 min; archived when finished; polled every 2 min</td><td>0.95° beam; 250 m gates (TDWR 150 m)</td><td>"Radar: NOAA NEXRAD"; NOAA open data</td></tr>
+<tr><td>NEXRAD Level II real-time chunks</td><td>NOAA; Unidata bucket <code>unidata-nexrad-level2-chunks</code></td><td>The volume in progress, in ~55 pieces as the radar scans (joined, byte-for-byte the archive file)</td><td>A piece every ~5 s; checked every 10 s</td><td>As Level II</td><td>NOAA open data</td></tr>
+<tr><td>Sea &amp; air temperature</td><td>NOAA CO-OPS, <code>api.tidesandcurrents.noaa.gov</code></td><td>Water and air temperature at tide stations that measure both (sea minus air)</td><td>6-minute readings; read every 10 min while the layer is on</td><td>One pier or harbour gauge each</td><td>US government, public domain</td></tr>
+<tr><td>Radar status</td><td>NWS API, <code>api.weather.gov/radar/stations</code></td><td>Each radar's own report: status, operability, scan pattern, alarms and alarm log, calibration, power, temperatures</td><td>Reported every few minutes; read every 10 min</td><td>Per radar (WSR-88D and TDWR)</td><td>US government, public domain</td></tr>
+<tr><td>NEXRAD Level III</td><td>NOAA/NWS; Unidata bucket <code>unidata-nexrad-level3</code></td><td>HCA N0H–N3H; NST, NMD, NTV, NHI storm products; N0B / N0G lowest-tilt reflectivity and velocity (Fast 2D, shown first in live)</td><td>Per volume; nearest file within 8 min</td><td>HCA 0.25 km bins, lowest four tilts</td><td>NOAA open data</td></tr>
+<tr><td>GOES ABI</td><td>NOAA; buckets <code>noaa-goes18</code> (NW, Hawaiʻi), <code>noaa-goes19</code> (Houston)</td><td>Visible (band 2; band 1 on the wide map), IR (band 13), shortwave IR (band 7), ACHA cloud-top height</td><td>1 min mesoscale, 5 min CONUS/PACUS, 10 min full disk</td><td>0.5 km visible, 2 km IR; ACHA 10 km (4 km meso)</td><td>"Satellite &amp; lightning: NOAA GOES-18/19"</td></tr>
+<tr><td>GOES GLM</td><td>NOAA; same GOES buckets, <code>GLM-L2-LCFA</code></td><td>Lightning flashes</td><td>A file every 20 s; checked every minute live</td><td>~10 km pixels</td><td>NOAA open data</td></tr>
+<tr><td>MRMS</td><td>NOAA; bucket <code>noaa-mrms-pds</code></td><td>1–72 h precipitation: MultiSensor Pass 2 (gauge-corrected) and RadarOnly</td><td>Hourly; Pass 2 runs 1–2 h behind</td><td>MRMS grid, resampled to the nearest cell</td><td>"Rain totals: NOAA MRMS"</td></tr>
+<tr><td>HRRR analyses</td><td>NOAA HRRR via the University of Utah HRRR Zarr archive (<code>hrrrzarr</code>)</td><td>Pressure levels and surface</td><td>Hourly</td><td>3 km</td><td>"NOAA HRRR via the University of Utah HRRR archive"</td></tr>
+<tr><td>HRRR forecasts</td><td>NOAA open data, <code>noaa-hrrr-bdp-pds</code></td><td>Forecast hours to +18 h</td><td>Hourly runs</td><td>3 km</td><td>"NOAA HRRR forecast files (NOAA open data)"</td></tr>
+<tr><td>GFS</td><td>NOAA open data, <code>noaa-gfs-bdp-pds</code></td><td>Hawaiʻi and the wide area; to +24 h</td><td>Runs every 6 h</td><td>0.25° (~27 km)</td><td>"NOAA GFS from NOAA's open-data bucket"</td></tr>
+<tr><td>Balloon soundings</td><td>Iowa Environmental Mesonet RAOB service</td><td>Observed T, dew point, wind with height</td><td>00Z and 12Z launches</td><td>Reported levels</td><td>IEM</td></tr>
+<tr><td>Airport reports (METAR/SPECI)</td><td>Iowa Environmental Mesonet ASOS service</td><td>Visibility, ceiling, weather</td><td>Hourly plus specials; polled every 5 min live</td><td>Stations</td><td>"Airport reports: Iowa Environmental Mesonet"</td></tr>
+<tr><td>Rain gauges</td><td>Iowa Environmental Mesonet daily API</td><td>NWS HADS, ASOS, CoCoRaHS daily totals</td><td>Daily; today refreshed every 10 min</td><td>Stations</td><td>"Rain gauges: Iowa Environmental Mesonet (NWS HADS, ASOS, CoCoRaHS)"</td></tr>
+<tr><td>Marine chart</td><td>NOAA ENC Direct to GIS</td><td>Depth areas, contours, soundings, lanes, buoys, lights</td><td>Built once per area</td><td>Coastal / approach / harbour bands, 10 m rounding</td><td>"Marine chart: NOAA ENC (not for navigation)"</td></tr>
+<tr><td>Satellite photo</td><td>Sentinel-2 cloudless 2024 by EOX IT Services GmbH</td><td>Cloud-free ground mosaic</td><td>Built once per area</td><td>10 m source, up to 4096 px per area</td><td>Contains modified Copernicus Sentinel data 2024; <b>CC BY-NC-SA 4.0</b></td></tr>
+<tr><td>Roads and waterways</td><td>OpenStreetMap via the Overpass API</td><td>Main roads, rivers, bayous</td><td>Built once per area</td><td>Simplified</td><td>© OpenStreetMap contributors, <b>ODbL</b></td></tr>
+<tr><td>Wide map</td><td>Natural Earth</td><td>Land, borders, places beyond the radar</td><td>Static</td><td>~1 km simplification</td><td>Public domain</td></tr>
+<tr><td>Terrain</td><td>AWS Terrarium elevation tiles (Mapzen/Tilezen)</td><td>Ground heights, blockage</td><td>Built once per area</td><td>Zoom 10, ~100 m</td><td>Public tiles</td></tr>
+<tr><td>Coastline</td><td>GSHHG full resolution</td><td>Shoreline in the radar area</td><td>Static</td><td>~100 m</td><td>—</td></tr>
+</table></div>
+
+<!-- ============================================================ 14 -->
+<h2 id="accuracy"><span class="num">14</span>Assumptions and accuracy</h2>
+<p>Every picture here rests on assumptions. In one place:</p>
+<ol>
+<li><b>4/3-Earth refraction</b> for every beam height, the gridder, the section and the owner map. Real refraction varies: warm air over cold water can duct the beam down (sea clutter, anomalous propagation), so beams can be lower, or higher, than drawn.</li>
+<li><b>0.95° beamwidth</b> for all radars, including TIAH, whose real beam is narrower.</li>
+<li><b>Nearest ray (within 1.1°) and nearest gate</b> horizontally; linear-in-elevation interpolation between tilts vertically (velocity nearest-tilt).</li>
+<li><b>One byte per voxel</b>: steps of ~0.39 dB and ~0.39 m/s; values clamped to each field's range.</li>
+<li><b>Weak-echo mask</b> for ZDR and CC with a nominal, uncalibrated sensitivity line.</li>
+<li><b>Velocity:</b> Py-ART region dealiasing in cases (can err); in live, only reference-wind unfolding against the VAD (raw where none).</li>
+<li><b>VAD</b> assumes a uniform wind round a 16–100 km ring; QC as described; heights MSL.</li>
+<li><b>SRV</b> subtracts only the along-beam part of one storm motion and ignores tilt.</li>
+<li><b>Merged areas:</b> owner map from geometry and a 50% blockage rule; partner volume within 4 minutes, not the same instant.</li>
+<li><b>HCA</b> is the NWS algorithm's guess, placed at the nearest of four tilts within 0.5°.</li>
+<li><b>QVP</b> assumes horizontal uniformity round the ring (power-averaged dBZ/ZDR, 25% coverage).</li>
+<li><b>Nowcast</b> is pure advection of the whole column; no growth or decay.</li>
+<li><b>Rain from radar:</b> one Z–R per region, lowest echo within 3 km, 15 dBZ floor, 53 dBZ cap; often ±30–50%.</li>
+<li><b>MRMS gauge-corrected</b> is a bias scaling, not gauge totals; it under-counts where radar sees little (windward Big Island).</li>
+<li><b>Gauges:</b> every-day and ≤25 in/day QC; CoCoRaHS 7 am day boundaries.</li>
+<li><b>Satellite cloud tops</b> from ACHA plus a 6.5 K/km IR estimate; thin cirrus reads too low, stratus under an inversion near zero; parallax corrected with those heights.</li>
+<li><b>Fog index</b> is a heuristic of smooth ramps; twilight least reliable; cannot see fog under higher cloud; cannot tell fog from stratus.</li>
+<li><b>Balloon spread</b> planes assume one profile holds across the area.</li>
+<li><b>Model</b> is a forecast system: analyses lag up to an hour; GFS is a forecast even at +0; particles use horizontal wind only.</li>
+<li><b>Standard-atmosphere pressure</b> on the pole marks and level menu is a guide, not the day's value.</li>
+<li><b>Marine chart</b> is simplified; not for navigation.</li>
+</ol>
+
+<!-- ============================================================ 15 -->
+<h2 id="workflows"><span class="num">15</span>Workflows on the water</h2>
+<p>These are ways to use what the tool shows. They are not forecasts and they do not replace NWS marine forecasts, warnings or your own eyes.</p>
+
+<h3 id="pre-departure">Pre-departure check (Puget Sound)</h3>
+<ol>
+<li>Live, <b>KATX</b> (or KATX + KLGX for the Strait and coast), focus on your launch spot (save it with ☆).</li>
+<li><b>ⓘ Tips → This case</b>: note the lowest beam height at your spot. That is how much of the low air you are blind to.</li>
+<li>dBZ, Max, <b>Low levels</b>, from above; play the loop. Where are showers, how are they moving? Try <b>Look ahead</b> +15 to +30 min, remembering it is extrapolated.</li>
+<li><b>Winds</b> dock: the steering flow and any strong wind just above the surface layer.</li>
+<li>Lightning badge; airports for visibility and ceiling; Air → HRRR surface wind for the pattern, labelled as model.</li>
+<li>Then look at the sky and the water.</li>
+</ol>
+
+<h3 id="showers">Reading showers over the Sound</h3>
+<p>Use <b>What's coming?</b> (Surface at 35 dBZ) and follow one core through the loop; its track and speed give arrival time. In the Northwest, showers move with the 700–500 hPa wind, commonly from the SW–W at 20–40 kt. A core that is tall and then collapses, or a bowed leading edge, pushes a gust front out ahead of the rain: the wind can shift and jump 10–25 kt minutes before the rain arrives, and radar rarely shows that gust front over water.</p>
+
+<h3 id="convergence">Spotting the Puget Sound Convergence Zone</h3>
+<p>When NW flow splits around the Olympics and rejoins over the Sound, look for a narrow W–E band of showers, often near the King–Snohomish county line, that stays in place or drifts north–south while the rest of the region is showery or dry. Use the <b>Puget Sound Convergence Zone</b> situation, then switch to Velocity (or <b>Gap winds, fronts &amp; convergence</b>) to see the two flows meet: a sharp colour change <i>along</i> the beam. Under the band: heavy showers, gusty and shifting winds, sometimes thunder; either side can be light winds.</p>
+
+<h3 id="outflow">Gust fronts and outflow</h3>
+<p>Watch for collapsing tall cores and bowed edges in dBZ, and for a line of outbound (or inbound) velocity racing ahead of the rain near the radar, where the beam is low enough to catch it. Far from the radar the outflow is usually below the beam: assume it may be there before you see it.</p>
+
+<h3 id="fog-workflow">Fog</h3>
+<p>Use the <b>Fog &amp; low stratus</b> situation: teal satellite index, airport markers and low-level radar. Teal over IFR/LIFR airports with FG or BR means fog on the surface; teal over VFR with an 800–1,500 ft ceiling means low stratus. Step through time: teal shrinking from the edges after sunrise is burn-off; teal pushing inland through the Strait or up the Sound is a marine push. Over open water, between airports, trust what you see.</p>
+
+<h3 id="waterspout-clues">Waterspout clues</h3>
+<p>Use <b>Rotation / waterspout check</b>, then SRV. The classic set-up is a tall shower with a sharp edge, light winds and a cold airmass over warmer water. Look for a small couplet across the beam at the lowest tilts under a shower base, and ZDR or dBZ showing a compact, vigorous cell. The radar sees the parent shower at best; spouts live below the beam. The Shilshole case is the worked example.</p>
+
+<h3 id="big-island">Big Island: windward rain and the channel</h3>
+<p><b>Trade-wind showers &amp; channel winds</b> shows the acceleration through the Alenuihāhā Channel in velocity, as the radar sees it aloft (PHKM's lowest beam is 1–2 km above the channel). For rain, remember the windward under-count: compare Rain totals with <b>Rain gauges</b> on the Hilo, Puna and Hāmākua slopes before trusting any radar or MRMS number there. The balloon from Hilo shows the trade-wind inversion that caps the showers.</p>
+
+<h3 id="houston">Houston convection and flooding</h3>
+<p>Start from Central Houston 3D on the satellite photo with Roads &amp; waterways on (the bayous). Squall lines and fronts come from the west and north-west, Gulf storms and sea-breeze cells from the south. For flooding use <b>Heavy rain &amp; flooding</b>: switch between 24 h (how wet the ground already is) and Loop (what is falling now), and watch several inches in a few hours over one bayou's watershed. TIAH (with KHGX as HOUSTON) adds low, close-in detail on the north side but attenuates behind heavy rain.</p>
+
+<!-- ============================================================ 16 -->
+<h2 id="performance"><span class="num">16</span>Performance and data use</h2>
+<ul>
+<li><b>Live downloads:</b> the code's own estimate is about 150–300 MB an hour for radar. Each volume is downloaded once, either piece by piece while it is scanned (the newest) or whole from the archive, and the next downloads while the current one is processed.</li>
+<li><b>Hidden tab:</b> when the tab is hidden (switched away, minimised, phone screen off), every live feed pauses: radar, lightning and airports. On return they re-list the bucket and fetch only what now falls inside the loop; the status line says "paused while hidden … catching up".</li>
+<li><b>Only what is on:</b> lightning, satellite, airports, rain, gauges, storms and the model fetch only while their layer is on, for the area on screen. Live visible satellite costs ~6–10 MB a scan, so it is read only when it would be shown; on a phone, only for the newest frame.</li>
+<li><b>Memory:</b> an unpacked volume is roughly 33 MB (a merged frame about twice that). Frame arrays not on screen are <b>packed</b> as runs of non-zero bytes (about 95% of voxels are empty sky), 10–20× smaller, and unpacked on first use; the field on screen stays unpacked so playback is instant. Secondary-radar volumes in merged areas stay packed until paired. The ⚡ 2D files are put onto the area's grid as they arrive and only that is kept (~170&nbsp;KB a scan for KATX instead of ~1&ndash;1.3&nbsp;MB decoded), so a long 2D loop stays small. In cases only the current field and the one before it are kept.</li>
+<li><b>Nothing downloaded twice:</b> changing the loop length (30 &rarr; 60 min) keeps what's loaded and fetches only the extra, older volumes (or drops the oldest). Downloaded volumes are also kept on your device for 2 hours (browser storage, up to 80 files), so switching between areas that share a radar (KATX &harr; KATX + KLGX) or reloading the page reuses them; only the gridding (a couple of seconds a volume) is redone. The newest volume, built from the real-time pieces, is stored the same way once whole. The ⚡ 2D files (2 hours) and lightning files (2 hours, and for the whole visit in memory) are kept the same way. The status line says <i>reading from this device</i> for these and <i>downloading</i> only when a volume really comes over the network (the download meter agrees). Switching area keeps your loop length unless the new area's default is shorter, so it doesn't fetch a stretch of older volumes you didn't ask for.</li>
+<li><b>Fast 2D:</b> the lowest tilt only, from Level III (~250&nbsp;KB a scan for both fields per radar), about 20&ndash;40× less than the volumes; see <a href="#fast-2d">Fast 2D</a>. Live opens with it and loads the 3D volumes behind.</li>
+<li><b>Radar first:</b> when a live area opens, the radar volumes get the connection to themselves; lightning, when on (about 135 GLM files, ~30&nbsp;MB for a 45-minute window), starts once the radar loop is in, or after 45&nbsp;s, three files at a time. The loop starts playing once most of it is in (60% of the first radar's volumes) or all of it, or after 90&nbsp;s; until then the newest scan stays on screen.</li>
+<li><b>Live pipeline:</b> each radar has its own worker. While one volume is decoded and gridded, the next one downloads, so there is no idle gap. A second worker per radar handles the volume in progress from the <a href="#realtime">real-time pieces</a>: each time new tilts arrive it updates only the field on screen, and only from just below the newest tilt up (velocity whole when the VAD wind that unfolds it has changed); the other fields are done once the volume is whole. Checked voxel for voxel against a full regrid: identical, for about 60% less CPU per volume. The field on screen is gridded first and shown as soon as it's ready; the other fields follow a moment later (about 0.5&ndash;1&nbsp;s on a laptop), and in a merged area each partner radar's share is painted in when its fields arrive. Decoding and gridding a volume takes a few seconds of CPU; on most connections the ~5&nbsp;MB download per volume is the slower part.</li>
+<li><b>Download meter</b> (top right, &ldquo;↓ 150 MB&rdquo;): everything this page has downloaded in the last <b>10 minutes</b>, with a bar per minute (newest on the right). Hover it for the breakdown by source (radar 3D volumes, the newest volume as it scans, 2D lowest tilt, lightning, satellite, model, rain totals, IEM, this site, libraries) and the total since the page opened. It counts downloads in the page and in its background workers, as bytes on the wire; volumes reused from this device's store don't count. Watch it to see a slow line's budget, or what a layer costs: switch it on and see the next minute's bar.</li>
+<li><b>What opening costs:</b> the page itself is small: about 350&nbsp;KB of scripts (minified), three.js from a CDN, and per area a satellite photo of 0.1&ndash;4&nbsp;MB (WebP) plus terrain and lines. The marine chart, 0.1&ndash;1.8&nbsp;MB compressed, loads only when that layer is on. Live data is the bulk: each radar volume is about 5&nbsp;MB, so a 30-minute loop on one radar is ~30&nbsp;MB in clear air; in precipitation mode volumes run ~7&nbsp;MB and come more often, and KATX + KLGX came to ~100&nbsp;MB of volumes on the meter, plus ~30&nbsp;MB of lightning if you switch it on (it's off by default) and ~10&nbsp;MB of satellite if it's on (about 150&nbsp;MB in the first half-minute, measured 2026-09-29).</li>
+<li><b>Phone defaults:</b> 30 min live loop; controls folded; visible satellite for the newest frame only.</li>
+<li><b>Model data:</b> HRRR analyses read only the tiles over the area (~10 KB each); forecast fields ~0.5–0.9 MB each; Load all estimates ~4 MB per level-hour for HRRR and ~3 MB for GFS.</li>
+<li><b>High quality</b> renders at full pixel ratio with finer ray steps: prettier, slower.</li>
+</ul>
+<div class="callout try"><span class="tag">On a slow connection</span>
+<p>Live already opens in Fast 2D (a whole loop in about 1&ndash;2&nbsp;MB); press <b>⚡ 2D</b> to stay there, or untick <b>Load 3D in background</b> so no volumes download at all. For 3D, open a single-radar area (KATX rather than KATX + KLGX) and keep the 30-minute loop: that roughly halves the download. The newest scan appears first, within the time of one ~5&nbsp;MB download, and the loop fills in behind it. Leave visible satellite and the wide area's visible imagery off (IR is far smaller), and leave Lightning off (the default) unless storms are about (its files download only while the layer is on). A hidden tab pauses everything, so nothing downloads while you're elsewhere.</p>
+</div>
+
+<!-- ============================================================ 17 -->
+<h2 id="glossary"><span class="num">17</span>Glossary</h2>
+<dl class="gloss">
+<dt>ACHA</dt><dd>NOAA's GOES cloud-top height product, used for the 3D cloud-top surface.</dd>
+<dt>Aliasing (folding)</dt><dd>A radial speed beyond the Nyquist velocity wrapping to the other end of the scale.</dd>
+<dt>AVSET</dt><dd>A scan mode that skips high tilts when no storm is tall enough to need them.</dd>
+<dt>Beam blockage</dt><dd>The fraction of a beam's power cut off by terrain; cumulative along each radial.</dd>
+<dt>Bright band</dt><dd>A layer of enhanced reflectivity just below the 0 °C level, where melting snow looks like huge raindrops.</dd>
+<dt>CC (ρhv)</dt><dd>Correlation coefficient: how alike the targets in the beam are. Low means mixed or non-weather.</dd>
+<dt>Cone of silence</dt><dd>The unscanned funnel above the top tilt, near the radar.</dd>
+<dt>Couplet</dt><dd>Adjacent inbound and outbound velocities; across the beam it means rotation.</dd>
+<dt>dBZ</dt><dd>Reflectivity on a log scale, 10·log<sub>10</sub>(Z).</dd>
+<dt>Dealiasing (unfolding)</dt><dd>Putting folded velocities back where they belong.</dd>
+<dt>GLM</dt><dd>Geostationary Lightning Mapper, the optical lightning sensor on GOES.</dd>
+<dt>HCA</dt><dd>Hydrometeor classification algorithm: the NWS's call on rain, snow, hail, clutter and so on.</dd>
+<dt>HRRR / GFS</dt><dd>NOAA's 3 km hourly model over the contiguous US, and its global 0.25° model.</dd>
+<dt>MRMS</dt><dd>Multi-Radar/Multi-Sensor: NOAA's national radar mosaic and rain analysis.</dd>
+<dt>Mixed layer</dt><dd>The air stirred from the surface; gusts come from its upper part. Its top is usually an inversion.</dd>
+<dt>Nyquist velocity</dt><dd>The highest radial speed a Doppler radar measures unambiguously.</dd>
+<dt>Owner map</dt><dd>Which radar each voxel of a merged area comes from.</dd>
+<dt>Gust factor</dt><dd>Gust divided by the mean wind at an airport; 1.4 and up means strong mixing or squalls.</dd>
+<dt>Parallax</dt><dd>A satellite's slanted view placing high cloud tops away from the satellite on a flat map.</dd>
+<dt>Potential temperature (θ)</dt><dd>The temperature air would have if brought to 1000&nbsp;mb without heat added or lost: constant through a well-mixed layer, rising with height in stable air.</dd>
+<dt>QVP</dt><dd>Quasi-vertical profile: a steep tilt averaged round the circle, stacked in time.</dd>
+<dt>Radial velocity</dt><dd>Motion toward or away from the radar only.</dd>
+<dt>SAILS</dt><dd>Supplemental adaptive intra-volume low-level scan: a mid-volume repeat of the lowest tilt.</dd>
+<dt>Sea minus air</dt><dd>Water minus air temperature: + unstable (sea warmer), − stable (air warmer), within ±1&nbsp;°C near neutral.</dd>
+<dt>SRV</dt><dd>Storm-relative velocity: radial velocity minus the storm's motion.</dd>
+<dt>TDWR</dt><dd>Terminal Doppler Weather Radar: the FAA's C-band airport radar (TIAH).</dd>
+<dt>Tilt / sweep</dt><dd>One full turn of the antenna at one elevation angle.</dd>
+<dt>Transfer function</dt><dd>The table turning each stored value into a colour and an opacity for rendering.</dd>
+<dt>VAD</dt><dd>Velocity-azimuth display: a sine fit round a ring of gates giving the average wind at one height.</dd>
+<dt>VCP</dt><dd>Volume coverage pattern: the set of tilts and speeds a radar runs.</dd>
+<dt>Vertical exaggeration</dt><dd>Stretching heights so thin weather shows its shape; ×2 by default.</dd>
+<dt>Voxel</dt><dd>One cell of the 3D grid.</dd>
+<dt>Z–R relationship</dt><dd>Z = a·R<sup>b</sup>, turning reflectivity into rain rate.</dd>
+<dt>ZDR</dt><dd>Differential reflectivity: horizontal versus vertical reflectivity; big flattened drops read high.</dd>
+</dl>
+
+<h2 id="changes">Changes</h2>
+<ul>
+<li><b>2026-09-30:</b> <a href="#mixing">Vertical mixing, stability and the lid (observed)</a>: the balloon's mixed layer and lid, the VAD wind that can mix down, airport gusts with gust factor, sea minus air at NOAA tide stations, and the <i>Vertical mixing &amp; gusts (observed)</i> situation.</li>
+<li><b>2026-09-30:</b> the <a href="#mixing">mixing section</a> teaches it properly: why surface and aloft differ, potential temperature with a diagram, the parcel method and its reasoning, where the lids come from, the gust factor, sea minus air physics, a reading routine, worked examples and pitfalls; in the app, a <i>How to read this</i> under the readout, hover explanations on each part, and 📖 links to the section.</li>
+</ul>
+
+<p class="muted" style="margin-top:40px">Written from the explorer's source code. Where a value is set per area or region, the tables say so. <a href="#start">Back to the top</a> · <a href="./">Back to the explorer</a></p>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+{
+ "case": "live",
+ "title": "Live \u00b7 Houston Intercontinental (TDWR)",
+ "note": "",
+ "frames": [],
+ "site": {
+  "id": "TIAH",
+  "name": "Houston Intercontinental (TDWR)",
+  "lat": 30.0297,
+  "lon": -95.5708,
+  "alt_m": 77.1
+ },
+ "region": {
+  "id": "houston",
+  "name": "Houston \u00b7 Galveston Bay",
+  "tz": "America/Chicago",
+  "goes": "noaa-goes19"
+ },
+ "radars": [
+  {
+   "id": "TIAH",
+   "name": "Houston Intercontinental (TDWR)",
+   "lat": 30.0297,
+   "lon": -95.5708,
+   "alt_m": 77.1,
+   "lowest_tilt": 0.1,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "grid": {
+  "x0": -100.0,
+  "x1": 100.0,
+  "y0": -100.0,
+  "y1": 100.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 0.5,
+  "dz": 0.4,
+  "nx": 401,
+  "ny": 401,
+  "nz": 41
+ },
+ "fields": [
+  {
+   "key": "dbz",
+   "label": "Reflectivity",
+   "units": "dBZ",
+   "lo": -20.0,
+   "hi": 80.0
+  },
+  {
+   "key": "vel",
+   "label": "Radial velocity",
+   "units": "m/s",
+   "lo": -50.0,
+   "hi": 50.0
+  },
+  {
+   "key": "zdr",
+   "label": "Differential reflectivity",
+   "units": "dB",
+   "lo": -2.0,
+   "hi": 6.0
+  },
+  {
+   "key": "rho",
+   "label": "Correlation coefficient",
+   "units": "",
+   "lo": 0.5,
+   "hi": 1.05
+  }
+ ],
+ "places": [
+  {
+   "name": "Houston",
+   "x": 19.38,
+   "y": -29.97,
+   "focus": false
+  },
+  {
+   "name": "Galveston",
+   "x": 75.04,
+   "y": -80.78,
+   "focus": false
+  },
+  {
+   "name": "Texas City",
+   "x": 64.7,
+   "y": -71.61,
+   "focus": false
+  },
+  {
+   "name": "Baytown",
+   "x": 57.33,
+   "y": -32.62,
+   "focus": false
+  },
+  {
+   "name": "Kemah",
+   "x": 53.28,
+   "y": -53.99,
+   "focus": false
+  },
+  {
+   "name": "Conroe",
+   "x": 11.02,
+   "y": 31.4,
+   "focus": false
+  },
+  {
+   "name": "The Woodlands",
+   "x": 10.56,
+   "y": 15.16,
+   "focus": false
+  },
+  {
+   "name": "Lake Conroe",
+   "x": -0.88,
+   "y": 37.84,
+   "focus": false
+  },
+  {
+   "name": "Katy",
+   "x": -24.44,
+   "y": -27.07,
+   "focus": false
+  },
+  {
+   "name": "Texas Medical Center",
+   "x": 16.69,
+   "y": -35.87,
+   "focus": false
+  },
+  {
+   "name": "Greenspoint",
+   "x": 14.72,
+   "y": -9.52,
+   "focus": false
+  },
+  {
+   "name": "IAH",
+   "x": 22.13,
+   "y": -5.06,
+   "focus": false
+  },
+  {
+   "name": "Spring",
+   "x": 14.8,
+   "y": 5.6,
+   "focus": false
+  },
+  {
+   "name": "Kingwood",
+   "x": 36.65,
+   "y": 2.32,
+   "focus": false
+  },
+  {
+   "name": "College Station",
+   "x": -73.03,
+   "y": 66.77,
+   "focus": false
+  },
+  {
+   "name": "Huntsville",
+   "x": 1.89,
+   "y": 77.2,
+   "focus": false
+  },
+  {
+   "name": "Museum District",
+   "x": 17.46,
+   "y": -34.2,
+   "focus": true
+  }
+ ],
+ "max_range_km": 230.0
+}

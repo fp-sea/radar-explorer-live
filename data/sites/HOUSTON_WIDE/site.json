@@ -1,0 +1,296 @@
+{
+ "site": {
+  "id": "HOUSTON_WIDE",
+  "name": "KHGX + KLCH + KCRP \u00b7 wide 600 km (hurricane scale)",
+  "lat": 29.4719,
+  "lon": -95.07874,
+  "alt_m": 34.0
+ },
+ "region": {
+  "id": "houston",
+  "name": "Houston \u00b7 Galveston Bay",
+  "tz": "America/Chicago",
+  "goes": "noaa-goes19"
+ },
+ "radars": [
+  {
+   "id": "KHGX",
+   "name": "Houston/Galveston",
+   "lat": 29.4719,
+   "lon": -95.07874,
+   "alt_m": 34.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "KLCH",
+   "name": "Lake Charles",
+   "lat": 30.12530518,
+   "lon": -93.21588898,
+   "alt_m": 41.0,
+   "lowest_tilt": 0.5,
+   "x": 179.157,
+   "y": 74.098
+  },
+  {
+   "id": "KCRP",
+   "name": "Corpus Christi",
+   "lat": 27.78401756,
+   "lon": -97.51125336,
+   "alt_m": 43.0,
+   "lowest_tilt": 0.3,
+   "x": -239.317,
+   "y": -185.228
+  }
+ ],
+ "grid": {
+  "x0": -300.0,
+  "x1": 300.0,
+  "y0": -400.0,
+  "y1": 200.0,
+  "z0": 0.0,
+  "z1": 16.0,
+  "dxy": 1.25,
+  "dz": 0.5,
+  "nx": 481,
+  "ny": 481,
+  "nz": 33
+ },
+ "tilts": [
+  0.2,
+  0.5,
+  0.9,
+  1.3,
+  1.8,
+  2.4,
+  3.1,
+  4.0,
+  5.1,
+  6.4,
+  8.0,
+  10.0,
+  12.0
+ ],
+ "terrain": {
+  "file": "terrain.i16.gz",
+  "units": "m",
+  "max_m": 460
+ },
+ "blockage": {
+  "file": "blockage.u8.gz",
+  "units": "%",
+  "shape": [
+   3,
+   13,
+   481,
+   481
+  ],
+  "summary": [
+   {
+    "radar": "KHGX",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 0.3
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KHGX",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 1.7
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 0.8
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 0.1
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 0.1
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLCH",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 0.1
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KCRP",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   }
+  ]
+ },
+ "owner": {
+  "file": "owner.u8.gz",
+  "pct_voxels": {
+   "KHGX": 36.5,
+   "KLCH": 21.5,
+   "KCRP": 26.2
+  }
+ },
+ "source": "AWS Terrain Tiles (Terrarium, zoom 10); blockage after Bech et al. 2003"
+}

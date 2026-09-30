@@ -1,0 +1,214 @@
+{
+ "site": {
+  "id": "SALISH",
+  "name": "KATX + KLGX",
+  "lat": 48.1946106,
+  "lon": -122.49569702,
+  "alt_m": 195.0
+ },
+ "radars": [
+  {
+   "id": "KATX",
+   "name": "Camano Island",
+   "lat": 48.1946106,
+   "lon": -122.49569702,
+   "alt_m": 195.0,
+   "lowest_tilt": 0.5,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "id": "KLGX",
+   "name": "Langley Hill",
+   "lat": 47.11694336,
+   "lon": -124.10666656,
+   "alt_m": 111.0,
+   "lowest_tilt": 0.2,
+   "x": -121.898,
+   "y": -118.561
+  }
+ ],
+ "grid": {
+  "x0": -200.0,
+  "x1": 90.0,
+  "y0": -150.0,
+  "y1": 110.0,
+  "z0": 0.0,
+  "z1": 12.0,
+  "dxy": 0.75,
+  "dz": 0.25,
+  "nx": 388,
+  "ny": 348,
+  "nz": 49
+ },
+ "tilts": [
+  0.2,
+  0.5,
+  0.9,
+  1.3,
+  1.8,
+  2.4,
+  3.1,
+  4.0,
+  5.1,
+  6.4,
+  8.0,
+  10.0,
+  12.0
+ ],
+ "terrain": {
+  "file": "terrain.i16.gz",
+  "units": "m",
+  "max_m": 4249
+ },
+ "blockage": {
+  "file": "blockage.u8.gz",
+  "units": "%",
+  "shape": [
+   2,
+   13,
+   348,
+   388
+  ],
+  "summary": [
+   {
+    "radar": "KATX",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 57.1
+   },
+   {
+    "radar": "KATX",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 43.2
+   },
+   {
+    "radar": "KATX",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 27.1
+   },
+   {
+    "radar": "KATX",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 7.4
+   },
+   {
+    "radar": "KATX",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.4
+   },
+   {
+    "radar": "KATX",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KATX",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 0.2,
+    "pct_azimuths_over_50_at_100km": 24.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 0.5,
+    "pct_azimuths_over_50_at_100km": 15.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 0.9,
+    "pct_azimuths_over_50_at_100km": 7.4
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 1.3,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 1.8,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 2.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 3.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 4.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 5.1,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 6.4,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 8.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 10.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   },
+   {
+    "radar": "KLGX",
+    "tilt": 12.0,
+    "pct_azimuths_over_50_at_100km": 0.0
+   }
+  ]
+ },
+ "owner": {
+  "file": "owner.u8.gz",
+  "pct_voxels": {
+   "KATX": 55.4,
+   "KLGX": 33.2
+  }
+ },
+ "source": "AWS Terrain Tiles (Terrarium, zoom 10); blockage after Bech et al. 2003"
+}
